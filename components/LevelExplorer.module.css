@@ -743,8 +743,7 @@
 
 .facts {
   display: grid;
-  /* Two even columns on desktop, one on phones: 5 rows read as a tidy 2+2+1 block
-     instead of an uneven auto-fit scramble. */
+  /* Six rows: 1-up on phones, 2-up on tablets, 3-up (a tidy 3x2 block) on desktop. */
   grid-template-columns: 1fr;
   gap: 12px;
   margin: 0;
@@ -754,8 +753,10 @@
   .facts {
     grid-template-columns: 1fr 1fr;
   }
-  .factWide {
-    grid-column: 1 / -1;
+}
+@media (min-width: 900px) {
+  .facts {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

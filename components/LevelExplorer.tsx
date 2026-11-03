@@ -516,6 +516,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                     ),
                   ],
                   [t.detail.date, fmtDate(active.competitionDate, lang)],
+                  [t.detail.fee, active.fee],
                 ] as [string, string | null][]
               ).map(([label, value]) => (
                 <div key={label} className={s.fact} data-reveal>
@@ -535,7 +536,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                   )}
                 </dd>
               </div>
-              <div className={`${s.fact} ${s.factWide}`} data-reveal>
+              <div className={s.fact} data-reveal>
                 <dt>{t.detail.contact}</dt>
                 <dd className={active.contact?.length ? undefined : s.unknown}>
                   {active.contact?.length ? (
