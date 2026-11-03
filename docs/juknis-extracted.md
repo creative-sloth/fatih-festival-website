@@ -262,7 +262,7 @@ Ranked by how much it blocks the site.
 |---|---|---|---|
 | 1 | **Google Form URL** | all 16 | Zero form URLs in the document. Every "Daftar" button stays disabled. `formUrl` |
 | 2 | **Per-competition juknis URL** | all 16 | The booklet exists as one 33-page PDF, not as 16 shareable files. Needs a Drive link per file set to "Anyone with the link". `juknisUrl` |
-| 3 | **Registration window** | 11 of 16 | Only SD Olimpiade (15 Okt–6 Nov), Debate (19 Sep–7 Nov), Essay (10 Nov), Cerdas Cermat (10 Nov) are dated. The rest have no window, so `lib/status.ts` cannot compute open/closed. `registrationOpens` / `registrationCloses` |
+| 3 | **Registration window** | 12 of 16 | Only SD Olimpiade (15 Okt–6 Nov), Debate (19 Sep–7 Nov), Essay (10 Nov), Cerdas Cermat (10 Nov) are dated. The rest have no window, so `lib/status.ts` cannot compute open/closed. `registrationOpens` / `registrationCloses` |
 | 4 | **Competition date + time** | 12 of 16 | Only SD Olimpiade (11–14 Nov, 09.30), Debate (11–13 Nov), Essay (upload 11 Nov), Cerdas Cermat (13 Nov) are dated. `competitionDate` |
 | 5 | **Festival-level narahubung (2 names + WhatsApp)** | footer | The booklet has per-competition PICs only. `festival.contacts` |
 | 6 | **3 logo files** (Fatih, SMA Unggul Garuda Transformasi, Cambridge) | hero | Still placeholder boxes. Cambridge also needs written permission. `festival.logos[i].src` |
@@ -278,7 +278,7 @@ Ranked by how much it blocks the site.
 | Summary (id + en) | all 16 | Site copy, 1–2 sentences each. `summary` |
 | English `name` | 15 | Only "English Debate", "Culture Vlog", "Spelling Bee", "STEM Expo", "Essay" are already English. `name.en` |
 | Juknis for Bercerita + Tari Kreasi | 2 | Document says "belum tersedia". These two have almost nothing |
-| Narahubung | 4 | Olimpiade SD, Spelling Bee, Cerdas Cermat, STEM Expo, Debate all say "akan diinformasikan" |
+| Narahubung | 5 | Olimpiade SD, Spelling Bee, Cerdas Cermat, STEM Expo say "akan diinformasikan"; Debate lists none |
 | Culture Vlog submission link + deadline | 1 | "akan diinformasikan" |
 | STEM Expo full timeline | 1 | Every row is "Diumumkan panitia" |
 | Room / court allocation | most | Only D11 and D12 are named |
