@@ -2,7 +2,7 @@
 
 /* ---------- Level tint (section background + wipe share it) ---------- */
 
-/* ---------- Level tint + comic-page collage (scripts/make-comic-backgrounds.py) ----------
+/* ---------- Level tint + Marvel panel collage (scripts/make-marvel-panels.py) ----------
    --tint paints half the panels, --alt the other half; the wipe recolours everything when the level changes. */
 
 .explorer,
@@ -33,7 +33,8 @@
   overflow: hidden;
   scroll-margin-top: 64px;
   border-top: var(--line) solid var(--ink);
-  background: color-mix(in srgb, var(--tint) 14%, var(--cream));
+  /* Panel colours read as ink-printed flats; the cream only shows through the borders. */
+  background: var(--cream);
 }
 
 .explorer::before,
@@ -45,22 +46,22 @@
   z-index: 0;
   pointer-events: none;
 }
+/* Marvel-style panel collage (scripts/make-marvel-panels.py):
+   two alternating flat colours on top of a heavy black grid of borders. */
 .explorer::before {
   background: var(--tint);
-  opacity: 0.85;
-  -webkit-mask: url('/assets/collage-fill-a.svg') top center / max(100%, 900px) auto repeat-y;
-  mask: url('/assets/collage-fill-a.svg') top center / max(100%, 900px) auto repeat-y;
+  -webkit-mask: url('/assets/marvel-fill-a.svg') top center / max(100%, 1000px) auto repeat-y;
+  mask: url('/assets/marvel-fill-a.svg') top center / max(100%, 1000px) auto repeat-y;
 }
 .explorer::after {
   background: var(--alt);
-  opacity: 0.85;
-  -webkit-mask: url('/assets/collage-fill-b.svg') top center / max(100%, 900px) auto repeat-y;
-  mask: url('/assets/collage-fill-b.svg') top center / max(100%, 900px) auto repeat-y;
+  -webkit-mask: url('/assets/marvel-fill-b.svg') top center / max(100%, 1000px) auto repeat-y;
+  mask: url('/assets/marvel-fill-b.svg') top center / max(100%, 1000px) auto repeat-y;
 }
 .gutters {
-  background: var(--cream);
-  -webkit-mask: url('/assets/collage-gutter.svg') top center / max(100%, 900px) auto repeat-y;
-  mask: url('/assets/collage-gutter.svg') top center / max(100%, 900px) auto repeat-y;
+  background: var(--ink);
+  -webkit-mask: url('/assets/marvel-gutter.svg') top center / max(100%, 1000px) auto repeat-y;
+  mask: url('/assets/marvel-gutter.svg') top center / max(100%, 1000px) auto repeat-y;
 }
 
 .wipe {
@@ -69,7 +70,7 @@
   z-index: 1;
   opacity: 0;
   pointer-events: none;
-  background: color-mix(in srgb, var(--tint) 55%, var(--cream));
+  background: var(--tint);
 }
 
 .inner {
