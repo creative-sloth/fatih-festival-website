@@ -1,0 +1,461 @@
+/* Hero — "the cover comes alive" (HANDOFF.md §9.2 #1).
+   Rotations use the individual `rotate` property so GSAP's transform tweens compose with them. */
+
+.hero {
+  --hex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33L28 66zm0 32V66' fill='none' stroke='%23000' stroke-opacity='.07' stroke-width='2'/%3E%3C/svg%3E");
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(ellipse 120% 95% at 50% 45%, transparent 52%, rgb(29 155 216 / 0.7) 100%),
+    var(--hex),
+    var(--teal);
+}
+
+/* Speed rays radiating from the title, fading out toward the centre */
+.rays {
+  position: absolute;
+  inset: -6%;
+  z-index: -2;
+  background: repeating-conic-gradient(from 4deg at 50% 46%, rgb(255 255 255 / 0.3) 0deg 6deg, transparent 6deg 17deg);
+  mask-image: radial-gradient(circle at 50% 46%, transparent 16%, #000 72%);
+}
+
+/* Static halftone in two corners, like the poster */
+.dots {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+  opacity: 0.16;
+  -webkit-mask:
+    url('/assets/halftone-tl.svg') left top / min(48vw, 520px) no-repeat,
+    url('/assets/halftone-br.svg') right bottom / min(48vw, 520px) no-repeat;
+  mask:
+    url('/assets/halftone-tl.svg') left top / min(48vw, 520px) no-repeat,
+    url('/assets/halftone-br.svg') right bottom / min(48vw, 520px) no-repeat;
+}
+
+/* Moving halftone "lens": positioned only with transform (set by HeroMotion on pointer devices) */
+.spot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  width: min(70vw, 560px);
+  aspect-ratio: 1;
+  background: var(--ink);
+  opacity: 0.2;
+  -webkit-mask: url('/assets/halftone-radial.svg') center / contain no-repeat;
+  mask: url('/assets/halftone-radial.svg') center / contain no-repeat;
+  transform: translate3d(58vw, 6svh, 0);
+  pointer-events: none;
+}
+
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .spot {
+    animation: drift 16s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(-10vw, 4svh, 0);
+  }
+  50% {
+    transform: translate3d(45vw, 30svh, 0);
+  }
+  100% {
+    transform: translate3d(5vw, 58svh, 0);
+  }
+}
+
+/* ---------- Top bar ---------- */
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px var(--gutter) 0;
+}
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.logoSlot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+  max-width: 132px;
+  padding: 4px 10px;
+  border: 2px dashed var(--ink);
+  background: rgb(255 255 255 / 0.75);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.logoTag {
+  font-size: 0.62rem;
+  font-weight: 800;
+  opacity: 0.65;
+}
+
+.logoShort {
+  display: none;
+}
+
+.lang {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 12px 2px;
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition:
+    transform var(--dur-press) ease-out,
+    box-shadow var(--dur-press) ease-out;
+}
+.lang b {
+  font-weight: 400;
+  color: var(--sun-4);
+}
+.lang:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: clamp(14px, 3.2svh, 34px);
+  padding: clamp(12px, 3svh, 32px) var(--gutter);
+}
+
+.title {
+  --t: min(12.5vw, 15.5svh);
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--t);
+  line-height: 0.84;
+  letter-spacing: 0.01em;
+  rotate: -4deg;
+}
+
+.line1 {
+  font-size: 1.42em;
+}
+
+.line2 {
+  display: flex;
+  align-items: center;
+  font-size: 0.94em;
+  margin-top: -0.02em;
+}
+
+.word {
+  display: inline-flex;
+}
+
+.glyph {
+  display: inline-block;
+  padding: 0 0.02em;
+  color: transparent;
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 0.5) 22%, transparent 26%),
+    linear-gradient(180deg, var(--sun-1) 10%, var(--sun-2) 42%, var(--sun-3) 74%, var(--sun-4) 100%);
+  background-size:
+    0.09em 0.09em,
+    100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0.032em var(--ink);
+  filter: drop-shadow(0.045em 0.055em 0 var(--ink));
+  transform-origin: 50% 85%;
+}
+
+.num {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  margin-left: 0.24em;
+  font-size: 1.3em;
+}
+
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  z-index: 0;
+  width: 1.75em;
+  height: 1.75em;
+  margin: -0.875em 0 0 -0.875em;
+}
+
+.numText {
+  position: relative;
+  z-index: 1;
+  padding: 0 0.04em;
+  color: transparent;
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 0.45) 22%, transparent 26%),
+    linear-gradient(180deg, #ffd23f 0%, var(--sun-3) 48%, var(--sun-4) 100%);
+  background-size:
+    0.08em 0.08em,
+    100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0.03em var(--ink);
+  filter: drop-shadow(0.04em 0.05em 0 var(--ink));
+}
+
+.sparkle {
+  position: absolute;
+  width: 0.32em;
+  height: 0.32em;
+  pointer-events: none;
+}
+.sp1 {
+  left: 6%;
+  top: 2%;
+}
+.sp2 {
+  right: 26%;
+  top: 34%;
+  width: 0.22em;
+  height: 0.22em;
+}
+.sp3 {
+  left: 30%;
+  bottom: -2%;
+  width: 0.2em;
+  height: 0.2em;
+}
+
+/* ---------- Decorations (wrappers carry position + parallax, SVGs carry the intro pop) ---------- */
+
+.decorWrap {
+  position: absolute;
+  z-index: -1;
+  width: clamp(54px, 8vw, 128px);
+  pointer-events: none;
+}
+.decor {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.flip {
+  scale: -1 1;
+}
+.boltL {
+  left: 3%;
+  top: 8%;
+  rotate: -18deg;
+}
+.starL {
+  left: 7%;
+  bottom: 14%;
+  rotate: -10deg;
+}
+.boltR {
+  right: 4%;
+  top: 12%;
+  rotate: -22deg;
+}
+.starR {
+  right: 6%;
+  bottom: 20%;
+  rotate: 14deg;
+}
+
+.titleWrap {
+  position: relative;
+}
+
+/* Letters invite a poke: cursor + spring on hover handled in HeroMotion */
+.glyph,
+.numText {
+  cursor: pointer;
+}
+
+/* ---------- Tagline bubble ---------- */
+
+.bubbleWrap {
+  position: relative;
+  z-index: 1;
+}
+
+.bubble {
+  position: relative;
+  max-width: 27ch;
+  margin: 0;
+  padding: 0.75em 1.6em 0.65em;
+  border: var(--line) solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.6vw + 0.7rem, 2.05rem);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  text-align: center;
+  rotate: -2.5deg;
+  transform-origin: 30% 0%;
+}
+
+/* Tail pointing up toward the title: ink triangle + paper triangle covering the border */
+.bubble::before,
+.bubble::after {
+  content: '';
+  position: absolute;
+  clip-path: polygon(0 0, 100% 100%, 22% 100%);
+}
+.bubble::before {
+  left: 24%;
+  top: -28px;
+  width: 38px;
+  height: 34px;
+  background: var(--ink);
+}
+.bubble::after {
+  left: calc(24% + 6px);
+  top: -17px;
+  width: 27px;
+  height: 24px;
+  background: var(--paper);
+}
+
+/* ---------- CTA ---------- */
+
+.actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ---------- Caption boxes (comic narration panels) ---------- */
+
+.captions {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 12px;
+  margin: 0;
+  padding: 0 var(--gutter) clamp(16px, 3svh, 28px);
+}
+
+.captionList {
+  display: contents;
+  margin: 0;
+}
+
+.caption {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 5px 12px 4px;
+  border: var(--line) solid var(--ink);
+  background: #fff3a6;
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  rotate: -1.2deg;
+}
+.caption:nth-child(even) {
+  rotate: 1deg;
+}
+.caption dt {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+}
+.caption dd {
+  margin: 0;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .logos {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .logoSlot {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+  }
+  .logoName {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .logoShort {
+    display: block;
+  }
+
+  /* Phone: 3.0 drops under FESTIVAL as a sticker so both words can be much bigger */
+  .title {
+    --t: min(23vw, 12svh);
+  }
+  .line2 {
+    flex-direction: column;
+    align-items: center;
+  }
+  .num {
+    align-self: flex-end;
+    margin: 0.2em 0 0 0;
+    font-size: 1.05em;
+  }
+  .bubble {
+    font-size: 1.2rem;
+  }
+  .boltR,
+  .starL {
+    display: none;
+  }
+  .boltL {
+    top: 2%;
+    left: 2%;
+  }
+  .starR {
+    bottom: 6%;
+    right: 3%;
+  }
+  .captionWide {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+}
