@@ -5,25 +5,32 @@
 /* ---------- Level tint + Marvel panel collage (scripts/make-marvel-panels.py) ----------
    --tint paints half the panels, --alt the other half; the wipe recolours everything when the level changes. */
 
+/* Panel colours are a tint of the level colour and a neutral paper tone, so the two
+   halves read as one printed page instead of two competing colours. */
 .explorer,
 .wipe {
-  --tint: var(--level-all);
-  --alt: var(--teal-deep);
+  --tint: color-mix(in srgb, var(--level-all) 26%, var(--paper));
+  --alt: #eee9dc;
+}
+.explorer[data-tint='TK'],
+.wipe[data-tint='TK'] {
+  --tint: color-mix(in srgb, var(--level-tk) 26%, var(--paper));
+  --alt: #eee9dc;
 }
 .explorer[data-tint='SD'],
 .wipe[data-tint='SD'] {
-  --tint: var(--level-sd);
-  --alt: var(--teal-deep);
+  --tint: color-mix(in srgb, var(--level-sd) 26%, var(--paper));
+  --alt: #eee9dc;
 }
 .explorer[data-tint='SMP'],
 .wipe[data-tint='SMP'] {
-  --tint: var(--level-smp);
-  --alt: var(--accent-yellow);
+  --tint: color-mix(in srgb, var(--level-smp) 26%, var(--paper));
+  --alt: #eee9dc;
 }
 .explorer[data-tint='SMA'],
 .wipe[data-tint='SMA'] {
-  --tint: var(--level-sma);
-  --alt: var(--accent-yellow);
+  --tint: color-mix(in srgb, var(--level-sma) 26%, var(--paper));
+  --alt: #eee9dc;
 }
 
 .explorer {
@@ -70,7 +77,7 @@
   z-index: 1;
   opacity: 0;
   pointer-events: none;
-  background: var(--tint);
+  background: color-mix(in srgb, var(--tint) 70%, transparent);
 }
 
 .inner {
@@ -90,10 +97,11 @@
   font-size: clamp(3rem, 6vw + 1rem, 6rem);
   line-height: 0.9;
   letter-spacing: 0.01em;
-  color: var(--paper);
-  -webkit-text-stroke: 0.045em var(--ink);
+  /* Ink lettering with a paper outline: reads on both the tinted and the neutral panels. */
+  color: var(--ink);
+  -webkit-text-stroke: 0.045em var(--paper);
   paint-order: stroke fill;
-  text-shadow: 0.05em 0.06em 0 var(--ink);
+  text-shadow: 0.045em 0.055em 0 var(--paper), 0.09em 0.11em 0 rgb(17 16 20 / 0.22);
   rotate: -2deg;
   transform-origin: 0 50%;
 }

@@ -41,8 +41,8 @@ def rays(cx, cy, n=28, r=2400, jitter=0.4):
     return ''.join(out)
 
 
-def ben_day(x0, y0, x1, y1, gx, gy, step=26, max_r=13.0):
-    """Ben-Day dots: strongest at (gx, gy), fading across the panel."""
+def ben_day(x0, y0, x1, y1, gx, gy, step=38, max_r=8.0):
+    """Sparse Ben-Day dots: a quiet printed texture, not a visual element."""
     out = []
     span = math.hypot(x1 - x0, y1 - y0) or 1
     row = 0
@@ -51,8 +51,8 @@ def ben_day(x0, y0, x1, y1, gx, gy, step=26, max_r=13.0):
         x = x0 + (step / 2 if row % 2 else 0)
         while x < x1:
             t = math.hypot(x - gx, y - gy) / span
-            r = max_r * max(0.0, 1 - t * 1.05) ** 1.15
-            if r > 0.7:
+            r = max_r * max(0.0, 1 - t) ** 1.6
+            if r > 0.8:
                 out.append(f'<circle cx="{f(x)}" cy="{f(y)}" r="{f(r)}"/>')
             x += step
         y += step * 0.866
@@ -91,16 +91,16 @@ def speed_lines(x0, y0, x1, y1, angle_deg, count=64):
 
 # ---------------------------------------------------------------- panel layout
 W, H = 1400, 2000
-GUTTER = 46  # heavy Marvel borders (the old soft collage used 26)
-# Horizontal cuts: flat at the tile edges so the tile repeats seamlessly. Slopes are far
-# steeper than the old collage so the panels read as a slanted comic page.
-H_CUTS = [(0, 0), (500, 0.16), (960, -0.13), (1480, 0.11), (H, 0)]
+GUTTER = 26  # visible frame, but not a wall of black
+# Horizontal cuts: flat at the tile edges so the tile repeats seamlessly. Gentle
+# slopes keep the page from looking like it is falling over.
+H_CUTS = [(0, 0), (540, 0.06), (1010, -0.05), (1490, 0.04), (H, 0)]
 # Vertical cuts per row: (x at row middle, dx/dy)
 V_CUTS = [
-    [(520, 0.20), (1010, -0.14)],
-    [(400, -0.17), (880, 0.22)],
-    [(700, 0.15)],
-    [(360, 0.13), (850, -0.19)],
+    [(560, 0.08), (1020, -0.06)],
+    [(450, -0.07), (930, 0.09)],
+    [(720, 0.06)],
+    [(400, 0.05), (900, -0.08)],
 ]
 
 
@@ -124,7 +124,6 @@ def corner(hi, cut, ymid):
 
 
 fills_a, fills_b, gutters, clips = [], [], [], []
-painters = ['dots', 'burst', 'rays', 'dots', 'speed', 'burst', 'dots', 'rays', 'speed', 'burst', 'dots', 'rays']
 pi = 0
 for row in range(len(H_CUTS) - 1):
     ymid = (H_CUTS[row][0] + H_CUTS[row + 1][0]) / 2
@@ -138,18 +137,11 @@ for row in range(len(H_CUTS) - 1):
         y0, y1 = min(ys), max(ys)
         cid = f'm{row}{c}'
         clips.append(f'<clipPath id="{cid}">{poly(pts)}</clipPath>')
-        kind = painters[pi % len(painters)]
-        pi += 1
-        cx, cy = rng.uniform(x0, x1), rng.uniform(y0, y1)
-        if kind == 'dots':
-            art = ben_day(x0, y0, x1, y1, rng.choice([x0, x1]), rng.choice([y0, y1]))
-        elif kind == 'burst':
-            art = focus_burst(cx, cy, (x1 - x0) * 0.2, (y1 - y0) * 0.2, count=120)
-        elif kind == 'rays':
-            art = rays(rng.choice([x0, x1]), rng.choice([y0, y1]), n=rng.choice([22, 30, 38]))
-        else:
-            art = speed_lines(x0, y0, x1, y1, rng.choice([-26, -14, 18, 30]))
+        # One quiet texture for every panel: dots that fade from one corner. Flat colour
+        # carries the page; the dots only stop it reading as a boring gradient.
+        art = ben_day(x0, y0, x1, y1, rng.choice([x0, x1]), rng.choice([y0, y1]))
         (fills_a if (row + c) % 2 == 0 else fills_b).append(f'<g clip-path="url(#{cid})">{art}</g>')
+        pi += 1
     for cut in V_CUTS[row]:
         top, bot = corner(row, cut, ymid), corner(row + 1, cut, ymid)
         gutters.append(f'<line x1="{f(top[0])}" y1="{f(top[1])}" x2="{f(bot[0])}" y2="{f(bot[1])}"/>')
