@@ -15,7 +15,7 @@ import s from './LevelExplorer.module.css';
 gsap.registerPlugin(Flip, ScrollTrigger);
 
 type Filter = 'ALL' | Level;
-const FILTERS: Filter[] = ['ALL', 'SD', 'SMP', 'SMA'];
+const FILTERS: Filter[] = ['ALL', 'TK', 'SD', 'SMP', 'SMA'];
 const PARAM_LEVEL = 'jenjang';
 
 const isFilter = (v: string | null): v is Filter => !!v && (FILTERS as string[]).includes(v);

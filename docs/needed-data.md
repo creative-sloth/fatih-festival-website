@@ -1,6 +1,8 @@
 # Missing data checklist
 
-> **Update 3 November 2026:** the committee supplied **"Juknis Fatih festival 3.0.pdf"** (33 pages). Every fact it contains is transcribed in **[`juknis-extracted.md`](./juknis-extracted.md)**, with page references and a list of what is still absent. That file supersedes this one for *what the committee has already published*. This file remains the checklist of what the site is still waiting for.
+> **Update 3 November 2026:** the committee supplied **"Juknis Fatih festival 3.0.pdf"** (33 pages). Its full text is transcribed verbatim in **[`juknis-extracted.txt`](./juknis-extracted.txt)** (page markers included). That file supersedes this one for *what the committee has already published*. This file remains the checklist of what the site is still waiting for.
+
+> **Update — juknis data is now wired in.** `content/competitions.ts` was rewritten from the booklet: 16 competitions plus Futsal (poster only). Names, fees, eligibility, team sizes, participation, format, contact persons and the 2 registration windows the booklet prints are live. Everything the booklet does not print is still `null` and still prints `???`.
 
 Everything below is `null` in `content/` right now, so the site prints `???` (or a dashed LOGO box) in its place. Nothing here is guessed. Fill a value and the placeholder disappears on the next build.
 
@@ -21,22 +23,23 @@ Rules (HANDOFF.md §0, §7):
 
 ## 1. Blocks the launch (nothing else matters until these exist)
 
-Status after the juknis PDF. ✅ = supplied but not yet wired into `content/`.
+Status after wiring the juknis into `content/`. ✅ = now live in the repo.
 
 | # | Fact | Where | Status |
 |---|---|---|---|
 | 1 | Festival start date | `festival.startDate` | ✅ 11 November 2026 |
-| 2 | Festival end date | `festival.endDate` | ❌ **conflict**: Closing/Awarding is 13 Nov (p.26–28) but SD Olimpiade announces winners 14 Nov (p.7) |
+| 2 | Festival end date | `festival.endDate` | ⚠️ set to 14 Nov from the SD Olimpiade prize date (p.7), but Closing/Awarding is 13 Nov (p.26–28). **Committee must confirm** |
 | 3 | Venue | `festival.venue` | ✅ Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122 |
-| 4 | Two contact persons (name + WhatsApp) | `festival.contacts[0..1]` | ❌ the PDF gives per-competition PICs only, no festival-level contact |
-| 5 | Registration window, per competition | `registrationOpens` / `registrationCloses` | ⚠️ 4 of 16 have dates (SD Olimpiade 15 Okt–6 Nov, Debate 19 Sep–7 Nov, Essay 10 Nov, Cerdas Cermat 10 Nov). 12 still missing |
-| 6 | Google Form URL, per competition | `formUrl` | ❌ **zero** form URLs in the PDF. Biggest blocker |
-| 7 | Juknis URL, per competition | `juknisUrl`, `juknisLanguage` | ⚠️ one 33-page booklet exists, not 16 files. Bercerita and Tari Kreasi say "juknis belum tersedia". Language is `id` |
-| 8 | Competition date, per competition | `competitionDate` | ⚠️ 4 of 16 have dates. 12 still missing |
-| 9 | Fee, per competition | `fee` | ✅ all 16 published (see `juknis-extracted.md`) |
+| 4 | Two contact persons (name + WhatsApp) | `festival.contacts[0..1]` | ⚠️ filled with two per-competition PICs the booklet repeats (Ms. Wardah, Mr. Dwiki). A dedicated festival-level pair is still wanted |
+| 5 | Registration window, per competition | `registrationOpens` / `registrationCloses` | ⚠️ 4 of 17 have dates (SD Olimpiade 15 Okt–6 Nov, Debate 19 Sep–7 Nov, Essay & Cerdas Cermat 10 Nov). 13 still missing |
+| 6 | Google Form URL, per competition | `formUrl` | ❌ **zero** form URLs in the booklet. Biggest blocker |
+| 7 | Juknis URL, per competition | `juknisUrl` | ❌ one 33-page Google Drive booklet exists, no per-competition file and no public link. Bercerita and Tari Kreasi explicitly say "juknis belum tersedia" |
+| 8 | Competition date, per competition | `competitionDate` | ⚠️ 4 of 17 have dates. 13 still missing |
+| 9 | Fee, per competition | `fee` | ✅ all 16 juknis competitions published. Futsal has none (no juknis) |
 | 10 | 3 logo files (SVG preferred) | `festival.logos[i].src` | ❌ still missing. Cambridge also needs written permission |
-| 11 | **TK level support in code** | `content/types.ts` `Level`, `FILTERS`, CSS tokens | ❌ the PDF adds Lomba Mewarnai (TK), which the site cannot express yet |
-| 12 | Bank account per competition | not modelled | ❌ **conflict**: the PDF uses both BSI `2828-0000-63` and `2828-0000-52`, inconsistently |
+| 11 | ~~TK level support in code~~ | `content/types.ts`, `FILTERS`, CSS tokens | ✅ done — `TK` level, `--level-tk`, filter chip, card band and chip all added |
+| 12 | Bank account per competition | not modelled | ❌ **conflict**: the booklet uses both BSI `2828-0000-63` (12×) and `2828-0000-52` (4×) |
+| 13 | Futsal (SD) juknis | `content/competitions.ts` | ❌ poster advertises it, the 33-page booklet has no page for it |
 
 ## 2. Needed for a complete site
 
@@ -79,31 +82,21 @@ Status after the juknis PDF. ✅ = supplied but not yet wired into `content/`.
 
 ## 5. How to fill a competition entry
 
-`content/competitions.ts` builds every entry from the `tba()` helper. To fill one in, replace its `tba(...)` line with an explicit object:
+Every entry in `content/competitions.ts` is spread from the `base(slug, name, levels, category)` helper, which already sets the venue, `format: 'onsite'`, `juknisLanguage: 'id'`, `cancelled: false` and `results: null`. Override only the fields the committee has confirmed:
 
 ```ts
 {
-  slug: 'sd-bercerita',
-  name: { id: 'Lomba Bercerita', en: null },
-  summary: { id: 'Lomba bercerita untuk siswa SD.', en: 'A storytelling competition for primary students.' },
-  levels: ['SD'],
-  category: 'Bahasa',
+  ...base('sd-bercerita', 'Lomba Bercerita', ['SD'], 'Bahasa'),
   participation: 'individual',
-  teamSize: null,
-  eligibility: null,
-  registrationOpens: '2026-12-01T00:00:00+07:00',
-  registrationCloses: '2026-12-10T23:59:00+07:00',
-  competitionDate: '2026-12-15T08:00:00+07:00',
-  venue: null,
-  format: 'onsite',
-  fee: 'Rp 50.000',
-  prizes: null,
-  juknisUrl: 'https://drive.google.com/...',
-  juknisLanguage: 'id',
-  formUrl: 'https://forms.gle/...',
+  eligibility: { id: '…', en: null },
+  registrationOpens: '2026-10-15T00:00:00+07:00',
+  registrationCloses: '2026-11-06T23:59:00+07:00',
+  competitionDate: '2026-11-11T09:00:00+07:00',
+  fee: 'Rp 40.000 / peserta',
+  prizes: { id: '…', en: null },
+  juknisUrl: 'https://drive.google.com/…',
+  formUrl: 'https://forms.gle/…',
   contact: { name: 'Nama Narahubung', whatsapp: '081234567890' },
-  cancelled: false,
-  results: null,
 },
 ```
 

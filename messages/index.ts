@@ -9,7 +9,7 @@ const id = {
   hero: {
     date: 'Tanggal',
     venue: 'Tempat',
-    levels: 'Untuk SD · SMP · SMA',
+    levels: 'Untuk TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} cabang lomba`,
     ctaPrimary: 'Lihat Lomba',
   },
@@ -92,7 +92,7 @@ const en: typeof id = {
   hero: {
     date: 'Date',
     venue: 'Venue',
-    levels: 'For SD · SMP · SMA',
+    levels: 'For TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} competitions`,
     ctaPrimary: 'See Competitions',
   },

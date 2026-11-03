@@ -1,7 +1,8 @@
 // Data model, see HANDOFF.md §7. `null` means "not supplied yet" and renders as ???.
 
 export type Lang = 'id' | 'en';
-export type Level = 'SD' | 'SMP' | 'SMA';
+// TK was added after the juknis booklet listed Lomba Mewarnai as a TK competition.
+export type Level = 'TK' | 'SD' | 'SMP' | 'SMA';
 export type Category = 'Akademik' | 'Bahasa' | 'Seni' | 'Media' | 'Inovasi' | 'Olahraga';
 
 export interface Localized {

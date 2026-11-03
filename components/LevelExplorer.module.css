@@ -126,6 +126,9 @@
   display: block;
   cursor: pointer;
 }
+.option[data-level='TK'] {
+  --c: var(--level-tk);
+}
 .option[data-level='SD'] {
   --c: var(--level-sd);
 }
@@ -259,6 +262,10 @@
 .panel {
   --b: var(--level-sd);
 }
+.card[data-band='TK'],
+.panel[data-band='TK'] {
+  --b: var(--level-tk);
+}
 .card[data-band='SMP'],
 .panel[data-band='SMP'] {
   --b: var(--level-smp);
@@ -355,6 +362,10 @@
   background: var(--level-sd);
   font-size: 0.8rem;
   font-weight: 800;
+}
+.chip[data-level='TK'] {
+  background: var(--level-tk);
+  color: var(--paper);
 }
 .chip[data-level='SMP'] {
   background: var(--level-smp);
