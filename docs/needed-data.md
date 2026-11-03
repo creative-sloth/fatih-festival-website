@@ -31,9 +31,10 @@ Status after wiring the juknis into `content/`. ✅ = now live in the repo.
 | 2 | Festival end date | `festival.endDate` | ⚠️ set to 14 Nov from the SD Olimpiade prize date (p.7), but Closing/Awarding is 13 Nov (p.26–28). **Committee must confirm** |
 | 3 | Venue | `festival.venue` | ✅ Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122 |
 | 4 | Two contact persons (name + WhatsApp) | `festival.contacts[0..1]` | ⚠️ filled with two per-competition PICs the booklet repeats (Ms. Wardah, Mr. Dwiki). A dedicated festival-level pair is still wanted |
+| 4b | Narahubung, per competition | `contact[]` | ✅ 13 of 17 cards now carry their printed PIC(s); Bercerita, Tari Kreasi, Spelling Bee and Futsal have none and show "Akan diinformasikan panitia" |
 | 5 | Registration window, per competition | `registrationOpens` / `registrationCloses` | ⚠️ 4 of 17 have dates (SD Olimpiade 15 Okt–6 Nov, Debate 19 Sep–7 Nov, Essay & Cerdas Cermat 10 Nov). 13 still missing |
 | 6 | Google Form URL, per competition | `formUrl` | ❌ **zero** form URLs in the booklet. Biggest blocker |
-| 7 | Juknis URL, per competition | `juknisUrl` | ❌ one 33-page Google Drive booklet exists, no per-competition file and no public link. Bercerita and Tari Kreasi explicitly say "juknis belum tersedia" |
+| 7 | ~~Juknis URL, per competition~~ | `juknisUrl` | ✅ done — the 33-page booklet is split per competition into `public/juknis/<slug>.pdf` (1–3 pages each, 16 files) and every card links to its own file |
 | 8 | Competition date, per competition | `competitionDate` | ⚠️ 4 of 17 have dates. 13 still missing |
 | 9 | Fee, per competition | `fee` | ✅ all 16 juknis competitions published. Futsal has none (no juknis) |
 | 10 | 3 logo files (SVG preferred) | `festival.logos[i].src` | ❌ still missing. Cambridge also needs written permission |

@@ -57,6 +57,11 @@ const id = {
     newTab: '(tab baru)',
     participationValues: { individual: 'Individu', team: 'Tim' },
     formatValues: { onsite: 'Luring (di lokasi)', online: 'Daring', hybrid: 'Hybrid' },
+    // Peserta: participation label + the printed team size, e.g. "Tim · 3 pendebat per tim".
+    peserta: (kind: string | null, size: string | null) =>
+      [kind, size].filter(Boolean).join(' · ') || null,
+    /** Fallback shown for a competition with no printed PIC. */
+    contactUnavailable: 'Akan diinformasikan panitia',
     close: 'Tutup',
     prev: 'Sebelumnya',
     next: 'Berikutnya',
@@ -140,6 +145,9 @@ const en: typeof id = {
     newTab: '(new tab)',
     participationValues: { individual: 'Individual', team: 'Team' },
     formatValues: { onsite: 'Onsite', online: 'Online', hybrid: 'Hybrid' },
+    peserta: (kind: string | null, size: string | null) =>
+      [kind, size].filter(Boolean).join(' · ') || null,
+    contactUnavailable: 'To be announced by the committee',
     close: 'Close',
     prev: 'Previous',
     next: 'Next',

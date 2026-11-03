@@ -16,6 +16,12 @@ export interface Winner {
   school: string;
 }
 
+/** Narahubung. The juknis prints two per competition for several lomba. */
+export interface Contact {
+  name: string;
+  whatsapp: string;
+}
+
 export interface Photo {
   src: string;
   thumb: string;
@@ -43,7 +49,7 @@ export interface Competition {
   juknisUrl: string | null;
   juknisLanguage: 'id' | 'en' | 'both' | null;
   formUrl: string | null;
-  contact: { name: string; whatsapp: string } | null;
+  contact: Contact[] | null;
   cancelled: boolean;
   results: Winner[] | null;
 }

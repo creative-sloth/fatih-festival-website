@@ -402,13 +402,10 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
         <ul ref={gridRef} className={s.grid}>
           {competitions.map((c) => {
             const shown = matches(c);
-            const order = visible.indexOf(c);
             const isFav = favs.includes(c.slug);
             const name = c.name[lang] ?? c.name.id;
-            // Rhythm: every 5th visible panel goes wide so the page reads like a comic layout, not a uniform grid.
-            const wide = shown && order % 5 === 0 && visible.length > 2;
             return (
-              <li key={c.slug} data-card data-flip-id={c.slug} hidden={!shown} className={wide ? `${s.cell} ${s.wide}` : s.cell}>
+              <li key={c.slug} data-card data-flip-id={c.slug} hidden={!shown} className={s.cell}>
                 <button type="button" className={s.card} data-band={bandOf(c)} data-open onClick={(e) => openDetail(c.slug, e.currentTarget)}>
                   <span className={`${s.band} ht`}>
                     <CategoryIcon category={c.category} className={s.icon} />
@@ -510,19 +507,15 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
             <dl className={s.facts}>
               {(
                 [
-                  [t.detail.level, active.levels.join(' & ')],
-                  [t.detail.participation, active.participation && t.detail.participationValues[active.participation]],
+                  [t.detail.level, active.levels.join(' · ')],
                   [
-                    t.detail.registration,
-                    active.registrationOpens || active.registrationCloses
-                      ? `${fmtDate(active.registrationOpens, lang) ?? u} → ${fmtDate(active.registrationCloses, lang) ?? u}`
-                      : null,
+                    t.detail.peserta,
+                    t.detail.peserta(
+                      active.participation ? t.detail.participationValues[active.participation] : null,
+                      active.teamSize,
+                    ),
                   ],
                   [t.detail.date, fmtDate(active.competitionDate, lang)],
-                  [t.detail.venue, active.venue?.[lang] ?? active.venue?.id ?? null],
-                  [t.detail.format, active.format && t.detail.formatValues[active.format]],
-                  [t.detail.fee, active.fee],
-                  [t.detail.prizes, active.prizes?.[lang] ?? active.prizes?.id ?? null],
                 ] as [string, string | null][]
               ).map(([label, value]) => (
                 <div key={label} className={s.fact} data-reveal>
@@ -542,15 +535,23 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                   )}
                 </dd>
               </div>
-              <div className={s.fact} data-reveal>
+              <div className={`${s.fact} ${s.factWide}`} data-reveal>
                 <dt>{t.detail.contact}</dt>
-                <dd className={active.contact ? undefined : s.unknown}>
-                  {active.contact ? (
-                    <a href={waLink(active.contact.whatsapp, `${t.footer.prefill} (${activeName})`)} target="_blank" rel="noopener noreferrer">
-                      {active.contact.name} <span className="sr-only">{t.detail.newTab}</span>
-                    </a>
+                <dd className={active.contact?.length ? undefined : s.unknown}>
+                  {active.contact?.length ? (
+                    active.contact.map((c) => (
+                      <a
+                        key={c.whatsapp}
+                        className={s.contactLink}
+                        href={waLink(c.whatsapp, `${t.footer.prefill} (${activeName})`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
+                      </a>
+                    ))
                   ) : (
-                    u
+                    <span className={s.contactNote}>{t.detail.contactUnavailable}</span>
                   )}
                 </dd>
               </div>

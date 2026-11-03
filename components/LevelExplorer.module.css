@@ -241,21 +241,19 @@
 
 .grid {
   display: grid;
+  /* Fixed 3-up on desktop. auto-flow:row (not dense) so cards keep document order and
+     nothing is pulled into an earlier hole by a wider neighbour. */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 262px), 1fr));
-  grid-auto-flow: dense;
   gap: 22px;
   margin: 0;
   padding: 0;
   list-style: none;
+  align-items: stretch;
 }
 .cell {
   position: relative;
   display: flex;
-}
-@media (min-width: 640px) {
-  .wide {
-    grid-column: span 2;
-  }
+  min-width: 0;
 }
 
 .card,
@@ -745,10 +743,20 @@
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  /* Two even columns on desktop, one on phones: 5 rows read as a tidy 2+2+1 block
+     instead of an uneven auto-fit scramble. */
+  grid-template-columns: 1fr;
   gap: 12px;
   margin: 0;
   padding: 18px;
+}
+@media (min-width: 560px) {
+  .facts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .factWide {
+    grid-column: 1 / -1;
+  }
 }
 
 .fact {
@@ -766,6 +774,17 @@
 }
 .fact a {
   font-weight: 800;
+}
+
+/* Narahubung: one line per PIC, each its own tap target. */
+.contactLink {
+  display: block;
+  width: fit-content;
+}
+.contactNote {
+  font-weight: 700;
+  font-style: italic;
+  opacity: 0.75;
 }
 
 .unknown {

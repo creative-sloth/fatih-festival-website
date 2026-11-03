@@ -8,6 +8,9 @@ const VENUE = {
   en: null,
 };
 
+/** Per-competition juknis, split out of the 33-page booklet into public/juknis/<slug>.pdf. */
+const juknis = (slug: string) => `/juknis/${slug}.pdf`;
+
 const base = (slug: string, name: string, levels: Level[], category: Category): Competition => ({
   slug,
   name: { id: name, en: null },
@@ -24,7 +27,7 @@ const base = (slug: string, name: string, levels: Level[], category: Category): 
   format: 'onsite',
   fee: null,
   prizes: null,
-  juknisUrl: null,
+  juknisUrl: juknis(slug),
   juknisLanguage: 'id',
   formUrl: null,
   contact: null,
@@ -40,7 +43,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa/i TK sederajat, perwakilan sekolah (surat keterangan)', en: null },
     format: 'onsite',
     fee: 'Rp 30.000 / peserta',
-    contact: { name: 'Ms. Wardah', whatsapp: '0852 6062 6123' },
+    contact: [{ name: 'Ms. Wardah', whatsapp: '0852 6062 6123' }, { name: 'Ms. Maula', whatsapp: '0822 4691 6727' }],
   },
 
   // ---------- SD/MI ----------
@@ -69,7 +72,7 @@ export const competitions: Competition[] = [
     teamSize: 'Maksimal 2 peserta per sekolah',
     eligibility: { id: 'Siswa SD/MI kelas 5 / 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 50.000 / peserta',
-    contact: { name: 'Ms. Desi', whatsapp: '0823 1039 9310' },
+    contact: [{ name: 'Ms. Desi', whatsapp: '0823 1039 9310' }, { name: 'Ms. Ratu', whatsapp: '0823 2677 8902' }],
   },
   {
     ...base('sd-spelling-bee', 'Spelling Bee', ['SD'], 'Bahasa'),
@@ -83,7 +86,7 @@ export const competitions: Competition[] = [
     participation: 'individual',
     eligibility: { id: 'Siswa kelas VII, VIII, atau IX SMP/MTs — perorangan, tanpa batasan jumlah per sekolah', en: null },
     fee: 'Rp 50.000 / peserta',
-    contact: { name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' },
+    contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }, { name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }],
   },
   {
     ...base('smp-vocal-solo', 'Vokal Solo', ['SMP'], 'Seni'),
@@ -91,7 +94,7 @@ export const competitions: Competition[] = [
     teamSize: 'Maksimal 2 peserta per sekolah',
     eligibility: { id: 'Siswa SMP/MTs sederajat, perwakilan sekolah (surat keterangan aktif atau KTS)', en: null },
     fee: 'Rp 65.000 / peserta',
-    contact: { name: 'Mr. Eko', whatsapp: '0852 7710 0192' },
+    contact: [{ name: 'Mr. Eko', whatsapp: '0852 7710 0192' }],
   },
   {
     ...base('smp-baca-puisi', 'Lomba Baca Puisi', ['SMP'], 'Bahasa'),
@@ -99,14 +102,14 @@ export const competitions: Competition[] = [
     teamSize: 'Maksimal 2 peserta per sekolah',
     eligibility: { id: 'Siswa/siswi aktif SMP/MTs dan sederajat', en: null },
     fee: 'Rp 40.000 / peserta',
-    contact: { name: 'Ms. Afrileni', whatsapp: '0813 6040 4988' },
+    contact: [{ name: 'Ms. Afrileni', whatsapp: '0813 6040 4988' }],
   },
   {
     ...base('smp-basket', 'Lomba Basket', ['SMP'], 'Olahraga'),
     participation: 'team',
     teamSize: 'Maksimal 12 pemain + official',
     fee: 'Rp 300.000 / tim',
-    contact: { name: 'Mr. Anis', whatsapp: '0813 9684 2987' },
+    contact: [{ name: 'Mr. Anis', whatsapp: '0813 9684 2987' }],
   },
 
   // ---------- SMA/MA ----------
@@ -129,7 +132,7 @@ export const competitions: Competition[] = [
     registrationCloses: '2026-11-10T23:59:00+07:00',
     format: 'online',
     fee: 'Rp 40.000 / peserta',
-    contact: { name: 'Ms. Nabila', whatsapp: '0823 6418 0206' },
+    contact: [{ name: 'Ms. Nabila', whatsapp: '0823 6418 0206' }],
   },
   {
     ...base('sma-cerdas-cermat', 'Cerdas Cermat', ['SMA'], 'Akademik'),
@@ -145,7 +148,7 @@ export const competitions: Competition[] = [
     participation: 'individual',
     fee: 'Rp 50.000 / peserta',
     juknisLanguage: 'both',
-    contact: { name: 'Mr. Surya', whatsapp: '0853 7192 8827' },
+    contact: [{ name: 'Mr. Surya', whatsapp: '0853 7192 8827' }],
   },
 
   // ---------- SMP & SMA ----------
@@ -153,7 +156,7 @@ export const competitions: Competition[] = [
     ...base('smp-sma-desain-grafis', 'Desain Grafis – Komik', ['SMP', 'SMA'], 'Media'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
-    contact: { name: 'Arief Al', whatsapp: '0812 6545 4182' },
+    contact: [{ name: 'Arief Al', whatsapp: '0812 6545 4182' }],
   },
   {
     ...base('smp-sma-stem-expo', 'STEM Expo', ['SMP', 'SMA'], 'Inovasi'),
