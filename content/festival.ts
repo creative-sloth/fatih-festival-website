@@ -25,13 +25,11 @@ export const festival: Festival = {
     { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: null },
     { name: 'Cambridge International School', short: 'Cambridge', src: null },
   ],
-  // Narahubung / contact persons: WhatsApp only (v1.5). Two slots.
-  // The booklet gives per-competition PICs only; these two are the competition-wide ones
-  // it repeats most (TK Mewarnai and SMP/MTs Olimpiade), used as festival-level defaults
-  // until the committee names a dedicated pair.
+  // Narahubung / Contact Person. Two festival-wide CPs supplied by the committee 3 Nov 2026.
+  // Where a competition's own juknis prints no CP, the card falls back to these.
   contacts: [
-    { name: 'Ms. Wardah', whatsapp: '0852 6062 6123' },
-    { name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' },
+    { name: 'Ms Nabila', whatsapp: '0823 6418 0206' },
+    { name: 'Mr Saddam', whatsapp: '0821 6506 9163' },
   ],
 };
 

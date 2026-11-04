@@ -5,6 +5,7 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { competitions } from '@/content/competitions';
+import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { FAVS_EVENT, SHOW_FAVS_EVENT, loadFavorites, saveFavorites } from '@/lib/favorites';
 import { getMessages } from '@/messages';
@@ -350,6 +351,10 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   const filtered = level !== 'ALL' || favOnly;
   const activeName = active ? (active.name[lang] ?? active.name.id) : '';
   const activeFav = active ? favs.includes(active.slug) : false;
+  // A competition whose juknis prints no PIC falls back to the festival-wide contacts.
+  const contactList = (active?.contact ?? []).filter(
+    (c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp,
+  );
 
   return (
     <section ref={sectionRef} className={s.explorer} id="jenjang" aria-labelledby="jenjang-title">
@@ -537,23 +542,19 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                 </dd>
               </div>
               <div className={s.fact} data-reveal>
-                <dt>{t.detail.contact}</dt>
-                <dd className={active.contact?.length ? undefined : s.unknown}>
-                  {active.contact?.length ? (
-                    active.contact.map((c) => (
-                      <a
-                        key={c.whatsapp}
-                        className={s.contactLink}
-                        href={waLink(c.whatsapp, `${t.footer.prefill} (${activeName})`)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
-                      </a>
-                    ))
-                  ) : (
-                    <span className={s.contactNote}>{t.detail.contactUnavailable}</span>
-                  )}
+                <dt>{contactList.length ? t.detail.contact : t.detail.contactGeneral}</dt>
+                <dd>
+                  {(contactList.length ? contactList : festival.contacts).map((c) => (
+                    <a
+                      key={c.whatsapp ?? c.name}
+                      className={s.contactLink}
+                      href={waLink(c.whatsapp!, `${t.footer.prefill} (${activeName})`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
+                    </a>
+                  ))}
                 </dd>
               </div>
             </dl>

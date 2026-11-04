@@ -30,8 +30,8 @@ Status after wiring the juknis into `content/`. ✅ = now live in the repo.
 | 1 | Festival start date | `festival.startDate` | ✅ 11 November 2026 |
 | 2 | Festival end date | `festival.endDate` | ⚠️ set to 14 Nov from the SD Olimpiade prize date (p.7), but Closing/Awarding is 13 Nov (p.26–28). **Committee must confirm** |
 | 3 | Venue | `festival.venue` | ✅ Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122 |
-| 4 | Two contact persons (name + WhatsApp) | `festival.contacts[0..1]` | ⚠️ filled with two per-competition PICs the booklet repeats (Ms. Wardah, Mr. Dwiki). A dedicated festival-level pair is still wanted |
-| 4b | Narahubung, per competition | `contact[]` | ✅ 13 of 17 cards now carry their printed PIC(s); Bercerita, Tari Kreasi, Spelling Bee and Futsal have none and show "Akan diinformasikan panitia" |
+| 4 | Two contact persons (name + WhatsApp) | `festival.contacts[0..1]` | ✅ Ms Nabila 0823 6418 0206 and Mr Saddam 0821 6506 9163 (committee, 4 Nov) |
+| 4b | Narahubung, per competition | `contact[]` | ✅ 13 of 17 have their own PIC. Debate and STEM Expo have none printed, and Olimpiade SD + Spelling Bee print placeholders, so those four fall back to the general CPs |
 | 5 | Registration window, per competition | `registrationOpens` / `registrationCloses` | ⚠️ 4 of 17 have dates (SD Olimpiade 15 Okt–6 Nov, Debate 19 Sep–7 Nov, Essay & Cerdas Cermat 10 Nov). 13 still missing |
 | 6 | Google Form URL, per competition | `formUrl` | ❌ **zero** form URLs in the booklet. Biggest blocker |
 | 7 | ~~Juknis URL, per competition~~ | `juknisUrl` | ✅ done — the 33-page booklet is split per competition into `public/juknis/<slug>.pdf` (1–3 pages each, 16 files) and every card links to its own file |
@@ -40,7 +40,8 @@ Status after wiring the juknis into `content/`. ✅ = now live in the repo.
 | 10 | 3 logo files (SVG preferred) | `festival.logos[i].src` | ❌ still missing. Cambridge also needs written permission |
 | 11 | ~~TK level support in code~~ | `content/types.ts`, `FILTERS`, CSS tokens | ✅ done — `TK` level, `--level-tk`, filter chip, card band and chip all added |
 | 12 | Bank account per competition | not modelled | ❌ **conflict**: the booklet uses both BSI `2828-0000-63` (12×) and `2828-0000-52` (4×) |
-| 13 | Futsal (SD) juknis | `content/competitions.ts` | ❌ poster advertises it, the 33-page booklet has no page for it |
+| 13 | Futsal (SD) juknis | `content/competitions.ts` | ✅ supplied: Rp 350.000/tim, Mr. Surya 0853 7192 8827, max 12 (10 pemain + 2 official) |
+| 14 | **Per-competition juknis as web links** | `juknisUrl` | ⚠️ the Drive docs are public **Google Docs**, not PDFs. Its own `docs.google.com/.../export?format=pdf` link works and always serves the committee's current version, but per brand rule the official file should be a PDF committed to `public/juknis/`. LibreOffice/Word is not installed here, so the 16 local PDFs are still the **old booklet extracts** |
 
 ## 2. Needed for a complete site
 

@@ -791,11 +791,6 @@
   display: block;
   width: fit-content;
 }
-.contactNote {
-  font-weight: 700;
-  font-style: italic;
-  opacity: 0.75;
-}
 
 .unknown {
   font-family: var(--font-display);

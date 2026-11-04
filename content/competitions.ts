@@ -163,15 +163,19 @@ export const competitions: Competition[] = [
     participation: 'team',
     teamSize: '2 orang per tim; maksimal 1 tim per sekolah',
     eligibility: { id: 'Siswa SMP/MTs kelas 7 – 9 dan SMA/MA sederajat kelas 10 – 12', en: null },
-    fee: 'Rp 150.000 / tim',
+    fee: 'Rp 150.000 / tim', // juknis: transfer to BSI 2828-0000-52
     juknisLanguage: 'both',
+    // Its own juknis prints no narahubung, so it falls back to the general CPs.
   },
 
-  // ---------- Advertised on the poster, no juknis page yet (see docs/needed-data.md) ----------
+  // Futsal is not in the 33-page juknis booklet but the committee supplied a separate
+  // PETUNJUK TEKNIS - LOMBA FUTSAL SD/MI, so it is a confirmed competition.
   {
     ...base('sd-futsal', 'Futsal', ['SD'], 'Olahraga'),
     participation: 'team',
-    venue: null,
-    format: null,
+    teamSize: 'Maksimal 12 orang per tim: 10 pemain + 2 official',
+    eligibility: { id: 'Siswa tingkat SD/MI sederajat, perwakilan sekolah (surat tugas)', en: null },
+    fee: 'Rp 350.000 / tim',
+    contact: [{ name: 'Mr. Surya', whatsapp: '0853 7192 8827' }],
   },
 ];

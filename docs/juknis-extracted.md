@@ -1,8 +1,11 @@
-# Facts extracted from the Juknis PDF
+# Facts extracted from the Juknis documents
 
-Source: **"Juknis Fatih festival 3.0.pdf"** (33 pages), Google Drive id `10Dx4uGYkZN0IewuccgUYSyl43b2ltoxH`, supplied by the committee 3 November 2026.
+Two sources, both from the committee:
 
-Every value below is copied from that document. Page numbers refer to the PDF page footer. Where the document is silent or self-contradictory it is marked **GAP** or **CONFLICT** and left out of `content/`. Nothing is inferred.
+1. **"Juknis Fatih festival 3.0.pdf"** (33-page booklet, 3 Nov 2026). Verbatim text: [`juknis-extracted.txt`](./juknis-extracted.txt).
+2. **The per-competition Drive folder** (supplied 4 Nov 2026), which supersedes the booklet for the competitions it covers. Every fee and PIC below is the one printed there.
+
+Every value below is copied from a committee document. Page numbers refer to the booklet's PDF page footer. Where a document is silent it is marked **GAP** and left out of `content/`. Nothing is inferred.
 
 ---
 
@@ -38,7 +41,33 @@ The document gives per-competition PICs only. Three competitions say "Narahubung
 
 ## 2. The 16 competitions
 
-The document's own numbering (page 2) is used. `slug` is the existing repo slug, or the proposed one for new entries.
+Folder: `drive.google.com/drive/folders/1VNVZn00g0nIWg1TeDHQqrwj3D6dBu1yA` — 12 subfolders plus 4 loose files, 15 documents in total. All are Google Docs or `.docx`, all publicly readable. Cross-checked against the booklet:
+
+| Competition | Change vs booklet | Source |
+|---|---|---|
+| **Futsal (SD)** | **Now documented in full.** Rp 350.000/tim, PIC Mr. Surya 0853 7192 8827, max 12 people (10 pemain + 2 official), knockout, 2×10 min (2×15 min from semifinals), BSI `2828-0000-63`. The booklet omitted it entirely. | PETUNJUK TEKNIS - LOMBA FUTSAL SD/MI |
+| **Cerdas Cermat (SMA)** | Same as booklet: Rp 200.000/tim, BSI 63. Its "Narahubung" heading is present but **no name or number is filled in**. | JUKNIS LOMBA CERDAS CERMAT SMA/SEDERAJAT |
+| **English Debate (SMA)** | Same as booklet. Still **no PIC** printed. | Juknis English Debate-2 |
+| **STEM Expo** | Confirmed name "STEM EXPO", Rp 150.000, BSI `2828-0000-52`. Still **no PIC**. | STEM EXPO - JUKNIS |
+| **Culture Vlog (SMA)** | PIC Mr. Surya 0853 7192 8827. Fee not printed in this file; booklet says Rp 50.000. | Juknis_Culture_Vlog |
+| **Olimpiade SD** | Fee Rp 50.000, BSI `2828-0000-52`. CP line is a **placeholder**: "CP: Siswa (08-)". | PETUNJUK TEKNIS - Olimpiade IPA dan Matematika Tingkat SD |
+| **Spelling Bee SD** | Fee Rp 40.000, BSI `2828-0000-63`. CP is a **placeholder**: "CP: Siswa ….". | Juknis Spelling bee SD |
+| **All others** | Fee and PICs match the booklet exactly. | the 8 remaining files |
+
+### General contact persons (new, committee-supplied)
+
+| | |
+|---|---|
+| Contact Person Umum 1 | **Ms Nabila · 0823 6418 0206** |
+| Contact Person Umum 2 | **Mr Saddam · 0821 6506 9163** |
+
+These now fill `festival.contacts` and are also the fallback shown on any competition whose own juknis prints no PIC (Debate, STEM Expo; and the two placeholder-only files above).
+
+---
+
+## 1c. The booklet's 16, as originally transcribed
+
+Still accurate for anything the folder did not restate. Numbering is the document's own (page 2). `slug` is the repo slug.
 
 ### TK
 

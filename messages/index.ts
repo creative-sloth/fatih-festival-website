@@ -60,8 +60,8 @@ const id = {
     // Peserta: participation label + the printed team size, e.g. "Tim · 3 pendebat per tim".
     peserta: (kind: string | null, size: string | null) =>
       [kind, size].filter(Boolean).join(' · ') || null,
-    /** Fallback shown for a competition with no printed PIC. */
-    contactUnavailable: 'Akan diinformasikan panitia',
+    /** Label used when a competition's own juknis prints no PIC. */
+    contactGeneral: 'Narahubung umum',
     close: 'Tutup',
     prev: 'Sebelumnya',
     next: 'Berikutnya',
@@ -147,7 +147,7 @@ const en: typeof id = {
     formatValues: { onsite: 'Onsite', online: 'Online', hybrid: 'Hybrid' },
     peserta: (kind: string | null, size: string | null) =>
       [kind, size].filter(Boolean).join(' · ') || null,
-    contactUnavailable: 'To be announced by the committee',
+    contactGeneral: 'General contact person',
     close: 'Close',
     prev: 'Previous',
     next: 'Next',
