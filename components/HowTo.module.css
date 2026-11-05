@@ -1,4 +1,6 @@
-/* "Cara daftar" comic strip: dark section for rhythm contrast with the light explorer above. */
+/* "Cara daftar" as a comic flowchart.
+   Phones and tablets: a single vertical chain of panels joined by chunky arrows.
+   >= 1100 px: one 1200 x 830 picture (nodes in %, arrows in a matching SVG) that scales as a whole. */
 
 .howto {
   position: relative;
@@ -12,7 +14,6 @@
 .head {
   max-width: 1240px;
   margin: 0 auto;
-  /* Top padding clears the fixed nav while the section is pinned */
   padding: max(84px, 9svh) var(--gutter) 12px;
 }
 
@@ -43,61 +44,100 @@
   font-weight: 700;
 }
 
-.viewport {
-  padding: 34px 0 clamp(40px, 6vw, 90px);
+.chart {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 44px var(--gutter) clamp(48px, 6vw, 90px);
 }
 
-/* Every panel is always fully on screen: 4 in a row on wide screens, 2×2 on medium, stacked on phones.
-   (v1.6: replaced the sideways-scrolling strip, which could leave panel 4 cut off.) */
-.strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(28px, 2.6vw, 44px);
-  max-width: 1340px;
-  margin: 0 auto;
-  padding: 0 calc(var(--gutter) + 12px);
+.stage {
+  position: relative;
+  container-type: inline-size;
+}
+
+/* Desktop-only furniture */
+.wires,
+.hint,
+.tag,
+.chat {
+  display: none;
+}
+
+/* ---------- Phone / tablet: vertical chain ---------- */
+
+.flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  margin: 0;
+  padding: 0 0 0 14px;
   list-style: none;
 }
 
-.panel {
+.node {
   --tone: var(--accent-yellow);
   position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  min-width: 0;
-  /* Fits under the heading while the section is pinned, even on short laptop screens */
-  height: clamp(300px, calc(100svh - 300px), 480px);
-  border: var(--line) solid var(--ink);
-  background: var(--tone);
-  --ht-size: 340px;
-  box-shadow: 8px 8px 0 var(--ink);
+  width: min(100%, 440px);
   color: var(--ink);
 }
-.panel:nth-child(even) {
-  rotate: 1deg;
+.node:nth-child(odd) {
+  rotate: -0.7deg;
 }
-.panel:nth-child(odd) {
-  rotate: -0.8deg;
+.node:nth-child(even) {
+  rotate: 0.7deg;
 }
-.panel[data-tone='sd'] {
+
+/* Chunky arrow below every node but the last: ink outline (::before) under a yellow core (::after) */
+.node:not(.last)::before,
+.node:not(.last)::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  clip-path: polygon(33% 0, 67% 0, 67% 52%, 100% 52%, 50% 100%, 0 52%, 33% 52%);
+}
+.node:not(.last)::before {
+  bottom: -58px;
+  width: 36px;
+  height: 52px;
+  margin-left: -18px;
+  background: var(--ink);
+}
+.node:not(.last)::after {
+  bottom: -52px;
+  width: 22px;
+  height: 36px;
+  margin-left: -11px;
+  background: var(--accent-yellow);
+}
+
+/* Step card: colour block on the left, caption on the right */
+.step {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.step[data-tone='sd'] {
   --tone: var(--level-sd);
 }
-.panel[data-tone='smp'] {
+.step[data-tone='smp'] {
   --tone: var(--level-smp);
 }
-.panel[data-tone='sma'] {
+.step[data-tone='sma'] {
   --tone: var(--level-sma);
 }
 
 .num {
   position: absolute;
-  left: -26px;
-  top: -30px;
+  left: -20px;
+  top: -22px;
   z-index: 2;
   display: grid;
   place-items: center;
-  width: 92px;
-  height: 92px;
+  width: 62px;
+  height: 62px;
 }
 .numBurst {
   position: absolute;
@@ -108,32 +148,32 @@
 .numText {
   position: relative;
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: 1.7rem;
   line-height: 1;
 }
 
 .art {
   display: grid;
   place-items: center;
-  padding: 36px 24px 20px;
+  padding: 18px 10px;
+  border-right: var(--line) solid var(--ink);
+  background: var(--tone);
 }
 .art svg {
-  width: min(62%, 210px, 22svh);
+  width: 74px;
   height: auto;
-  filter: drop-shadow(5px 5px 0 var(--ink));
+  filter: drop-shadow(3px 3px 0 var(--ink));
 }
 
 .caption {
-  padding: 16px 18px 18px;
-  border-top: var(--line) solid var(--ink);
-  background: var(--paper);
+  padding: 14px 16px 16px;
 }
 
 .stepTitle {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.8rem, 1.2vw + 1.3rem, 2.3rem);
+  font-size: 1.7rem;
   line-height: 1;
   letter-spacing: 0.01em;
 }
@@ -144,32 +184,362 @@
 
 .stepBody {
   margin: 6px 0 0;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
-@media (max-width: 1199px) {
-  .strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 860px;
-  }
-  .panel {
-    height: auto;
-  }
-  .art {
-    min-height: 200px;
+/* Start / end bursts */
+.burstNode {
+  display: grid;
+  place-items: center;
+  width: 170px;
+  height: 140px;
+}
+.burstArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(5px 5px 0 var(--ink));
+}
+.burstText {
+  position: relative;
+  max-width: 62%;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-shadow: 2px 2px 0 var(--paper);
+}
+.endNode {
+  width: 210px;
+  height: 170px;
+}
+.endNode .burstText {
+  font-size: 1.75rem;
+  color: var(--ink);
+}
+
+/* Decision diamond */
+.decision {
+  display: grid;
+  place-items: center;
+  width: min(100%, 360px);
+  min-height: 210px;
+}
+.diamond {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(6px 6px 0 var(--ink));
+}
+.question {
+  position: relative;
+  max-width: 52%;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--paper);
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Both exits spelled out under the diamond (phones) */
+.branches {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(92vw, 380px);
+  translate: -50% 0;
+}
+.branchYes,
+.branchNo {
+  display: block;
+  padding: 8px 12px 7px;
+  border: var(--line) solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  color: var(--ink);
+}
+.branchYes {
+  background: var(--paper);
+}
+.branchNo {
+  background: var(--accent-yellow);
+}
+.branches b {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.branches small {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.branchYes:focus-visible {
+  outline: 4px solid var(--ink);
+  outline-offset: 3px;
+}
+/* The branch chips hang below the diamond, so reserve their height; the arrow to step 3 leaves the "no" chip */
+.decision {
+  margin-bottom: 150px;
+}
+.decision:not(.last)::before,
+.decision:not(.last)::after {
+  display: none;
+}
+.branchNo {
+  position: relative;
+}
+.branchNo::before,
+.branchNo::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  clip-path: polygon(33% 0, 67% 0, 67% 52%, 100% 52%, 50% 100%, 0 52%, 33% 52%);
+}
+.branchNo::before {
+  top: calc(100% + 10px);
+  width: 36px;
+  height: 52px;
+  margin-left: -18px;
+  background: var(--ink);
+}
+.branchNo::after {
+  top: calc(100% + 16px);
+  width: 22px;
+  height: 36px;
+  margin-left: -11px;
+  background: var(--accent-yellow);
+}
+
+/* ---------- Desktop: one scalable picture ---------- */
+
+@media (max-width: 1099px) {
+  .deskSr {
+    display: none;
   }
 }
 
-@media (max-width: 640px) {
-  .strip {
-    grid-template-columns: 1fr;
-    gap: 44px;
-    padding-left: calc(var(--gutter) + 18px);
+@media (min-width: 1100px) {
+  .stage {
+    aspect-ratio: 1200 / 830;
+  }
+
+  .wires {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .link {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+  }
+
+  .flow {
+    display: block;
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .node,
+  .burstNode,
+  .endNode,
+  .decision {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--w);
+    height: var(--h);
+    min-height: 0;
+    margin: 0;
+    rotate: 0deg;
+  }
+  .node:nth-child(odd),
+  .node:nth-child(even) {
+    rotate: 0deg;
+  }
+  .step:nth-child(3n + 2) {
+    rotate: -0.8deg;
+  }
+  .step:nth-child(3n) {
+    rotate: 0.7deg;
+  }
+  .node:not(.last)::before,
+  .node:not(.last)::after {
+    display: none;
+  }
+  .branches {
+    display: none;
+  }
+  .decision {
+    margin-bottom: 0;
+  }
+
+  .step {
+    grid-template-columns: none;
+    grid-template-rows: minmax(0, 1fr) auto;
+    box-shadow: 0.7cqw 0.7cqw 0 var(--ink);
+    transition: translate 260ms var(--ease-spring);
+  }
+  .step:hover {
+    translate: -0.2cqw -0.3cqw;
+  }
+  .num {
+    left: -2.2cqw;
+    top: -2.4cqw;
+    width: 7.2cqw;
+    height: 7.2cqw;
+  }
+  .numText {
+    font-size: 3.1cqw;
   }
   .art {
-    min-height: 0;
+    padding: 1.4cqw 1cqw 1cqw;
+    border-right: 0;
+    border-bottom: var(--line) solid var(--ink);
   }
   .art svg {
-    width: min(46%, 170px);
+    width: 9.6cqw;
+    filter: drop-shadow(0.4cqw 0.4cqw 0 var(--ink));
+  }
+  .caption {
+    padding: 1.1cqw 1.4cqw 1.3cqw;
+  }
+  .stepTitle {
+    font-size: 2.3cqw;
+  }
+  .stepBody {
+    margin-top: 0.4cqw;
+    font-size: 1.4cqw;
+    line-height: 1.3;
+  }
+
+  .burstArt {
+    filter: drop-shadow(0.45cqw 0.45cqw 0 var(--ink));
+  }
+  .burstText {
+    font-size: 2.3cqw;
+  }
+  .endNode .burstText {
+    font-size: 2.9cqw;
+    max-width: 52%;
+  }
+  .diamond {
+    filter: drop-shadow(0.55cqw 0.55cqw 0 var(--ink));
+  }
+  .question {
+    font-size: 2.6cqw;
+    max-width: 46%;
+  }
+
+  /* "Yes" branch: a speech bubble above the diamond that loops back to step 2 */
+  .chat {
+    display: block;
+  }
+  .chatLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 2cqw;
+    border: var(--line) solid var(--ink);
+    border-radius: 4cqw;
+    background: var(--paper);
+    box-shadow: 0.55cqw 0.55cqw 0 var(--ink);
+    color: var(--ink);
+    text-align: center;
+    text-decoration: none;
+    transition: translate 260ms var(--ease-spring), box-shadow 90ms ease-out;
+  }
+  .chatLink:hover {
+    translate: -0.2cqw -0.3cqw;
+    box-shadow: 0.75cqw 0.75cqw 0 var(--ink);
+  }
+  .chatLink:active {
+    translate: 0.4cqw 0.4cqw;
+    box-shadow: 0 0 0 var(--ink);
+  }
+  .chatLink:focus-visible {
+    outline: 4px solid var(--ink);
+    outline-offset: 4px;
+  }
+  .chatTitle {
+    font-family: var(--font-display);
+    font-size: 2.4cqw;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .chatBody {
+    margin-top: 0.3cqw;
+    font-size: 1.3cqw;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 2px;
+  }
+
+  .hint {
+    display: block;
+    position: absolute;
+    left: 28%;
+    top: 3.6%;
+    margin: 0;
+    padding: 0.6cqw 1.6cqw 0.4cqw;
+    border: var(--line) solid var(--ink);
+    background: #fff3a6;
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-size: 2.3cqw;
+    letter-spacing: 0.03em;
+    rotate: -2.5deg;
+  }
+
+  .tag {
+    display: block;
+    position: absolute;
+    padding: 0.2cqw 1.1cqw 0;
+    border: var(--line) solid var(--ink);
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-display);
+    font-size: 2cqw;
+    letter-spacing: 0.05em;
+  }
+  .tagYes {
+    left: 86%;
+    top: 17.4%;
+    rotate: 3deg;
+  }
+  .tagNo {
+    left: 86%;
+    top: 59%;
+    background: var(--accent-yellow);
+    rotate: -3deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step,
+  .chatLink {
+    transition: none;
   }
 }

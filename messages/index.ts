@@ -4,7 +4,7 @@ import type { Category, Lang } from '@/content/types';
 // Copy rule (antislop R-02): no em dashes in visible text.
 const id = {
   skipToContent: 'Lewati ke konten utama',
-  nav: { favorites: 'Favorit', label: 'Navigasi utama', levels: 'Jenjang', competitions: 'Lomba', howto: 'Cara Daftar', contact: 'Narahubung' },
+  nav: { label: 'Navigasi utama', levels: 'Jenjang', competitions: 'Lomba', howto: 'Cara Daftar', contact: 'Narahubung' },
   langSwitch: { label: 'Bahasa', other: 'EN', otherName: 'English' },
   hero: {
     date: 'Tanggal',
@@ -19,17 +19,12 @@ const id = {
     legend: 'Jenjang sekolah',
     all: 'Semua',
     count: (n: number) => `${n} lomba`,
-    showing: (n: number, level: string | null, narrowed: boolean) =>
-      level ? `${n} lomba untuk ${level}` : narrowed ? `${n} lomba favorit` : `Semua ${n} cabang lomba`,
+    showing: (n: number, level: string | null) =>
+      level ? `${n} lomba untuk ${level}` : `Semua ${n} cabang lomba`,
     open: 'Lihat detail',
     registration: 'Pendaftaran',
-    favorites: (n: number) => `Favoritku (${n})`,
     reset: 'Reset pilihan',
     empty: 'Belum ada lomba yang cocok dengan pilihanmu.',
-    emptyFav: 'Belum ada favorit. Ketuk bintang di lomba yang kamu suka.',
-    favAdd: (name: string) => `Simpan ${name} ke favorit`,
-    favRemove: (name: string) => `Hapus ${name} dari favorit`,
-    favSaved: 'Tersimpan di perangkat ini',
   },
   categories: {
     Akademik: 'Akademik',
@@ -77,6 +72,17 @@ const id = {
       { title: 'Isi Google Form', body: 'Daftar lewat link Google Form di halaman lomba.' },
       { title: '???', body: 'Langkah selanjutnya akan diumumkan panitia.' },
     ],
+    flow: {
+      hint: 'Ikuti panahnya!',
+      start: 'MULAI',
+      question: 'Masih bingung?',
+      yes: 'YA',
+      no: 'TIDAK',
+      chatTitle: 'Tanya narahubung',
+      chatBody: 'Chat lewat WhatsApp',
+      loop: 'Lalu kembali ke langkah 2',
+      end: 'SIAP LOMBA!',
+    },
   },
   footer: {
     tbc: 'Bersambung di hari lomba...',
@@ -92,7 +98,7 @@ const id = {
 
 const en: typeof id = {
   skipToContent: 'Skip to main content',
-  nav: { favorites: 'Favourites', label: 'Main navigation', levels: 'Levels', competitions: 'Competitions', howto: 'How to Register', contact: 'Contact Person' },
+  nav: { label: 'Main navigation', levels: 'Levels', competitions: 'Competitions', howto: 'How to Register', contact: 'Contact Person' },
   langSwitch: { label: 'Language', other: 'ID', otherName: 'Bahasa Indonesia' },
   hero: {
     date: 'Date',
@@ -107,17 +113,12 @@ const en: typeof id = {
     legend: 'School level',
     all: 'All',
     count: (n: number) => `${n} competitions`,
-    showing: (n: number, level: string | null, narrowed: boolean) =>
-      level ? `${n} competitions for ${level}` : narrowed ? `${n} favourite competitions` : `All ${n} competitions`,
+    showing: (n: number, level: string | null) =>
+      level ? `${n} competitions for ${level}` : `All ${n} competitions`,
     open: 'See details',
     registration: 'Registration',
-    favorites: (n: number) => `My favourites (${n})`,
     reset: 'Reset filters',
     empty: 'No competitions match your choices yet.',
-    emptyFav: 'No favourites yet. Tap the star on a competition you like.',
-    favAdd: (name: string) => `Save ${name} to favourites`,
-    favRemove: (name: string) => `Remove ${name} from favourites`,
-    favSaved: 'Saved on this device',
   },
   categories: {
     Akademik: 'Academic',
@@ -163,6 +164,17 @@ const en: typeof id = {
       { title: 'Fill in the Google Form', body: 'Register through the Google Form link on the competition page.' },
       { title: '???', body: 'The next step will be announced by the committee.' },
     ],
+    flow: {
+      hint: 'Follow the arrows!',
+      start: 'START',
+      question: 'Still unsure?',
+      yes: 'YES',
+      no: 'NO',
+      chatTitle: 'Ask a contact person',
+      chatBody: 'Chat on WhatsApp',
+      loop: 'Then back to step 2',
+      end: 'READY TO GO!',
+    },
   },
   footer: {
     tbc: 'To be continued on competition day...',

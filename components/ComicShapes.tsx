@@ -1,6 +1,7 @@
 // Poster shape vocabulary drawn as inline SVG (no raster clip-art). All decorative → aria-hidden.
 
 type ShapeProps = { className?: string; anim?: boolean };
+type BurstProps = ShapeProps & { outerFill?: string; innerFill?: string };
 
 const burstPoints = (spikes: number, outer: number, inner: number, jitter: number[]) =>
   Array.from({ length: spikes * 2 }, (_, i) => {
@@ -13,11 +14,11 @@ const burstPoints = (spikes: number, outer: number, inner: number, jitter: numbe
 const BURST_OUTER = burstPoints(14, 96, 58, [1, 0.86, 0.95, 0.8, 1, 0.9, 0.84]);
 const BURST_INNER = burstPoints(14, 74, 46, [1, 0.9, 0.82, 0.96, 0.88]);
 
-export function Starburst({ className, anim }: ShapeProps) {
+export function Starburst({ className, anim, outerFill = 'var(--sun-4)', innerFill = 'var(--accent-yellow)' }: BurstProps) {
   return (
     <svg className={className} viewBox="0 0 200 200" aria-hidden="true" data-anim={anim ? 'burst' : undefined}>
-      <polygon points={BURST_OUTER} fill="var(--sun-4)" stroke="var(--ink)" strokeWidth="5" strokeLinejoin="round" />
-      <polygon points={BURST_INNER} fill="var(--accent-yellow)" stroke="var(--ink)" strokeWidth="4" strokeLinejoin="round" />
+      <polygon points={BURST_OUTER} fill={outerFill} stroke="var(--ink)" strokeWidth="5" strokeLinejoin="round" />
+      <polygon points={BURST_INNER} fill={innerFill} stroke="var(--ink)" strokeWidth="4" strokeLinejoin="round" />
     </svg>
   );
 }

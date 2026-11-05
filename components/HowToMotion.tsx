@@ -6,49 +6,51 @@ import { useEffect } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** "How to register" comic strip. All four panels are always laid out fully on screen (no sideways scrolling).
- *  Wide screens (≥ 1200 px): the section pins briefly and scrolling inks the panels in one after another.
- *  Smaller screens: each panel inks in as it enters the viewport.
- *  Reduced motion: nothing moves. */
+/** "How to register" flowchart. Everything is always laid out and readable; motion only adds the reveal.
+ *  Wide screens (>= 1100 px): when the chart scrolls into view, nodes and arrows pop in once, in flow order.
+ *  Smaller screens: each node pops in as it enters the viewport.
+ *  Only transform and opacity are animated. Reduced motion: nothing moves. */
 export default function HowToMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('[data-howto]');
     if (!root) return;
-    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
     const mm = gsap.matchMedia();
+    const order = (el: Element) => Number(getComputedStyle(el).getPropertyValue('--order')) || 0;
 
-    const inkIn = (tl: gsap.core.Timeline, panel: HTMLElement, at: number | string) =>
-      tl
-        .fromTo(panel, { clipPath: 'inset(0 100% 0 0)', y: 30, rotate: -3 }, { clipPath: 'inset(0 0% 0 0)', y: 0, rotate: 0, duration: 0.6, ease: 'power3.out' }, at)
-        .fromTo(panel.querySelector('[data-art]'), { scale: 0.3, rotate: -25 }, { scale: 1, rotate: 0, duration: 0.6, ease: 'back.out(2.5)' }, '<0.2');
+    mm.add('(min-width: 1100px) and (prefers-reduced-motion: no-preference)', () => {
+      const parts = Array.from(root.querySelectorAll<HTMLElement | SVGElement>('[data-node], [data-link]')).sort(
+        (a, b) => order(a) - order(b),
+      );
+      const nodes = parts.filter((p) => p.hasAttribute('data-node'));
+      const links = parts.filter((p) => p.hasAttribute('data-link'));
+      gsap.set(nodes, { opacity: 0, scale: 0.55, y: 24 });
+      gsap.set(links, { opacity: 0, scale: 0.6 });
 
-    mm.add('(min-width: 1200px) and (min-height: 620px) and (prefers-reduced-motion: no-preference)', () => {
-      // Pin for ~1 screen once the section reaches the top...
-      const pinLength = () => Math.round(window.innerHeight * 1.1);
-      ScrollTrigger.create({ trigger: root, start: 'top top', end: () => `+=${pinLength()}`, pin: true, invalidateOnRefresh: true });
-      // ...while the ink-in starts earlier, as the section scrolls up, so the strip is never blank on arrival.
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: 'top 60%',
-          end: () => `+=${Math.round(window.innerHeight * 0.6) + pinLength()}`,
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-        },
+        paused: true,
+        scrollTrigger: { trigger: root.querySelector('[data-node]'), start: 'top 85%', once: true, onEnter: () => tl.play() },
       });
-      panels.forEach((panel, i) => inkIn(tl, panel, i * 0.55));
-      tl.to({}, { duration: 0.5 }); // short hold with all four visible before the page moves on
+      parts.forEach((p, i) => {
+        const isNode = p.hasAttribute('data-node');
+        tl.to(
+          p,
+          isNode
+            ? { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(2.2)' }
+            : { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(3)' },
+          i * 0.16,
+        );
+      });
     });
 
-    mm.add('(max-width: 1199px), (max-height: 619px)', () => {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      panels.forEach((panel) => {
-        gsap.set(panel, { clipPath: 'inset(0 100% 0 0)' });
+    mm.add('(max-width: 1099px) and (prefers-reduced-motion: no-preference)', () => {
+      const nodes = Array.from(root.querySelectorAll<HTMLElement>('[data-node]')).filter((n) => getComputedStyle(n).display !== 'none');
+      nodes.forEach((n) => {
+        gsap.set(n, { opacity: 0, scale: 0.7, y: 30 });
         ScrollTrigger.create({
-          trigger: panel,
-          start: 'top 88%',
+          trigger: n,
+          start: 'top 92%',
           once: true,
-          onEnter: () => inkIn(gsap.timeline(), panel, 0),
+          onEnter: () => gsap.to(n, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(2.2)' }),
         });
       });
     });
