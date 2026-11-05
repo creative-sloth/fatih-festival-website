@@ -85,32 +85,51 @@
 
 .logos {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 0;
   margin: 0;
-  padding: 0;
+  padding: 6px 12px;
   list-style: none;
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
 }
 
 .logoSlot {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   min-height: 44px;
-  max-width: 132px;
-  padding: 4px 10px;
-  border: 2px dashed var(--ink);
-  background: rgb(255 255 255 / 0.75);
+  padding: 0 14px;
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1.2;
 }
+.logoSlot:first-child {
+  padding-left: 0;
+}
+.logoSlot:last-child {
+  padding-right: 0;
+}
+.logoSlot + .logoSlot {
+  border-left: 2px solid var(--ink);
+}
 
+/* Fallback box, only used when a logo file is missing */
 .logoTag {
+  display: block;
   font-size: 0.62rem;
   font-weight: 800;
   opacity: 0.65;
+}
+.logoName {
+  display: block;
+}
+
+.logoImg {
+  display: block;
+  height: 38px;
+  width: auto;
 }
 
 .logoShort {
@@ -362,6 +381,39 @@
   gap: 14px;
 }
 
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 8px 32px 4px;
+  border: var(--line) solid var(--ink);
+  background: var(--accent-yellow);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  rotate: -1.5deg;
+  transition:
+    transform 260ms var(--ease-spring),
+    box-shadow var(--dur-press) ease-out;
+}
+.cta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.cta:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 var(--ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta {
+    transition: none;
+  }
+}
+
 /* ---------- Caption boxes (comic narration panels) ---------- */
 
 .captions {
@@ -407,12 +459,13 @@
 
 @media (max-width: 640px) {
   .logos {
-    flex-wrap: nowrap;
-    gap: 6px;
+    padding: 4px 8px;
   }
   .logoSlot {
-    padding: 3px 8px;
-    font-size: 0.75rem;
+    padding: 0 8px;
+  }
+  .logoImg {
+    height: 28px;
   }
   .logoName {
     position: absolute;

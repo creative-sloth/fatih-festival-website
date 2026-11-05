@@ -19,11 +19,10 @@ export const festival: Festival = {
   startDate: '2026-11-11T08:00:00+07:00',
   endDate: '2026-11-14T22:00:00+07:00',
   venue: { id: ADDRESS, en: ADDRESS },
-  // src: null → labelled placeholder box until official files arrive
   logos: [
-    { name: 'Fatih Bilingual School', short: 'Fatih', src: null },
-    { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: null },
-    { name: 'Cambridge International School', short: 'Cambridge', src: null },
+    { name: 'Fatih Bilingual School', short: 'Fatih', src: '/logos/fatih.png' },
+    { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: '/logos/garuda.png' },
+    { name: 'Cambridge International School', short: 'Cambridge', src: '/logos/cambridge.png' },
   ],
   // Narahubung / Contact Person. Two festival-wide CPs supplied by the committee 3 Nov 2026.
   // Where a competition's own juknis prints no CP, the card falls back to these.

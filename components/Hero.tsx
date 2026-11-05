@@ -45,12 +45,19 @@ export default function Hero({ lang }: { lang: Lang }) {
         <ul className={s.logos} aria-label="Logo">
           {festival.logos.map((logo) => (
             <li key={logo.name} className={s.logoSlot}>
-              {/* Placeholder until official files arrive (HANDOFF.md §0) */}
-              <span className={s.logoTag}>{t.logoPlaceholder}</span>
-              <span className={s.logoName}>{logo.name}</span>
-              <span className={s.logoShort} aria-hidden="true">
-                {logo.short}
-              </span>
+              {logo.src ? (
+                <img src={logo.src} alt={logo.name} className={s.logoImg} />
+              ) : (
+                <>
+                  <span className={s.logoTag}>{t.logoPlaceholder}</span>
+                  <span className={s.logoName}>{logo.name}</span>
+                </>
+              )}
+              {!logo.src && (
+                <span className={s.logoShort} aria-hidden="true">
+                  {logo.short}
+                </span>
+              )}
             </li>
           ))}
         </ul>
