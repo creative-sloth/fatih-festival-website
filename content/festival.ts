@@ -16,8 +16,8 @@ export const festival: Festival = {
     en: 'Two Decades of Learning, A Lifetime of Impact',
   },
   host: 'Fatih Bilingual School',
-  startDate: '2026-11-25T08:00:00+07:00',
-  endDate: '2026-11-28T17:00:00+07:00',
+  startDate: '2026-11-25', // dates only; no time of day (committee, 6 Nov 2026)
+  endDate: '2026-11-28',
   venue: { id: ADDRESS, en: ADDRESS },
   venueShort: { id: 'Fatih Bilingual School, Banda Aceh', en: 'Fatih Bilingual School, Banda Aceh' },
   logos: [
@@ -29,7 +29,7 @@ export const festival: Festival = {
   formUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSc0ZACvGgYvLkD2lDxdqXY-qM3dH2eMaRIJFU6LyWLNUBpOsw/viewform',
   // One deadline for all competitions: 20 Nov 2026, 23:59 WIB (committee, 6 Nov 2026).
-  // Competition days are 25-28 Nov 2026 (startDate/endDate); the end time of day is a placeholder, only the dates are shown.
+  // Competition days are 25-28 Nov 2026 (startDate/endDate), dates only.
   registrationCloses: '2026-11-20T23:59:00+07:00',
   registrationClosesText: { id: '20 November 2026, 23.59 WIB', en: '20 November 2026, 11:59 PM WIB' },
   // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person TK & SD / SMP / SMA", 5 Nov 2026).
