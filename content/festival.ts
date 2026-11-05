@@ -19,6 +19,7 @@ export const festival: Festival = {
   startDate: '2026-11-11T08:00:00+07:00',
   endDate: '2026-11-14T22:00:00+07:00',
   venue: { id: ADDRESS, en: ADDRESS },
+  venueShort: { id: 'Fatih Bilingual School, Banda Aceh', en: 'Fatih Bilingual School, Banda Aceh' },
   logos: [
     { name: 'Fatih Bilingual School', short: 'Fatih', src: '/logos/fatih.png' },
     { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: '/logos/garuda.png' },

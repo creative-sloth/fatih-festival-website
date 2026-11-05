@@ -57,6 +57,12 @@ export default function Footer({ lang }: { lang: Lang }) {
       </div>
       <p className={s.host}>
         {t.footer.host} <b>{festival.host}</b>
+        {festival.venue && (
+          <>
+            <br />
+            <span className={s.address}>{festival.venue[lang] ?? festival.venue.id}</span>
+          </>
+        )}
       </p>
     </footer>
   );

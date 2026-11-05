@@ -136,3 +136,10 @@ a.wa:active {
   margin: 32px 0 0;
   font-weight: 600;
 }
+
+.address {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}

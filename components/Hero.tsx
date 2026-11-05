@@ -127,7 +127,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           </div>
           <div className={s.caption}>
             <dt>{t.hero.venue}</dt>
-            <dd>{festival.venue?.[lang] ?? festival.venue?.id ?? t.unknown}</dd>
+            <dd>{festival.venueShort?.[lang] ?? festival.venueShort?.id ?? t.unknown}</dd>
           </div>
         </dl>
         <p className={`${s.caption} ${s.captionWide}`}>
