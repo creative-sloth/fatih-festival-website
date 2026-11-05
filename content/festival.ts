@@ -25,11 +25,21 @@ export const festival: Festival = {
     { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: '/logos/garuda.png' },
     { name: 'Cambridge International School', short: 'Cambridge', src: '/logos/cambridge.png' },
   ],
-  // Narahubung / Contact Person. Two festival-wide CPs supplied by the committee 3 Nov 2026.
-  // Where a competition's own juknis prints no CP, the card falls back to these.
-  contacts: [
-    { name: 'Ms Nabila', whatsapp: '0823 6418 0206' },
-    { name: 'Mr Saddam', whatsapp: '0821 6506 9163' },
+  // General registration form (committee, 5 Nov 2026). A competition with its own `formUrl` overrides it.
+  formUrl:
+    'https://docs.google.com/forms/d/e/1FAIpQLSc0ZACvGgYvLkD2lDxdqXY-qM3dH2eMaRIJFU6LyWLNUBpOsw/viewform',
+  // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person TK & SD / SMP / SMA", 5 Nov 2026).
+  levelContacts: [
+    { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nabila', whatsapp: '0823 6418 0206' }] },
+    { label: 'SMP', levels: ['SMP'], people: [{ name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }] },
+    {
+      label: 'SMA',
+      levels: ['SMA'],
+      people: [
+        { name: 'Mr. Rayhan', whatsapp: '0815 1911 1367' },
+        { name: 'Mr. Dhiya', whatsapp: '0823 7056 1457' },
+      ],
+    },
   ],
 };
 

@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Lang } from '@/content/types';
+import { festival } from '@/content/festival';
 import { getMessages } from '@/messages';
 import { Starburst } from './ComicShapes';
 import HowToMotion from './HowToMotion';
@@ -116,6 +117,11 @@ export default function HowTo({ lang }: { lang: Lang }) {
             {st.title}
           </h3>
           <p className={s.stepBody}>{st.body}</p>
+          {i === 2 && festival.formUrl && (
+            <a className={s.stepLink} href={festival.formUrl} target="_blank" rel="noopener noreferrer">
+              {t.howto.formLink} <span className="sr-only">{t.detail.newTab}</span> ›
+            </a>
+          )}
         </div>
       </li>
     );

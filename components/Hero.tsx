@@ -113,7 +113,12 @@ export default function Hero({ lang }: { lang: Lang }) {
         </div>
 
         <div className={s.actions}>
-          <a className={s.cta} href="#jenjang">
+          {festival.formUrl && (
+            <a className={s.cta} href={festival.formUrl} target="_blank" rel="noopener noreferrer">
+              {t.hero.ctaRegister} <span className="sr-only">{t.detail.newTab}</span>
+            </a>
+          )}
+          <a className={`${s.cta} ${s.ctaAlt}`} href="#jenjang">
             {t.hero.ctaPrimary}
           </a>
         </div>

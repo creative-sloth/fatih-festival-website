@@ -65,6 +65,9 @@ export interface Festival {
   /** Short place line for the hero (the full address in `venue` goes in the footer). */
   venueShort: Localized | null;
   logos: { name: string; short: string; src: string | null }[];
-  // Narahubung / contact persons: WhatsApp only (v1.5). Two slots.
-  contacts: { name: string | null; whatsapp: string | null }[];
+  /** General Google Form for registration. Used when a competition has no `formUrl` of its own. */
+  formUrl: string | null;
+  /** Narahubung grouped by school level (from the committee's Data Lomba sheet). A competition without
+   *  its own contact falls back to the groups that cover its levels. */
+  levelContacts: { label: string; levels: Level[]; people: Contact[] }[];
 }

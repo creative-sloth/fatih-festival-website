@@ -43,7 +43,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa/i TK sederajat, perwakilan sekolah (surat keterangan)', en: null },
     format: 'onsite',
     fee: 'Rp 30.000 / peserta',
-    contact: [{ name: 'Ms. Wardah', whatsapp: '0852 6062 6123' }, { name: 'Ms. Maula', whatsapp: '0822 4691 6727' }],
+    contact: [{ name: 'Ms. Wardah', whatsapp: '0852 6062 6123' }],
   },
 
   // ---------- SD/MI ----------
@@ -51,11 +51,13 @@ export const competitions: Competition[] = [
     ...base('sd-bercerita', 'Lomba Bercerita', ['SD'], 'Bahasa'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
+    contact: [{ name: 'Ms. Nina', whatsapp: '0852 6269 8828' }],
   },
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
     participation: 'team',
     fee: 'Rp 120.000 / peserta',
+    contact: [{ name: 'Ms. Ailiya', whatsapp: '0822 4732 3894' }],
   },
   {
     ...base('sd-olimpiade-mipa', 'Olimpiade Matematika & IPA', ['SD'], 'Akademik'),
@@ -65,6 +67,7 @@ export const competitions: Competition[] = [
     registrationCloses: '2026-11-06T23:59:00+07:00',
     competitionDate: '2026-11-11T09:30:00+07:00',
     fee: 'Rp 50.000 / peserta',
+    contact: [{ name: 'Ms. Ihda', whatsapp: '0823 7078 6848' }],
   },
   {
     ...base('sd-vocal-solo', 'Vokal Solo', ['SD'], 'Seni'),
@@ -72,7 +75,7 @@ export const competitions: Competition[] = [
     teamSize: 'Maksimal 2 peserta per sekolah',
     eligibility: { id: 'Siswa SD/MI kelas 5 / 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 50.000 / peserta',
-    contact: [{ name: 'Ms. Desi', whatsapp: '0823 1039 9310' }, { name: 'Ms. Ratu', whatsapp: '0823 2677 8902' }],
+    contact: [{ name: 'Ms. Ratu', whatsapp: '0823 2677 8902' }],
   },
   {
     ...base('sd-spelling-bee', 'Spelling Bee', ['SD'], 'Bahasa'),
@@ -86,7 +89,7 @@ export const competitions: Competition[] = [
     participation: 'individual',
     eligibility: { id: 'Siswa kelas VII, VIII, atau IX SMP/MTs — perorangan, tanpa batasan jumlah per sekolah', en: null },
     fee: 'Rp 50.000 / peserta',
-    contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }, { name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }],
+    contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }],
   },
   {
     ...base('smp-vocal-solo', 'Vokal Solo', ['SMP'], 'Seni'),
@@ -102,14 +105,14 @@ export const competitions: Competition[] = [
     teamSize: 'Maksimal 2 peserta per sekolah',
     eligibility: { id: 'Siswa/siswi aktif SMP/MTs dan sederajat', en: null },
     fee: 'Rp 40.000 / peserta',
-    contact: [{ name: 'Ms. Afrileni', whatsapp: '0813 6040 4988' }],
+    contact: [{ name: 'Mr. Safriadi', whatsapp: '0823 6294 6335' }],
   },
   {
     ...base('smp-basket', 'Lomba Basket', ['SMP'], 'Olahraga'),
     participation: 'team',
     teamSize: 'Maksimal 12 pemain + official',
     fee: 'Rp 300.000 / tim',
-    contact: [{ name: 'Mr. Anis', whatsapp: '0813 9684 2987' }],
+    contact: [{ name: 'Mr. Juliandi', whatsapp: '0853 6274 3015' }],
   },
 
   // ---------- SMA/MA ----------
@@ -124,6 +127,7 @@ export const competitions: Competition[] = [
     competitionDate: '2026-11-11T08:00:00+07:00',
     fee: 'Rp 300.000 / tim',
     juknisLanguage: 'both',
+    contact: [{ name: 'Ms. Raysa', whatsapp: '0822 7250 3705' }],
   },
   {
     ...base('sma-essay', 'Lomba Essay', ['SMA'], 'Akademik'),
@@ -142,6 +146,7 @@ export const competitions: Competition[] = [
     registrationCloses: '2026-11-10T23:59:00+07:00',
     competitionDate: '2026-11-13T08:00:00+07:00',
     fee: 'Rp 200.000 / tim',
+    contact: [{ name: 'Mr. Dhiya', whatsapp: '0823 7056 1457' }],
   },
   {
     ...base('sma-culture-vlog', 'Culture Vlog Competition', ['SMA'], 'Media'),
@@ -156,7 +161,7 @@ export const competitions: Competition[] = [
     ...base('smp-sma-desain-grafis', 'Desain Grafis – Komik', ['SMP', 'SMA'], 'Media'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
-    contact: [{ name: 'Arief Al', whatsapp: '0812 6545 4182' }],
+    contact: [{ name: 'Mr. Arief', whatsapp: '0812 6545 4182' }],
   },
   {
     ...base('smp-sma-stem-expo', 'STEM Expo', ['SMP', 'SMA'], 'Inovasi'),
@@ -165,7 +170,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa SMP/MTs kelas 7 – 9 dan SMA/MA sederajat kelas 10 – 12', en: null },
     fee: 'Rp 150.000 / tim', // juknis: transfer to BSI 2828-0000-52
     juknisLanguage: 'both',
-    // Its own juknis prints no narahubung, so it falls back to the general CPs.
+    // No own narahubung in Data Lomba.xlsx, so it falls back to the SMP and SMA level contacts.
   },
 
   // Futsal is not in the 33-page juknis booklet but the committee supplied a separate

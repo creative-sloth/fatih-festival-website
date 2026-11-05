@@ -368,8 +368,10 @@
 .actions {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 16px 20px;
 }
 
 .cta {
@@ -390,6 +392,10 @@
   transition:
     transform 260ms var(--ease-spring),
     box-shadow var(--dur-press) ease-out;
+}
+.ctaAlt {
+  background: var(--paper);
+  rotate: 1.2deg;
 }
 .cta:hover {
   transform: translate(-2px, -2px);

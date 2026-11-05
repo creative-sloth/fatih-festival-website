@@ -12,6 +12,7 @@ const id = {
     levels: 'Untuk TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} cabang lomba`,
     ctaPrimary: 'Lihat Lomba',
+    ctaRegister: 'Daftar Sekarang',
   },
   explorer: {
     title: 'Pilih Jenjangmu',
@@ -56,7 +57,7 @@ const id = {
     peserta: (kind: string | null, size: string | null) =>
       [kind, size].filter(Boolean).join(' · ') || null,
     /** Label used when a competition's own juknis prints no PIC. */
-    contactGeneral: 'Narahubung umum',
+    contactFor: (label: string) => `Narahubung ${label}`,
     close: 'Tutup',
     prev: 'Sebelumnya',
     next: 'Berikutnya',
@@ -72,6 +73,7 @@ const id = {
       { title: 'Isi Google Form', body: 'Daftar lewat link Google Form di halaman lomba.' },
       { title: '???', body: 'Langkah selanjutnya akan diumumkan panitia.' },
     ],
+    formLink: 'Buka Google Form',
     flow: {
       hint: 'Ikuti panahnya!',
       start: 'MULAI',
@@ -87,7 +89,7 @@ const id = {
   footer: {
     tbc: 'Bersambung di hari lomba...',
     contactTitle: 'Narahubung',
-    person: (n: number) => `Narahubung ${n}`,
+    group: (label: string) => `Narahubung ${label}`,
     chat: 'Chat lewat WhatsApp',
     prefill: 'Halo, saya ingin bertanya tentang Fatih Festival 3.0.',
     host: 'Diselenggarakan oleh',
@@ -106,6 +108,7 @@ const en: typeof id = {
     levels: 'For TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} competitions`,
     ctaPrimary: 'See Competitions',
+    ctaRegister: 'Register Now',
   },
   explorer: {
     title: 'Pick Your Level',
@@ -148,7 +151,7 @@ const en: typeof id = {
     formatValues: { onsite: 'Onsite', online: 'Online', hybrid: 'Hybrid' },
     peserta: (kind: string | null, size: string | null) =>
       [kind, size].filter(Boolean).join(' · ') || null,
-    contactGeneral: 'General contact person',
+    contactFor: (label: string) => `Contact person ${label}`,
     close: 'Close',
     prev: 'Previous',
     next: 'Next',
@@ -164,6 +167,7 @@ const en: typeof id = {
       { title: 'Fill in the Google Form', body: 'Register through the Google Form link on the competition page.' },
       { title: '???', body: 'The next step will be announced by the committee.' },
     ],
+    formLink: 'Open the Google Form',
     flow: {
       hint: 'Follow the arrows!',
       start: 'START',
@@ -179,7 +183,7 @@ const en: typeof id = {
   footer: {
     tbc: 'To be continued on competition day...',
     contactTitle: 'Contact Person',
-    person: (n: number) => `Contact person ${n}`,
+    group: (label: string) => `Contact person ${label}`,
     chat: 'Chat on WhatsApp',
     prefill: 'Hello, I have a question about Fatih Festival 3.0.',
     host: 'Hosted by',

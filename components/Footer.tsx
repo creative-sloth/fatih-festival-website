@@ -33,24 +33,30 @@ export default function Footer({ lang }: { lang: Lang }) {
           {t.footer.contactTitle}
         </h2>
         <ul className={s.list}>
-          {festival.contacts.map((person, i) => (
-            <li key={i} className={s.person}>
-              <span className={s.label}>{t.footer.person(i + 1)}</span>
-              <span className={person.name ? s.name : `${s.name} ${s.unknown}`}>{person.name ?? t.unknown}</span>
-              {person.whatsapp ? (
-                <a className={s.wa} href={waLink(person.whatsapp, t.footer.prefill)} target="_blank" rel="noopener noreferrer">
-                  <WhatsAppIcon />
-                  <span>
-                    {person.whatsapp}
-                    <span className={s.waHint}>{t.footer.chat}</span>
-                  </span>
-                </a>
-              ) : (
-                <span className={`${s.wa} ${s.waEmpty}`}>
-                  <WhatsAppIcon />
-                  <span className={s.unknown}>{t.unknown}</span>
+          {festival.levelContacts.map((group) => (
+            <li key={group.label} className={s.person}>
+              <span className={s.label}>{t.footer.group(group.label)}</span>
+              {group.people.map((person) => (
+                <span key={person.whatsapp ?? person.name} className={s.contactRow}>
+                  <span className={s.name}>{person.name}</span>
+                  {person.whatsapp ? (
+                    <a className={s.wa} href={waLink(person.whatsapp, `${t.footer.prefill} (${group.label})`)} target="_blank" rel="noopener noreferrer">
+                      <WhatsAppIcon />
+                      <span>
+                        {person.whatsapp}
+                        <span className={s.waHint}>
+                          {t.footer.chat} <span className="sr-only">{t.detail.newTab}</span>
+                        </span>
+                      </span>
+                    </a>
+                  ) : (
+                    <span className={`${s.wa} ${s.waEmpty}`}>
+                      <WhatsAppIcon />
+                      <span className={s.unknown}>{t.unknown}</span>
+                    </span>
+                  )}
                 </span>
-              )}
+              ))}
             </li>
           ))}
         </ul>

@@ -543,3 +543,29 @@
     transition: none;
   }
 }
+
+.stepLink {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px 1px;
+  border: 2px solid var(--ink);
+  background: var(--accent-yellow);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.stepLink:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+@media (min-width: 1100px) {
+  .stepLink {
+    margin-top: 0.5cqw;
+    padding: 0.2cqw 0.9cqw 0;
+    font-size: 1.6cqw;
+    box-shadow: 0.2cqw 0.2cqw 0 var(--ink);
+  }
+}

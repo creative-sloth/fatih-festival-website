@@ -5,6 +5,7 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { competitions } from '@/content/competitions';
+import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
 import { waLink } from '@/lib/whatsapp';
@@ -360,10 +361,18 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   const u = t.unknown;
   const filtered = level !== 'ALL';
   const activeName = active ? (active.name[lang] ?? active.name.id) : '';
-  // A competition whose juknis prints no PIC shows ??? (no festival-wide fallback).
-  const contactList = (active?.contact ?? []).filter(
+  // A competition without its own PIC falls back to the narahubung of its school level(s).
+  const ownContacts = (active?.contact ?? []).filter(
     (c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp,
   );
+  const levelGroups = active ? festival.levelContacts.filter((g) => g.levels.some((l) => active.levels.includes(l))) : [];
+  const fallbackContacts = levelGroups
+    .flatMap((g) => g.people)
+    .filter((c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp);
+  const contactList = ownContacts.length ? ownContacts : fallbackContacts;
+  const contactLabel = ownContacts.length ? t.detail.contact : t.detail.contactFor(levelGroups.map((g) => g.label).join(' & '));
+  // The competition's own form wins; otherwise the general registration form.
+  const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
 
   return (
     <section ref={sectionRef} className={s.explorer} id="jenjang" aria-labelledby="jenjang-title">
@@ -529,7 +538,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                 </dd>
               </div>
               <div className={s.fact} data-reveal>
-                <dt>{contactList.length ? t.detail.contact : t.detail.contactGeneral}</dt>
+                <dt>{contactLabel}</dt>
                 <dd>
                   {contactList.length ? (
                     contactList.map((c) => (
@@ -541,7 +550,10 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                         rel="noopener noreferrer"
                       >
                         <WhatsAppIcon />
-                        {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
+                        <span>
+                          {c.name} · <span className={s.nowrap}>{c.whatsapp}</span>
+                          <span className="sr-only"> {t.detail.newTab}</span>
+                        </span>
                       </a>
                     ))
                   ) : (
@@ -553,8 +565,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
 
             {/* No form URL → no active register button (HANDOFF.md §7) */}
             <div className={s.register} data-reveal>
-              {active.formUrl ? (
-                <a className={s.registerBtn} href={active.formUrl} target="_blank" rel="noopener noreferrer">
+              {formUrl ? (
+                <a className={s.registerBtn} href={formUrl} target="_blank" rel="noopener noreferrer">
                   {t.detail.register} <span className={s.newTab}>{t.detail.newTab}</span>
                 </a>
               ) : (
