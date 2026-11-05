@@ -1055,3 +1055,41 @@
 .nowrap {
   white-space: nowrap;
 }
+
+.tba {
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* ---------- Section background: purple comic burst (not on the cards) ----------
+   Base glow and graded halftone tile every 1100px so the burst repeats down the tall section; speed-line
+   spikes and white poof clouds hug the left and right edges (scripts: public/assets/burst-edge-*.svg). */
+.explorer {
+  background:
+    radial-gradient(ellipse 75% 50% at 50% 50%, #c25ae0 0%, #9b2dbf 48%, #6a1a92 100%) 0 0 / 100% 1100px repeat-y,
+    #7d219f;
+}
+.explorer::before,
+.explorer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.explorer::before {
+  background: rgb(255 255 255 / 0.32);
+  -webkit-mask: url('/assets/halftone-radial.svg') center / 1200px 1100px repeat-y;
+  mask: url('/assets/halftone-radial.svg') center / 1200px 1100px repeat-y;
+}
+.explorer::after {
+  background:
+    url('/assets/burst-edge-left.svg') left top / auto 1000px repeat-y,
+    url('/assets/burst-edge-right.svg') right top / auto 1000px repeat-y;
+}
+.reset {
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}

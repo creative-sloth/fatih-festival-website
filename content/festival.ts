@@ -16,8 +16,8 @@ export const festival: Festival = {
     en: 'Two Decades of Learning, A Lifetime of Impact',
   },
   host: 'Fatih Bilingual School',
-  startDate: '2026-11-11T08:00:00+07:00',
-  endDate: '2026-11-14T22:00:00+07:00',
+  startDate: '2026-11-25T08:00:00+07:00',
+  endDate: '2026-11-28T17:00:00+07:00',
   venue: { id: ADDRESS, en: ADDRESS },
   venueShort: { id: 'Fatih Bilingual School, Banda Aceh', en: 'Fatih Bilingual School, Banda Aceh' },
   logos: [
@@ -28,9 +28,10 @@ export const festival: Festival = {
   // General registration form (committee, 5 Nov 2026). A competition with its own `formUrl` overrides it.
   formUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSc0ZACvGgYvLkD2lDxdqXY-qM3dH2eMaRIJFU6LyWLNUBpOsw/viewform',
-  // One deadline for all competitions (committee, 5 Nov 2026); the exact day is not announced yet.
-  registrationCloses: null,
-  registrationClosesText: { id: '? Nov 2026', en: '? Nov 2026' },
+  // One deadline for all competitions: 20 Nov 2026, 23:59 WIB (committee, 6 Nov 2026).
+  // Competition days are 25-28 Nov 2026 (startDate/endDate); the end time of day is a placeholder, only the dates are shown.
+  registrationCloses: '2026-11-20T23:59:00+07:00',
+  registrationClosesText: { id: '20 November 2026, 23.59 WIB', en: '20 November 2026, 11:59 PM WIB' },
   // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person TK & SD / SMP / SMA", 5 Nov 2026).
   levelContacts: [
     { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nisa', whatsapp: '0852 7637 7196' }] },

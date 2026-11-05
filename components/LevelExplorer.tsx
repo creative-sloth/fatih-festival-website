@@ -8,6 +8,7 @@ import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
+import { formatDateRange } from '@/lib/dates';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
 import s from './LevelExplorer.module.css';
@@ -377,7 +378,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
       : t.detail.participationValues.individual
     : null;
   const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
-  const dateText = active ? fmtDate(active.competitionDate, lang) : null;
+  // A competition's own date wins; otherwise the shared festival days.
+  const dateText = active ? (fmtDate(active.competitionDate, lang) ?? formatDateRange(festival.startDate, festival.endDate, lang)) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
 
@@ -527,28 +529,28 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                       {pesertaSub && <span className={s.dim}>{pesertaSub}</span>}
                     </>
                   ) : (
-                    <span className={s.unknown}>{u}</span>
+                    <span className={s.tba}>{t.detail.tba}</span>
                   )}
                 </dd>
               </div>
               <div className={s.fact} data-tone="date" data-reveal>
                 <dt>{t.detail.date}</dt>
-                <dd className={dateText ? undefined : s.unknown}>{dateText ?? u}</dd>
+                <dd className={dateText ? undefined : s.tba}>{dateText ?? t.detail.tba}</dd>
               </div>
               <div className={s.fact} data-tone="fee" data-reveal>
                 <dt>{t.detail.fee}</dt>
-                <dd className={active.fee ? undefined : s.unknown}>{active.fee ?? u}</dd>
+                <dd className={active.fee ? undefined : s.tba}>{active.fee ?? t.detail.tba}</dd>
               </div>
               <div className={s.fact} data-tone="juknis" data-reveal>
                 <dt>{t.detail.juknis}</dt>
-                <dd className={active.juknisUrl ? undefined : s.unknown}>
+                <dd className={active.juknisUrl ? undefined : s.tba}>
                   {active.juknisUrl ? (
                     <a className={s.factLink} href={active.juknisUrl} target="_blank" rel="noopener noreferrer">
                       <LinkIcon />
                       {t.detail.juknisDownload} <span className="sr-only">{t.detail.newTab}</span>
                     </a>
                   ) : (
-                    u
+                    t.detail.tba
                   )}
                 </dd>
               </div>
@@ -573,7 +575,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                       </a>
                     ))
                   ) : (
-                    <span className={s.unknown}>{u}</span>
+                    <span className={s.tba}>{t.detail.tba}</span>
                   )}
                 </dd>
               </div>

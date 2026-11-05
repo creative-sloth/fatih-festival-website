@@ -32,6 +32,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         <h2 className={s.title} id="kontak-title">
           {t.footer.contactTitle}
         </h2>
+        <p className={s.note}>{t.footer.contactNote}</p>
         <ul className={s.list}>
           {festival.levelContacts.map((group) => (
             <li key={group.label} className={s.person}>

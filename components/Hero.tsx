@@ -1,6 +1,7 @@
 import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
+import { formatDateRange } from '@/lib/dates';
 import { getMessages } from '@/messages';
 import { Bolt, Sparkle, Star, Starburst } from './ComicShapes';
 import Countdown from './Countdown';
@@ -19,16 +20,6 @@ function Glyphs({ text, group }: { text: string; group: string }) {
       ))}
     </span>
   );
-}
-
-function fmtDate(iso: string | null, lang: Lang) {
-  if (!iso) return null;
-  return new Intl.DateTimeFormat(lang === 'id' ? 'id-ID' : 'en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'Asia/Jakarta',
-  }).format(new Date(iso));
 }
 
 export default function Hero({ lang }: { lang: Lang }) {
@@ -131,7 +122,7 @@ export default function Hero({ lang }: { lang: Lang }) {
         <dl className={s.captionList}>
           <div className={s.caption}>
             <dt>{t.hero.date}</dt>
-            <dd>{fmtDate(festival.startDate, lang) ?? t.unknown}</dd>
+            <dd>{formatDateRange(festival.startDate, festival.endDate, lang) ?? t.unknown}</dd>
           </div>
           <div className={s.caption}>
             <dt>{t.hero.venue}</dt>

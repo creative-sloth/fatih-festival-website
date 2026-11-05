@@ -62,6 +62,7 @@ const id = {
     perSchool: (count: number, unit: 'tim' | 'peserta') => `maks. ${count} ${unit} per sekolah`,
     /** Label used when a competition's own juknis prints no PIC. */
     contactFor: (label: string) => `Narahubung ${label}`,
+    tba: 'To Be Announced',
     close: 'Tutup',
     prev: 'Sebelumnya',
     next: 'Berikutnya',
@@ -92,7 +93,8 @@ const id = {
   },
   footer: {
     tbc: 'Bersambung di hari lomba...',
-    contactTitle: 'Narahubung',
+    contactTitle: 'Narahubung Umum',
+    contactNote: 'Narahubung untuk setiap lomba dapat dilihat pada halaman detail lomba masing-masing',
     group: (label: string) => `Narahubung ${label}`,
     chat: 'Chat lewat WhatsApp',
     prefill: 'Halo, saya ingin bertanya tentang Fatih Festival 3.0.',
@@ -162,6 +164,7 @@ const en: typeof id = {
     perSchool: (count: number, unit: 'tim' | 'peserta') =>
       `max. ${count} ${unit === 'tim' ? (count === 1 ? 'team' : 'teams') : count === 1 ? 'participant' : 'participants'} per school`,
     contactFor: (label: string) => `Contact person ${label}`,
+    tba: 'To Be Announced',
     close: 'Close',
     prev: 'Previous',
     next: 'Next',
@@ -192,7 +195,8 @@ const en: typeof id = {
   },
   footer: {
     tbc: 'To be continued on competition day...',
-    contactTitle: 'Contact Person',
+    contactTitle: 'General Contact Person',
+    contactNote: 'Contact persons for each competition are listed on that competition\'s detail page',
     group: (label: string) => `Contact person ${label}`,
     chat: 'Chat on WhatsApp',
     prefill: 'Hello, I have a question about Fatih Festival 3.0.',

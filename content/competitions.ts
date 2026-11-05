@@ -1,7 +1,7 @@
 import type { Category, Competition, Level } from './types';
 
 // Source: Juknis Fatih Festival 3.0 (docs/juknis-extracted.txt). Only facts printed in the juknis
-// are filled. Everything the committee has not published stays null and renders as ???.
+// are filled (competition days 25-28 Nov 2026 now live on `festival`). Everything the committee has not published stays null and renders as ???.
 // See docs/needed-data.md for the outstanding list.
 const VENUE = {
   id: 'Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122',
@@ -66,7 +66,6 @@ export const competitions: Competition[] = [
     maxPerSchool: { count: 5, unit: 'peserta' },
     eligibility: { id: 'Siswa kelas IV, V, dan VI SD/MI — perorangan; maksimal 5 siswa per sekolah per kategori', en: null },
     registrationOpens: '2026-10-15T00:00:00+07:00',
-    competitionDate: '2026-11-11T09:30:00+07:00',
     fee: 'Rp 50.000 / peserta',
     contact: [{ name: 'Ms. Ihda', whatsapp: '0823 7078 6848' }],
   },
@@ -83,6 +82,7 @@ export const competitions: Competition[] = [
     participation: 'individual',
     eligibility: { id: 'Siswa SD/MI sederajat kelas 5 – 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 40.000 / peserta',
+    contact: [{ name: 'Ms. Tiara', whatsapp: '0853 1267 7451' }],
   },
   // ---------- SMP/MTs ----------
   {
@@ -125,7 +125,6 @@ export const competitions: Competition[] = [
     maxPerSchool: { count: 2, unit: 'tim' },
     eligibility: { id: 'Siswa/i aktif SMA/MA/sederajat (KTS atau surat keterangan aktif)', en: null },
     registrationOpens: '2026-09-19T00:00:00+07:00',
-    competitionDate: '2026-11-11T08:00:00+07:00',
     fee: 'Rp 300.000 / tim',
     juknisLanguage: 'both',
     contact: [{ name: 'Ms. Raysa', whatsapp: '0822 7250 3705' }],
@@ -144,7 +143,6 @@ export const competitions: Competition[] = [
     teamSize: '3',
     maxPerSchool: { count: 2, unit: 'tim' },
     eligibility: { id: 'Siswa/i aktif SMA/MA/sederajat (kelas 10 – 12), perwakilan resmi sekolah', en: null },
-    competitionDate: '2026-11-13T08:00:00+07:00',
     fee: 'Rp 200.000 / tim',
     contact: [{ name: 'Mr. Dhiya', whatsapp: '0823 7056 1457' }],
   },
@@ -171,7 +169,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa SMP/MTs kelas 7 – 9 dan SMA/MA sederajat kelas 10 – 12', en: null },
     fee: 'Rp 150.000 / tim', // juknis: transfer to BSI 2828-0000-52
     juknisLanguage: 'both',
-    // No own narahubung in Data Lomba.xlsx, so it falls back to the SMP and SMA level contacts.
+    contact: [{ name: 'Ms. Bella', whatsapp: '0822 4921 4517' }],
   },
 
   // Futsal is not in the 33-page juknis booklet but the committee supplied a separate

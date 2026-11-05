@@ -161,7 +161,7 @@
   justify-items: center;
   align-content: center;
   gap: clamp(8px, 1.7svh, 22px);
-  padding: clamp(12px, 3svh, 32px) var(--gutter);
+  padding: clamp(8px, 2svh, 32px) var(--gutter);
 }
 
 .title {
@@ -333,7 +333,7 @@
   background: var(--paper);
   box-shadow: var(--shadow-md);
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 1.6vw + 0.7rem, 2.05rem);
+  font-size: clamp(1.05rem, min(1.6vw + 0.7rem, 3.6svh), 2.05rem);
   line-height: 1.08;
   letter-spacing: 0.02em;
   text-align: center;
@@ -378,8 +378,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px;
-  padding: 8px 32px 4px;
+  min-height: clamp(46px, 6.4svh, 56px);
+  padding: 6px 32px 3px;
   border: var(--line) solid var(--ink);
   background: var(--accent-yellow);
   color: var(--ink);
