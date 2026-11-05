@@ -5,9 +5,7 @@ import { Flip } from 'gsap/Flip';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { competitions } from '@/content/competitions';
-import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
-import { FAVS_EVENT, SHOW_FAVS_EVENT, loadFavorites, saveFavorites } from '@/lib/favorites';
 import { getMessages } from '@/messages';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
@@ -26,6 +24,62 @@ const countFor = (f: Filter) => competitions.filter((c) => inLevel(c, f)).length
 // Colour band on each card: sports red, shared SMP & SMA magenta, otherwise the level colour (HANDOFF.md §9.1).
 const bandOf = (c: Competition) => (c.category === 'Olahraga' ? 'olahraga' : c.levels.length > 1 ? 'shared' : c.levels[0]);
 
+// ---------- Comic-page layout ----------
+// The visible competitions are laid out like a comic page: rows of 3 and 2 panels (a lone last panel goes
+// full width) separated by slanted gutters. Each gutter has a signed slant in px; the panel on its left
+// and the panel on its right use the same value, so the two edges stay parallel. Three layouts are
+// computed (desktop 12-column rows, tablet 2-up, phone single column) and picked by CSS media queries.
+const SLANTS = [24, -20, 16, -26, 22, -16];
+const PATTERNS = ['rays', 'dots', 'burst'] as const;
+
+type Cell = { style: React.CSSProperties; pattern: (typeof PATTERNS)[number] };
+
+function buildLayout(n: number): Cell[] {
+  const cells: Cell[] = Array.from({ length: n }, (_, i) => ({
+    style: {},
+    pattern: PATTERNS[(i + Math.floor(i / 5)) % PATTERNS.length],
+  }));
+  const px = (v: number) => `${v}px`;
+
+  // Desktop: rows of 3 and 2
+  let i = 0;
+  let row = 0;
+  let twos = 0;
+  let threes = 0;
+  while (i < n) {
+    const rem = n - i;
+    let k = rem <= 3 ? rem : row % 2 === 0 ? 3 : 2;
+    if (rem > 3 && rem - k === 1) k -= 1;
+    const spans =
+      k === 1 ? [12] : k === 2 ? (twos++ % 2 === 0 ? [7, 5] : [5, 7]) : threes++ % 2 === 0 ? [4, 4, 4] : [3, 5, 4];
+    for (let j = 0; j < k; j++) {
+      const left = j > 0 ? SLANTS[(row * 2 + j - 1) % SLANTS.length] : 0;
+      const right = j < k - 1 ? SLANTS[(row * 2 + j) % SLANTS.length] : 0;
+      Object.assign(cells[i + j].style, { '--span': spans[j], '--sl': px(left), '--sr': px(right) });
+    }
+    i += k;
+    row += 1;
+  }
+
+  // Tablet: two columns, last odd panel full width
+  for (let t = 0; t < n; t++) {
+    const lone = t === n - 1 && t % 2 === 0;
+    const s2 = SLANTS[Math.floor(t / 2) % SLANTS.length];
+    Object.assign(cells[t].style, {
+      '--tspan': lone ? 2 : 1,
+      '--tsl': px(!lone && t % 2 === 1 ? s2 : 0),
+      '--tsr': px(!lone && t % 2 === 0 ? s2 : 0),
+    });
+  }
+
+  // Phone: single column, gutters slant alternately
+  const g = (t: number) => (t % 2 === 0 ? 12 : -12);
+  for (let t = 0; t < n; t++) {
+    Object.assign(cells[t].style, { '--sa': px(t > 0 ? g(t - 1) : 0), '--sb': px(t < n - 1 ? g(t) : 0) });
+  }
+  return cells;
+}
+
 const prefersReduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function fmtDate(iso: string | null, lang: Lang) {
@@ -43,53 +97,29 @@ function fmtDate(iso: string | null, lang: Lang) {
   );
 }
 
-function StarIcon({ filled }: { filled: boolean }) {
+function LinkIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z"
-        fill={filled ? 'var(--accent-yellow)' : 'var(--paper)'}
-        stroke="var(--ink)"
-        strokeWidth="2.2"
-        strokeLinejoin="round"
-      />
+    <svg className={s.factIcon} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1" />
+      <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" />
     </svg>
   );
 }
 
-/** Small stars spray out of a freshly starred button: feedback that the save happened. */
-function sprayStars(origin: HTMLElement) {
-  if (prefersReduced()) return;
-  for (let i = 0; i < 7; i++) {
-    const p = document.createElement('span');
-    p.className = s.spark;
-    origin.appendChild(p);
-    const angle = (Math.PI * 2 * i) / 7 + gsap.utils.random(-0.3, 0.3);
-    const dist = gsap.utils.random(26, 44);
-    gsap.fromTo(
-      p,
-      { x: 0, y: 0, scale: 0.4, opacity: 1, rotate: 0 },
-      {
-        x: Math.cos(angle) * dist,
-        y: Math.sin(angle) * dist,
-        scale: 1,
-        rotate: gsap.utils.random(-120, 120),
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        onComplete: () => p.remove(),
-      },
-    );
-  }
+function WhatsAppIcon() {
+  return (
+    <svg className={s.factIcon} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2.5a9.4 9.4 0 0 0-8.1 14.2L2.6 21.4l4.8-1.3A9.4 9.4 0 1 0 12 2.5Z" fill="#25d366" stroke="var(--ink)" strokeWidth="1.8" strokeLinejoin="round" />
+      <path d="M8.6 7.6c.3-.3.8-.3 1 .1l.7 1.6c.1.3 0 .6-.2.8l-.5.6c.8 1.5 1.9 2.5 3.4 3.2l.7-.7c.2-.2.5-.3.8-.1l1.5.8c.3.2.4.6.2.9-.5 1-1.5 1.5-2.6 1.3-3-.6-5.2-3-5.9-5.9-.1-.9.2-1.9.9-2.6Z" fill="var(--paper)" />
+    </svg>
+  );
 }
 
-/** "Pick your level" + favourites + competition panels + detail dialog.
+/** "Pick your level" + competition panels + detail dialog.
  *  The level lives in the URL (?jenjang=SMP) so a teacher can share a filtered view. */
 export default function LevelExplorer({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
   const [level, setLevel] = useState<Filter>('ALL');
-  const [favOnly, setFavOnly] = useState(false);
-  const [favs, setFavs] = useState<string[]>([]);
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -101,9 +131,9 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   const navDir = useRef<1 | -1 | null>(null);
   const revealTriggers = useRef<ScrollTrigger[]>([]);
 
-  const matches = (c: Competition) =>
-    inLevel(c, level) && (!favOnly || favs.includes(c.slug));
+  const matches = (c: Competition) => inLevel(c, level);
   const visible = competitions.filter(matches);
+  const layout = buildLayout(visible.length);
 
   const cards = () => Array.from(gridRef.current?.querySelectorAll<HTMLElement>('[data-card]') ?? []);
 
@@ -129,37 +159,33 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     const fromUrl = params.get(PARAM_LEVEL);
     const initial = isFilter(fromUrl) ? fromUrl : 'ALL';
     setLevel(initial);
-    setFavs(loadFavorites());
     if (sectionRef.current) sectionRef.current.dataset.tint = initial;
-
-    const onFavs = (e: Event) => setFavs((e as CustomEvent<string[]>).detail);
-    window.addEventListener(FAVS_EVENT, onFavs);
-    return () => window.removeEventListener(FAVS_EVENT, onFavs);
   }, []);
-
-  // Nav badge asks to show favourites.
-  useEffect(() => {
-    const onShow = () => applyChange(() => setFavOnly(true));
-    window.addEventListener(SHOW_FAVS_EVENT, onShow);
-    return () => window.removeEventListener(SHOW_FAVS_EVENT, onShow);
-  });
 
   // ---------- First view: panels ink in as they scroll into view (once) ----------
   useEffect(() => {
     if (prefersReduced()) return;
-    const targets = cards().filter((el) => !el.hidden);
-    gsap.set(targets, { clipPath: 'inset(0 0 100% 0)' });
-    revealTriggers.current = ScrollTrigger.batch(targets, {
-      start: 'top 92%',
-      once: true,
-      onEnter: (batch) =>
-        gsap.fromTo(
-          batch,
-          { clipPath: 'inset(0 0 100% 0)', y: 40, rotate: () => gsap.utils.random(-4, 4) },
-          { clipPath: 'inset(0 0 0% 0)', y: 0, rotate: 0, duration: 0.65, stagger: 0.09, ease: 'power3.out', clearProps: 'transform' },
-        ),
+    // Wait one frame so a level restored from ?jenjang= has already hidden the other cards;
+    // otherwise the triggers would be measured against the unfiltered layout and never fire.
+    const frame = requestAnimationFrame(() => {
+      const targets = cards().filter((el) => !el.hidden);
+      gsap.set(targets, { clipPath: 'inset(0 0 100% 0)' });
+      revealTriggers.current = ScrollTrigger.batch(targets, {
+        start: 'top 92%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.fromTo(
+            batch,
+            { clipPath: 'inset(0 0 100% 0)', y: 40, rotate: () => gsap.utils.random(-4, 4) },
+            { clipPath: 'inset(0 0 0% 0)', y: 0, rotate: 0, duration: 0.65, stagger: 0.09, ease: 'power3.out', clearProps: 'transform,clipPath' },
+          ),
+      });
+      ScrollTrigger.refresh();
     });
-    return () => revealTriggers.current.forEach((st) => st.kill());
+    return () => {
+      cancelAnimationFrame(frame);
+      revealTriggers.current.forEach((st) => st.kill());
+    };
   }, []);
 
   // ---------- Level choice: halftone wipe from the chosen card ----------
@@ -193,25 +219,9 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     syncUrl(next);
   };
 
-  const toggleFavOnly = () => applyChange(() => setFavOnly((v) => !v));
-
   const resetAll = (origin: HTMLElement) => {
     if (level !== 'ALL') chooseLevel('ALL', origin);
-    applyChange(() => setFavOnly(false));
     syncUrl('ALL');
-  };
-
-  const toggleFav = (slug: string, button: HTMLElement) => {
-    const adding = !favs.includes(slug);
-    const next = adding ? [...favs, slug] : favs.filter((f) => f !== slug);
-    if (favOnly && !adding) applyChange(() => setFavs(next));
-    else setFavs(next);
-    saveFavorites(next);
-    if (adding) {
-      sprayStars(button);
-      if (!prefersReduced())
-        gsap.fromTo(button.querySelector('svg'), { scale: 0.4, rotate: -40 }, { scale: 1, rotate: 0, duration: 0.6, ease: 'elastic.out(1.2, 0.4)' });
-    }
   };
 
   // Re-flow the grid from its previous layout once React has rendered the new filter.
@@ -232,7 +242,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
         ),
       onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.4, duration: 0.25, ease: 'power2.in' }),
     });
-  }, [level, favOnly, favs]);
+  }, [level]);
 
   // ---------- Detail dialog ----------
   const openDetail = (slug: string, el: HTMLElement) => {
@@ -348,17 +358,15 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   };
 
   const u = t.unknown;
-  const filtered = level !== 'ALL' || favOnly;
+  const filtered = level !== 'ALL';
   const activeName = active ? (active.name[lang] ?? active.name.id) : '';
-  const activeFav = active ? favs.includes(active.slug) : false;
-  // A competition whose juknis prints no PIC falls back to the festival-wide contacts.
+  // A competition whose juknis prints no PIC shows ??? (no festival-wide fallback).
   const contactList = (active?.contact ?? []).filter(
     (c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp,
   );
 
   return (
     <section ref={sectionRef} className={s.explorer} id="jenjang" aria-labelledby="jenjang-title">
-      <div className={s.gutters} aria-hidden="true" />
       <div ref={wipeRef} className={s.wipe} aria-hidden="true" />
 
       <div className={s.inner}>
@@ -391,12 +399,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
 
         <div className={s.toolbar}>
           <p className={s.status} id="lomba" aria-live="polite">
-            {t.explorer.showing(visible.length, level === 'ALL' ? null : level, favOnly)}
+            {t.explorer.showing(visible.length, level === 'ALL' ? null : level)}
           </p>
-          <button type="button" className={s.favToggle} aria-pressed={favOnly} onClick={toggleFavOnly}>
-            <StarIcon filled={favOnly || favs.length > 0} />
-            {t.explorer.favorites(favs.length)}
-          </button>
           {filtered && (
             <button type="button" className={s.reset} onClick={(e) => resetAll(e.currentTarget)}>
               {t.explorer.reset}
@@ -407,44 +411,35 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
         <ul ref={gridRef} className={s.grid}>
           {competitions.map((c) => {
             const shown = matches(c);
-            const isFav = favs.includes(c.slug);
             const name = c.name[lang] ?? c.name.id;
+            const cell = layout[visible.indexOf(c)];
             return (
-              <li key={c.slug} data-card data-flip-id={c.slug} hidden={!shown} className={s.cell}>
-                <button type="button" className={s.card} data-band={bandOf(c)} data-open onClick={(e) => openDetail(c.slug, e.currentTarget)}>
-                  <span className={`${s.band} ht`}>
+              <li key={c.slug} data-card data-flip-id={c.slug} hidden={!shown} className={s.cell} style={cell?.style}>
+                <div className={s.frame}>
+                  <button type="button" className={s.card} data-band={bandOf(c)} data-pattern={cell?.pattern} data-open onClick={(e) => openDetail(c.slug, e.currentTarget)}>
+                    <span className={s.band}>
+                      <span className={s.cat}>{t.categories[c.category]}</span>
+                    </span>
                     <CategoryIcon category={c.category} className={s.icon} />
-                    <span className={s.cat}>{t.categories[c.category]}</span>
-                  </span>
-                  <span className={s.cardBody}>
-                    <span className={s.name} lang={c.name[lang] ? lang : 'id'}>
-                      {name}
-                    </span>
-                    <span className={s.chips}>
-                      {c.levels.map((l) => (
-                        <span key={l} className={s.chip} data-level={l}>
-                          {l}
+                    <span className={s.cardBody}>
+                      <span className={s.name} lang={c.name[lang] ? lang : 'id'}>
+                        {name}
+                      </span>
+                      <span className={s.cardFoot}>
+                        <span className={s.chips}>
+                          {c.levels.map((l) => (
+                            <span key={l} className={s.chip} data-level={l}>
+                              {l}
+                            </span>
+                          ))}
                         </span>
-                      ))}
+                        <span className={s.more} aria-hidden="true">
+                          {t.explorer.open} ›
+                        </span>
+                      </span>
                     </span>
-                    <span className={s.meta}>
-                      {t.explorer.registration}: <b>{fmtDate(c.registrationCloses, lang) ?? u}</b>
-                    </span>
-                    <span className={s.more} aria-hidden="true">
-                      {t.explorer.open}
-                    </span>
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className={s.fav}
-                  aria-pressed={isFav}
-                  aria-label={isFav ? t.explorer.favRemove(name) : t.explorer.favAdd(name)}
-                  title={t.explorer.favSaved}
-                  onClick={(e) => toggleFav(c.slug, e.currentTarget)}
-                >
-                  <StarIcon filled={isFav} />
-                </button>
+                  </button>
+                </div>
               </li>
             );
           })}
@@ -452,7 +447,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
 
         {visible.length === 0 && (
           <div className={s.empty}>
-            <p>{favOnly && favs.length === 0 ? t.explorer.emptyFav : t.explorer.empty}</p>
+            <p>{t.explorer.empty}</p>
             <button type="button" className={s.reset} onClick={(e) => resetAll(e.currentTarget)}>
               {t.explorer.reset}
             </button>
@@ -497,15 +492,6 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                   <span aria-hidden="true">✕</span>
                   <span className="sr-only">{t.detail.close}</span>
                 </button>
-                <button
-                  type="button"
-                  className={s.panelFav}
-                  aria-pressed={activeFav}
-                  aria-label={activeFav ? t.explorer.favRemove(activeName) : t.explorer.favAdd(activeName)}
-                  onClick={(e) => toggleFav(active.slug, e.currentTarget)}
-                >
-                  <StarIcon filled={activeFav} />
-                </button>
               </div>
             </div>
 
@@ -514,7 +500,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                 [
                   [t.detail.level, active.levels.join(' · ')],
                   [
-                    t.detail.peserta,
+                    t.detail.participation,
                     t.detail.peserta(
                       active.participation ? t.detail.participationValues[active.participation] : null,
                       active.teamSize,
@@ -533,7 +519,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                 <dt>{t.detail.juknis}</dt>
                 <dd className={active.juknisUrl ? undefined : s.unknown}>
                   {active.juknisUrl ? (
-                    <a href={active.juknisUrl} target="_blank" rel="noopener noreferrer">
+                    <a className={s.factLink} href={active.juknisUrl} target="_blank" rel="noopener noreferrer">
+                      <LinkIcon />
                       {t.detail.juknisDownload} <span className="sr-only">{t.detail.newTab}</span>
                     </a>
                   ) : (
@@ -544,17 +531,22 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
               <div className={s.fact} data-reveal>
                 <dt>{contactList.length ? t.detail.contact : t.detail.contactGeneral}</dt>
                 <dd>
-                  {(contactList.length ? contactList : festival.contacts).map((c) => (
-                    <a
-                      key={c.whatsapp ?? c.name}
-                      className={s.contactLink}
-                      href={waLink(c.whatsapp!, `${t.footer.prefill} (${activeName})`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
-                    </a>
-                  ))}
+                  {contactList.length ? (
+                    contactList.map((c) => (
+                      <a
+                        key={c.whatsapp ?? c.name}
+                        className={`${s.factLink} ${s.contactLink}`}
+                        href={waLink(c.whatsapp!, `${t.footer.prefill} (${activeName})`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <WhatsAppIcon />
+                        {c.name} · {c.whatsapp} <span className="sr-only">{t.detail.newTab}</span>
+                      </a>
+                    ))
+                  ) : (
+                    <span className={s.unknown}>{u}</span>
+                  )}
                 </dd>
               </div>
             </dl>

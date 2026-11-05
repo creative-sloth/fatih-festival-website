@@ -34,41 +34,13 @@
 }
 
 .explorer {
-  --cream: #fff8e7;
   position: relative;
   isolation: isolate;
   overflow: hidden;
   scroll-margin-top: 64px;
   border-top: var(--line) solid var(--ink);
-  /* Panel colours read as ink-printed flats; the cream only shows through the borders. */
-  background: var(--cream);
-}
-
-.explorer::before,
-.explorer::after,
-.gutters {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-/* Marvel-style panel collage (scripts/make-marvel-panels.py):
-   two alternating flat colours on top of a heavy black grid of borders. */
-.explorer::before {
-  background: var(--tint);
-  -webkit-mask: url('/assets/marvel-fill-a.svg') top center / max(100%, 1000px) auto repeat-y;
-  mask: url('/assets/marvel-fill-a.svg') top center / max(100%, 1000px) auto repeat-y;
-}
-.explorer::after {
-  background: var(--alt);
-  -webkit-mask: url('/assets/marvel-fill-b.svg') top center / max(100%, 1000px) auto repeat-y;
-  mask: url('/assets/marvel-fill-b.svg') top center / max(100%, 1000px) auto repeat-y;
-}
-.gutters {
-  background: var(--ink);
-  -webkit-mask: url('/assets/marvel-gutter.svg') top center / max(100%, 1000px) auto repeat-y;
-  mask: url('/assets/marvel-gutter.svg') top center / max(100%, 1000px) auto repeat-y;
+  /* Plain page: the comic panels themselves are the collage. */
+  background: var(--paper);
 }
 
 .wipe {
@@ -97,11 +69,10 @@
   font-size: clamp(3rem, 6vw + 1rem, 6rem);
   line-height: 0.9;
   letter-spacing: 0.01em;
-  /* Ink lettering with a paper outline: reads on both the tinted and the neutral panels. */
-  color: var(--ink);
-  -webkit-text-stroke: 0.045em var(--paper);
+  color: var(--accent-yellow);
+  -webkit-text-stroke: 0.045em var(--ink);
   paint-order: stroke fill;
-  text-shadow: 0.045em 0.055em 0 var(--paper), 0.09em 0.11em 0 rgb(17 16 20 / 0.22);
+  text-shadow: 0.05em 0.06em 0 var(--ink);
   rotate: -2deg;
   transform-origin: 0 50%;
 }
@@ -122,7 +93,7 @@
 
 .picker {
   display: grid;
-  grid-template-columns: 0.8fr repeat(3, 1fr);
+  grid-template-columns: 0.8fr repeat(4, 1fr);
   gap: 18px;
   margin: 36px 0 0;
   padding: 0;
@@ -246,23 +217,56 @@
   scroll-margin-top: 80px;
 }
 
-/* ---------- Competition panels ---------- */
+/* ---------- Competition panels: one comic page ---------- */
 
 .grid {
+  --gap: 12px;
   display: grid;
-  /* Fixed 3-up on desktop. auto-flow:row (not dense) so cards keep document order and
-     nothing is pulled into an earlier hole by a wider neighbour. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 262px), 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: 270px;
+  gap: var(--gap);
   margin: 0;
   padding: 0;
   list-style: none;
-  align-items: stretch;
 }
 .cell {
   position: relative;
   display: flex;
   min-width: 0;
+  grid-column: span var(--span, 4);
+  /* Hard offset shadow follows the slanted shape (filter runs after the child's clip-path). */
+  filter: drop-shadow(4px 4px 0 var(--ink));
+  transition:
+    translate 0.5s var(--ease-spring),
+    filter 0.5s var(--ease-spring);
+}
+.cell:hover {
+  z-index: 2;
+  translate: -2px -4px;
+  filter: drop-shadow(7px 8px 0 var(--ink));
+}
+.cell:has(.card:active) {
+  translate: 3px 3px;
+  filter: drop-shadow(1px 1px 0 var(--ink));
+  transition-duration: 80ms;
+}
+
+/* Gutter slants: each side is a signed px value; the neighbour across the gutter uses the same value,
+   so both edges stay parallel. Positive = the edge leans right going down. */
+.frame {
+  --L: var(--sl, 0px);
+  --R: var(--sr, 0px);
+  --shape: polygon(
+    max(var(--L) * -1, 0px) 0,
+    calc(100% - max(var(--R), 0px)) 0,
+    calc(100% - max(var(--R) * -1, 0px)) 100%,
+    max(var(--L), 0px) 100%
+  );
+  flex: 1;
+  min-width: 0;
+  padding: 3px;
+  background: var(--ink);
+  clip-path: var(--shape);
 }
 
 .card,
@@ -292,82 +296,143 @@
 
 .card {
   appearance: none;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: block;
+  overflow: hidden;
   width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  border: var(--line) solid var(--ink);
-  background: var(--paper);
-  box-shadow: var(--shadow-md);
-  color: inherit;
+  border: 0;
+  background: var(--b);
+  clip-path: var(--shape);
+  color: var(--ink);
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition:
-    transform 0.55s var(--ease-spring),
-    box-shadow 0.55s var(--ease-spring);
 }
-.card:hover {
-  transform: translate(-3px, -5px) rotate(-0.6deg);
-  box-shadow: 9px 11px 0 var(--ink);
+
+/* Panel art: sunburst rays, graded halftone, or a glowing burst, always in the level colour. */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: transform 0.6s var(--ease-spring);
 }
-.card:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0 var(--ink);
-  transition-duration: 80ms;
+.card[data-pattern='rays']::before {
+  background: repeating-conic-gradient(
+    from -6deg at 50% 46%,
+    var(--b) 0 6deg,
+    color-mix(in srgb, var(--b) 70%, #fff) 6deg 12deg
+  );
+}
+.card[data-pattern='rays']::after {
+  background: radial-gradient(circle, rgb(255 255 255 / 0.5) 1.5px, transparent 2.4px) 0 0 / 9px 9px;
+  -webkit-mask: radial-gradient(circle at 50% 46%, #000 0, transparent 60%);
+  mask: radial-gradient(circle at 50% 46%, #000 0, transparent 60%);
+}
+.card[data-pattern='dots']::before {
+  background: var(--b);
+}
+.card[data-pattern='dots']::after {
+  background: radial-gradient(circle, color-mix(in srgb, var(--b) 62%, #000) 2.2px, transparent 2.8px) 0 0 / 10px 10px;
+  -webkit-mask: linear-gradient(200deg, transparent 20%, #000 95%);
+  mask: linear-gradient(200deg, transparent 20%, #000 95%);
+}
+.card[data-pattern='burst']::before {
+  background:
+    radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--b) 35%, #fff) 0 14%, transparent 62%),
+    repeating-conic-gradient(from 4deg at 50% 46%, var(--b) 0 9deg, color-mix(in srgb, var(--b) 82%, #000) 9deg 18deg);
+}
+.card[data-pattern='burst']::after {
+  background: radial-gradient(circle, rgb(255 255 255 / 0.55) 1.6px, transparent 2.5px) 0 0 / 9px 9px;
+  -webkit-mask: radial-gradient(circle at 50% 46%, transparent 18%, #000 85%);
+  mask: radial-gradient(circle at 50% 46%, transparent 18%, #000 85%);
+}
+.cell:hover .card::before {
+  transform: scale(1.08) rotate(1.5deg);
+}
+.card:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 5px var(--accent-yellow), inset 0 0 0 8px var(--ink);
 }
 
 .band {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-bottom: var(--line) solid var(--ink);
-  background: var(--b);
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  z-index: 2;
 }
-
-.icon {
-  flex: none;
-  width: 46px;
-  height: 46px;
-}
-
 .cat {
+  display: inline-block;
   padding: 2px 8px 0;
   border: 2px solid var(--ink);
   background: var(--paper);
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: 0.03em;
   rotate: -2deg;
 }
 
+.icon {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  z-index: 1;
+  width: 82px;
+  height: 82px;
+  translate: -50% -50%;
+  filter: drop-shadow(4px 4px 0 var(--ink));
+}
+
+/* Caption box, like narration in a comic panel */
 .cardBody {
-  flex: 1;
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
   display: grid;
-  align-content: start;
-  gap: 10px;
-  padding: 14px 16px 16px;
+  gap: 6px;
+  padding: 8px 12px 9px;
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--ink);
+  rotate: -1deg;
+  transition: rotate 0.5s var(--ease-spring);
+}
+.cell:nth-child(even) .cardBody {
+  rotate: 0.8deg;
+}
+.cell:hover .cardBody {
+  rotate: 0deg;
 }
 
 .name {
   font-family: var(--font-display);
-  font-size: clamp(1.55rem, 1vw + 1.15rem, 1.95rem);
+  font-size: clamp(1.4rem, 0.7vw + 1.1rem, 1.75rem);
   line-height: 1;
   letter-spacing: 0.01em;
 }
 
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 .chip {
-  padding: 1px 8px;
+  padding: 0 7px;
   border: 2px solid var(--ink);
   background: var(--level-sd);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
 }
 .chip[data-level='TK'] {
@@ -383,44 +448,49 @@
   color: var(--paper);
 }
 
-.meta {
-  font-size: 0.92rem;
-}
-
 .more {
-  justify-self: start;
-  margin-top: 4px;
+  flex: none;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   letter-spacing: 0.03em;
-  text-decoration: underline;
-  text-decoration-thickness: 3px;
-  text-decoration-color: var(--b);
-  text-underline-offset: 4px;
+  white-space: nowrap;
 }
 
-/* Wide panels: band becomes a vertical strip, bigger title (RHYTHM) */
-@media (min-width: 640px) {
-  .wide .card {
-    flex-direction: row;
+/* Tablet: two panels per row */
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 250px;
   }
-  .wide .band {
-    flex-direction: column;
-    justify-content: center;
-    min-width: 168px;
-    border-bottom: 0;
-    border-right: var(--line) solid var(--ink);
+  .cell {
+    grid-column: span var(--tspan, 1);
   }
-  .wide .icon {
-    width: 84px;
-    height: 84px;
+  .frame {
+    --L: var(--tsl, 0px);
+    --R: var(--tsr, 0px);
   }
-  .wide .name {
-    font-size: clamp(2rem, 1.6vw + 1.3rem, 2.7rem);
+}
+
+/* Phone: one column, gutters slant between stacked panels */
+@media (max-width: 639px) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
   }
-  .wide .cardBody {
-    align-content: center;
-    padding: 20px 68px 20px 24px;
+  .cell {
+    grid-column: auto;
+  }
+  .frame {
+    --shape: polygon(
+      0 max(var(--sa, 0px) * -1, 0px),
+      100% max(var(--sa, 0px), 0px),
+      100% calc(100% - max(var(--sb, 0px) * -1, 0px)),
+      0 calc(100% - max(var(--sb, 0px), 0px))
+    );
+  }
+  .icon {
+    width: 70px;
+    height: 70px;
   }
 }
 
@@ -770,25 +840,51 @@
 }
 
 .fact {
-  padding: 8px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 12px 12px;
   border: 2px solid var(--ink);
   background: #fafaf6;
+  text-align: center;
 }
 .fact dt {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 800;
 }
 .fact dd {
-  margin: 2px 0 0;
+  margin: 0;
+  font-size: 0.9rem;
   font-weight: 700;
-}
-.fact a {
-  font-weight: 800;
+  line-height: 1.3;
 }
 
-/* Narahubung: one line per PIC, each its own tap target. */
+/* Juknis and narahubung: icon + text, no underline. Each link is its own 44 px tap target. */
+.factLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--ink);
+}
+.factLink:hover {
+  color: var(--b);
+}
+.factLink:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+.factIcon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
 .contactLink {
-  display: block;
   width: fit-content;
 }
 
