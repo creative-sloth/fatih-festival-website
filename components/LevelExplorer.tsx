@@ -371,6 +371,13 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     .filter((c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp);
   const contactList = ownContacts.length ? ownContacts : fallbackContacts;
   const contactLabel = ownContacts.length ? t.detail.contact : t.detail.contactFor(levelGroups.map((g) => g.label).join(' & '));
+  const pesertaMain = active?.participation
+    ? active.participation === 'team'
+      ? t.detail.teamOf(active.teamSize)
+      : t.detail.participationValues.individual
+    : null;
+  const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
+  const dateText = active ? fmtDate(active.competitionDate, lang) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
 
@@ -441,9 +448,11 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                               {l}
                             </span>
                           ))}
+                          <span className={s.badge}>{c.participation ? t.detail.participationValues[c.participation] : u}</span>
+                          <span className={`${s.badge} ${s.badgeFee}`}>{c.fee ?? u}</span>
                         </span>
                         <span className={s.more} aria-hidden="true">
-                          {t.explorer.open} ›
+                          ›
                         </span>
                       </span>
                     </span>
@@ -505,26 +514,32 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
             </div>
 
             <dl className={s.facts}>
-              {(
-                [
-                  [t.detail.level, active.levels.join(' · ')],
-                  [
-                    t.detail.participation,
-                    t.detail.peserta(
-                      active.participation ? t.detail.participationValues[active.participation] : null,
-                      active.teamSize,
-                    ),
-                  ],
-                  [t.detail.date, fmtDate(active.competitionDate, lang)],
-                  [t.detail.fee, active.fee],
-                ] as [string, string | null][]
-              ).map(([label, value]) => (
-                <div key={label} className={s.fact} data-reveal>
-                  <dt>{label}</dt>
-                  <dd className={value ? undefined : s.unknown}>{value ?? u}</dd>
-                </div>
-              ))}
-              <div className={s.fact} data-reveal>
+              <div className={s.fact} data-tone="level" data-reveal>
+                <dt>{t.detail.level}</dt>
+                <dd>{active.levels.join(' · ')}</dd>
+              </div>
+              <div className={s.fact} data-tone="peserta" data-reveal>
+                <dt>{t.detail.participation}</dt>
+                <dd>
+                  {pesertaMain ? (
+                    <>
+                      <span>{pesertaMain}</span>
+                      {pesertaSub && <span className={s.dim}>{pesertaSub}</span>}
+                    </>
+                  ) : (
+                    <span className={s.unknown}>{u}</span>
+                  )}
+                </dd>
+              </div>
+              <div className={s.fact} data-tone="date" data-reveal>
+                <dt>{t.detail.date}</dt>
+                <dd className={dateText ? undefined : s.unknown}>{dateText ?? u}</dd>
+              </div>
+              <div className={s.fact} data-tone="fee" data-reveal>
+                <dt>{t.detail.fee}</dt>
+                <dd className={active.fee ? undefined : s.unknown}>{active.fee ?? u}</dd>
+              </div>
+              <div className={s.fact} data-tone="juknis" data-reveal>
                 <dt>{t.detail.juknis}</dt>
                 <dd className={active.juknisUrl ? undefined : s.unknown}>
                   {active.juknisUrl ? (
@@ -537,7 +552,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                   )}
                 </dd>
               </div>
-              <div className={s.fact} data-reveal>
+              <div className={s.fact} data-tone="contact" data-reveal>
                 <dt>{contactLabel}</dt>
                 <dd>
                   {contactList.length ? (
@@ -550,8 +565,9 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                         rel="noopener noreferrer"
                       >
                         <WhatsAppIcon />
-                        <span>
-                          {c.name} · <span className={s.nowrap}>{c.whatsapp}</span>
+                        <span className={s.contactText}>
+                          <span className={s.contactName}>{c.name}</span>
+                          <span className={s.nowrap}>{c.whatsapp}</span>
                           <span className="sr-only"> {t.detail.newTab}</span>
                         </span>
                       </a>
@@ -567,7 +583,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
             <div className={s.register} data-reveal>
               {formUrl ? (
                 <a className={s.registerBtn} href={formUrl} target="_blank" rel="noopener noreferrer">
-                  {t.detail.register} <span className={s.newTab}>{t.detail.newTab}</span>
+                  {t.detail.register} <span className="sr-only">{t.detail.newTab}</span>
                 </a>
               ) : (
                 <p className={s.registerNote}>{t.detail.registerUnavailable}</p>

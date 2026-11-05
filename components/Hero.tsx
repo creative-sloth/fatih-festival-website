@@ -3,6 +3,7 @@ import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
 import { getMessages } from '@/messages';
 import { Bolt, Sparkle, Star, Starburst } from './ComicShapes';
+import Countdown from './Countdown';
 import HeroMotion from './HeroMotion';
 import s from './Hero.module.css';
 
@@ -122,6 +123,8 @@ export default function Hero({ lang }: { lang: Lang }) {
             {t.hero.ctaPrimary}
           </a>
         </div>
+
+        <Countdown lang={lang} />
       </div>
 
       <div className={s.captions}>

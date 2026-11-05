@@ -1,0 +1,72 @@
+/* Registration countdown in the hero: comic caption + four ink tiles. */
+
+.wrap {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(6px, 1.1svh, 10px);
+}
+
+.title {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px 10px;
+  margin: 0;
+  padding: 5px 14px 3px;
+  border: var(--line) solid var(--ink);
+  background: #fff3a6;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1vw + 0.7rem, 1.3rem);
+  letter-spacing: 0.04em;
+  rotate: -1.5deg;
+}
+.title b {
+  font-weight: 400;
+  color: var(--sun-4);
+}
+
+.tiles {
+  display: flex;
+  gap: clamp(8px, 1.4vw, 16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  display: grid;
+  justify-items: center;
+  min-width: clamp(54px, min(6.5vw, 9.5svh), 84px);
+  border: var(--line) solid var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.tile:nth-child(odd) {
+  rotate: -1.2deg;
+}
+.tile:nth-child(even) {
+  rotate: 1deg;
+}
+
+.digits {
+  padding: 4px 6px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, min(3vw + 0.5rem, 5svh), 3.4rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.unit {
+  width: 100%;
+  padding: 2px 4px 1px;
+  border-top: 2px solid var(--ink);
+  background: var(--accent-yellow);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-align: center;
+}

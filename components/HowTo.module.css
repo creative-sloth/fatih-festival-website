@@ -206,7 +206,7 @@
   position: relative;
   max-width: 62%;
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   line-height: 0.95;
   letter-spacing: 0.03em;
   text-align: center;
@@ -217,7 +217,7 @@
   height: 170px;
 }
 .endNode .burstText {
-  font-size: 1.75rem;
+  font-size: 1.3rem;
   color: var(--ink);
 }
 
@@ -436,11 +436,12 @@
     filter: drop-shadow(0.45cqw 0.45cqw 0 var(--ink));
   }
   .burstText {
-    font-size: 2.3cqw;
+    font-size: 1.65cqw;
+    max-width: 58%;
   }
   .endNode .burstText {
-    font-size: 2.9cqw;
-    max-width: 52%;
+    font-size: 2cqw;
+    max-width: 46%;
   }
   .diamond {
     filter: drop-shadow(0.55cqw 0.55cqw 0 var(--ink));

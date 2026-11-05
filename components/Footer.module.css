@@ -66,6 +66,7 @@
 
 .person {
   display: grid;
+  align-content: start;
   gap: 6px;
   padding: 14px 16px 16px;
   border: 2px solid var(--ink);

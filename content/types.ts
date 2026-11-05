@@ -37,7 +37,10 @@ export interface Competition {
   levels: Level[];
   category: Category;
   participation: 'individual' | 'team' | null;
+  /** Members per team as printed in the juknis, e.g. "3" or "maks. 12". Rendered as "Tim (3 orang)". */
   teamSize: string | null;
+  /** School entry limit, e.g. 2 teams or 5 participants. Rendered as "maks. 2 tim per sekolah". */
+  maxPerSchool: { count: number; unit: 'tim' | 'peserta' } | null;
   eligibility: Localized | null;
   registrationOpens: string | null; // ISO 8601 with +07:00
   registrationCloses: string | null;
@@ -67,6 +70,10 @@ export interface Festival {
   logos: { name: string; short: string; src: string | null }[];
   /** General Google Form for registration. Used when a competition has no `formUrl` of its own. */
   formUrl: string | null;
+  /** Registration deadline (ISO, +07:00), the same for every competition. null = not announced: the hero
+   *  shows `registrationClosesText` and a placeholder countdown. */
+  registrationCloses: string | null;
+  registrationClosesText: Localized;
   /** Narahubung grouped by school level (from the committee's Data Lomba sheet). A competition without
    *  its own contact falls back to the groups that cover its levels. */
   levelContacts: { label: string; levels: Level[]; people: Contact[] }[];

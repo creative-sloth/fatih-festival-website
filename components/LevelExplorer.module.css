@@ -223,7 +223,7 @@
   --gap: 12px;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: 270px;
+  grid-auto-rows: 300px;
   gap: var(--gap);
   margin: 0;
   padding: 0;
@@ -379,10 +379,10 @@
 .icon {
   position: absolute;
   left: 50%;
-  top: 38%;
+  top: 31%;
   z-index: 1;
-  width: 82px;
-  height: 82px;
+  width: 74px;
+  height: 74px;
   translate: -50% -50%;
   filter: drop-shadow(4px 4px 0 var(--ink));
 }
@@ -419,7 +419,7 @@
 
 .cardFoot {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 8px;
 }
@@ -427,6 +427,17 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+}
+.badge {
+  padding: 0 7px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.badgeFee {
+  background: var(--accent-yellow);
 }
 .chip {
   padding: 0 7px;
@@ -450,17 +461,22 @@
 
 .more {
   flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--ink);
+  background: var(--accent-yellow);
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
+  font-size: 1.3rem;
+  line-height: 1;
 }
 
 /* Tablet: two panels per row */
 @media (max-width: 899px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 250px;
+    grid-auto-rows: 300px;
   }
   .cell {
     grid-column: span var(--tspan, 1);
@@ -475,7 +491,7 @@
 @media (max-width: 639px) {
   .grid {
     grid-template-columns: 1fr;
-    grid-auto-rows: 240px;
+    grid-auto-rows: 290px;
   }
   .cell {
     grid-column: auto;
@@ -489,8 +505,8 @@
     );
   }
   .icon {
-    width: 70px;
-    height: 70px;
+    width: 66px;
+    height: 66px;
   }
 }
 
@@ -840,25 +856,67 @@
 }
 
 .fact {
+  --hc: var(--accent-yellow);
+  --hf: var(--ink);
+  display: grid;
+  grid-template-rows: 42px 1fr;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: #fafaf6;
+}
+/* Each header has its own colour so the six boxes are told apart at a glance. */
+.fact[data-tone='level'] {
+  --hc: var(--level-smp-sma);
+  --hf: var(--paper);
+}
+.fact[data-tone='peserta'] {
+  --hc: var(--level-smp);
+  --hf: var(--paper);
+}
+.fact[data-tone='date'] {
+  --hc: var(--sun-3);
+}
+.fact[data-tone='fee'] {
+  --hc: var(--level-sma);
+  --hf: var(--paper);
+}
+.fact[data-tone='juknis'] {
+  --hc: var(--accent-yellow);
+}
+.fact[data-tone='contact'] {
+  --hc: var(--teal);
+}
+.fact dt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px 2px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--hc);
+  color: var(--hf);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.fact dd {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 10px 12px 12px;
-  border: 2px solid var(--ink);
-  background: #fafaf6;
-  text-align: center;
-}
-.fact dt {
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-.fact dd {
+  gap: 2px;
   margin: 0;
-  font-size: 0.9rem;
+  padding: 10px 10px 12px;
+  font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.3;
+  text-align: center;
+}
+.dim {
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 /* Juknis and narahubung: icon + text, no underline. Each link is its own 44 px tap target. */
@@ -887,6 +945,13 @@
 .contactLink {
   width: fit-content;
 }
+.contactText {
+  display: grid;
+  text-align: left;
+}
+.contactName {
+  font-weight: 800;
+}
 
 .unknown {
   font-family: var(--font-display);
@@ -898,6 +963,7 @@
 
 .register {
   padding: 0 18px 20px;
+  text-align: center;
 }
 
 .pager {

@@ -28,9 +28,12 @@ export const festival: Festival = {
   // General registration form (committee, 5 Nov 2026). A competition with its own `formUrl` overrides it.
   formUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSc0ZACvGgYvLkD2lDxdqXY-qM3dH2eMaRIJFU6LyWLNUBpOsw/viewform',
+  // One deadline for all competitions (committee, 5 Nov 2026); the exact day is not announced yet.
+  registrationCloses: null,
+  registrationClosesText: { id: '? Nov 2026', en: '? Nov 2026' },
   // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person TK & SD / SMP / SMA", 5 Nov 2026).
   levelContacts: [
-    { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nabila', whatsapp: '0823 6418 0206' }] },
+    { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nisa', whatsapp: '0852 7637 7196' }] },
     { label: 'SMP', levels: ['SMP'], people: [{ name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }] },
     {
       label: 'SMA',

@@ -13,6 +13,11 @@ const id = {
     competitionsCount: (n: number) => `${n} cabang lomba`,
     ctaPrimary: 'Lihat Lomba',
     ctaRegister: 'Daftar Sekarang',
+    countdown: {
+      title: 'Pendaftaran ditutup',
+      units: { d: 'Hari', h: 'Jam', m: 'Menit', s: 'Detik' },
+      closed: 'Pendaftaran sudah ditutup',
+    },
   },
   explorer: {
     title: 'Pilih Jenjangmu',
@@ -53,9 +58,8 @@ const id = {
     newTab: '(tab baru)',
     participationValues: { individual: 'Individu', team: 'Tim' },
     formatValues: { onsite: 'Luring (di lokasi)', online: 'Daring', hybrid: 'Hybrid' },
-    // Peserta: participation label + the printed team size, e.g. "Tim · 3 pendebat per tim".
-    peserta: (kind: string | null, size: string | null) =>
-      [kind, size].filter(Boolean).join(' · ') || null,
+    teamOf: (size: string | null) => (size ? `Tim (${size} orang)` : 'Tim'),
+    perSchool: (count: number, unit: 'tim' | 'peserta') => `maks. ${count} ${unit} per sekolah`,
     /** Label used when a competition's own juknis prints no PIC. */
     contactFor: (label: string) => `Narahubung ${label}`,
     close: 'Tutup',
@@ -109,6 +113,11 @@ const en: typeof id = {
     competitionsCount: (n: number) => `${n} competitions`,
     ctaPrimary: 'See Competitions',
     ctaRegister: 'Register Now',
+    countdown: {
+      title: 'Registration closes',
+      units: { d: 'Days', h: 'Hours', m: 'Min', s: 'Sec' },
+      closed: 'Registration has closed',
+    },
   },
   explorer: {
     title: 'Pick Your Level',
@@ -149,8 +158,9 @@ const en: typeof id = {
     newTab: '(new tab)',
     participationValues: { individual: 'Individual', team: 'Team' },
     formatValues: { onsite: 'Onsite', online: 'Online', hybrid: 'Hybrid' },
-    peserta: (kind: string | null, size: string | null) =>
-      [kind, size].filter(Boolean).join(' · ') || null,
+    teamOf: (size: string | null) => (size ? `Team (${size.replace('maks.', 'max.')} people)` : 'Team'),
+    perSchool: (count: number, unit: 'tim' | 'peserta') =>
+      `max. ${count} ${unit === 'tim' ? (count === 1 ? 'team' : 'teams') : count === 1 ? 'participant' : 'participants'} per school`,
     contactFor: (label: string) => `Contact person ${label}`,
     close: 'Close',
     prev: 'Previous',
