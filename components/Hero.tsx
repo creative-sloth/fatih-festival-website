@@ -2,25 +2,12 @@ import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
 import { formatDateRange } from '@/lib/dates';
 import { getMessages } from '@/messages';
-import { Bolt, Sparkle, Star } from './ComicShapes';
+import { Bolt, Star } from './ComicShapes';
 import Countdown from './Countdown';
 import RegisterLink from './RegisterLink';
 import HeroMotion from './HeroMotion';
+import TitleArt from './TitleArt';
 import s from './Hero.module.css';
-
-// One span per glyph so the intro can slam letters individually and each letter can spring when poked.
-// The real heading text is in a visually-hidden span; glyph spans are aria-hidden.
-function Glyphs({ text, group }: { text: string; group: string }) {
-  return (
-    <span className={s.word} aria-hidden="true">
-      {[...text].map((c, i) => (
-        <span key={i} className={s.glyph} data-anim={group} data-glyph data-ch={c}>
-          {c}
-        </span>
-      ))}
-    </span>
-  );
-}
 
 export default function Hero({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
@@ -80,20 +67,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <span className="sr-only">
               {festival.name} {festival.edition}
             </span>
-            <span className={s.line1}>
-              <Glyphs text="FATIH" group="ch1" />
-            </span>
-            <span className={s.line2}>
-              <Glyphs text="FESTIVAL" group="ch2" />
-              <span className={s.num} aria-hidden="true">
-                <span className={s.numText} data-anim="num" data-glyph data-ch={festival.edition}>
-                  {festival.edition}
-                </span>
-              </span>
-            </span>
-            <Sparkle className={`${s.sparkle} ${s.sp1}`} anim />
-            <Sparkle className={`${s.sparkle} ${s.sp2}`} anim />
-            <Sparkle className={`${s.sparkle} ${s.sp3}`} anim />
+            <TitleArt />
           </h1>
         </div>
 
