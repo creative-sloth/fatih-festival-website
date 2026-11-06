@@ -26,6 +26,8 @@ export function Starburst({ className, anim, outerFill = 'var(--sun-4)', innerFi
 export function Bolt({ className, anim }: ShapeProps) {
   return (
     <svg className={className} viewBox="0 0 120 120" aria-hidden="true" data-anim={anim ? 'decor' : undefined}>
+      {/* White die-cut edge, as on the flyer */}
+      <path d="M58 6 L18 64 L50 64 L36 114 L102 44 L66 44 L84 6 Z" fill="#fff" stroke="#fff" strokeWidth="15" strokeLinejoin="round" transform="translate(3 3)" />
       <path d="M58 6 L18 64 L50 64 L36 114 L102 44 L66 44 L84 6 Z" fill="var(--ink)" transform="translate(6 6)" />
       <path
         d="M58 6 L18 64 L50 64 L36 114 L102 44 L66 44 L84 6 Z"
@@ -43,16 +45,9 @@ const STAR = 'M60 6 L74 42 L112 44 L82 68 L93 106 L60 84 L27 106 L38 68 L8 44 L4
 export function Star({ className, anim }: ShapeProps) {
   return (
     <svg className={className} viewBox="0 0 124 120" aria-hidden="true" data-anim={anim ? 'decor' : undefined}>
+      <path d={STAR} fill="#fff" stroke="#fff" strokeWidth="15" strokeLinejoin="round" transform="translate(4 3)" />
       <path d={STAR} fill="var(--level-smp-sma)" stroke="var(--ink)" strokeWidth="5" strokeLinejoin="round" transform="translate(8 6)" />
       <path d={STAR} fill="var(--accent-yellow)" stroke="var(--ink)" strokeWidth="5" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-export function Sparkle({ className, anim }: ShapeProps) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" data-anim={anim ? 'sparkle' : undefined}>
-      <path d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="#fff" />
     </svg>
   );
 }
