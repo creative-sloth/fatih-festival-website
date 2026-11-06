@@ -3,10 +3,8 @@ import type { Festival } from './types';
 const ADDRESS =
   'Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122';
 
-// Source: Juknis Fatih Festival 3.0 (docs/juknis-extracted.md). The poster lists no dates and
-// disagrees with the juknis on competition names (it has Futsal and no TK), so the juknis wins.
-// Festival window 11–14 Nov 2026 comes from: SD Olimpiade pelaksanaan 11–14 Nov, Debate
-// perlombaan 11–13 Nov, Essay/Cerdas Cermat awarding 13 Nov, hadiah 14 Nov.
+// Sources: committee juknis booklet, Data Lomba.xlsx and the chat decisions recorded in HANDOFF.md section 0.1.
+// The committee's dates (25-27 Nov, awarding 28 Nov) override the 11-14 Nov dates printed in the old juknis.
 // null = not supplied yet.
 export const festival: Festival = {
   name: 'Fatih Festival',
@@ -38,7 +36,7 @@ export const festival: Festival = {
   // Pelaksanaan 25-27 Nov 2026 (startDate/endDate); Awarding Ceremony 28 Nov 2026. Dates only, no times.
   registrationCloses: '2026-11-20T23:59:00+07:00',
   registrationClosesText: { id: '20 November 2026, 23.59 WIB', en: '20 November 2026, 11:59 PM WIB' },
-  // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person TK & SD / SMP / SMA", 5 Nov 2026).
+  // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person ..."); TK & SD was later changed to Ms. Nisa by the committee (6 Nov 2026).
   levelContacts: [
     { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nisa', whatsapp: '0852 7637 7196' }] },
     { label: 'SMP', levels: ['SMP'], people: [{ name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }] },

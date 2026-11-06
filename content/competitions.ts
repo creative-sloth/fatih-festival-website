@@ -1,8 +1,7 @@
 import type { Category, Competition, Level } from './types';
 
-// Source: Juknis Fatih Festival 3.0 (docs/juknis-extracted.txt). Only facts printed in the juknis
-// are filled (competition days 25-28 Nov 2026 now live on `festival`). Everything the committee has not published stays null and renders as ???.
-// See docs/needed-data.md for the outstanding list.
+// Sources: juknis booklet (docs/juknis-extracted.md) and Data Lomba.xlsx (contacts); the committee's chat decisions win.
+// Only confirmed facts are filled. Everything else stays null. See docs/needed-data.md for the outstanding list.
 const VENUE = {
   id: 'Fatih Bilingual School, Jl. Sultan Malikul Saleh No. 103, Bandaraya, Lamlagang, Banda Raya, Kota Banda Aceh 23122',
   en: null,

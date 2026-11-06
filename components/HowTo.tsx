@@ -4,6 +4,7 @@ import { festival } from '@/content/festival';
 import { getMessages } from '@/messages';
 import { Starburst } from './ComicShapes';
 import HowToMotion from './HowToMotion';
+import RegisterLink from './RegisterLink';
 import s from './HowTo.module.css';
 
 // Each step gets its own panel colour so the chart reads like consecutive comic panels.
@@ -122,10 +123,10 @@ export default function HowTo({ lang }: { lang: Lang }) {
               {t.howto.juknisLink} <span className="sr-only">{t.detail.newTab}</span> ›
             </a>
           )}
-          {i === 2 && festival.formUrl && (
-            <a className={s.stepLink} href={festival.formUrl} target="_blank" rel="noopener noreferrer">
+          {i === 2 && (
+            <RegisterLink className={s.stepLink}>
               {t.howto.formLink} <span className="sr-only">{t.detail.newTab}</span> ›
-            </a>
+            </RegisterLink>
           )}
         </div>
       </li>

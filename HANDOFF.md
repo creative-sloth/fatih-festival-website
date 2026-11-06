@@ -1,6 +1,6 @@
 # PROJECT HANDOFF — FATIH FESTIVAL 3.0 WEBSITE
-Version: 1.6.0
-Prepared: 3 November 2026
+Version: 1.7.0
+Prepared: 3 November 2026 (updated 7 November 2026)
 Supersedes: `school_festival_website_handoff_claude_opus.md` (v1.0) and v1.1
 Audience: Claude Code (implementer) and any reviewer agent. This file is the single source of truth for scope, design, and rules. If anything here conflicts with chat history, this file wins; if it conflicts with an official committee document, the committee document wins and the conflict must be flagged.
 
@@ -13,6 +13,23 @@ Audience: Claude Code (implementer) and any reviewer agent. This file is the sin
 - **Placeholder convention (user decision, v1.2):** any missing fact (date, venue, fee, contact, link, etc.) is displayed as `???` on the site. In data files it is stored as `null` and rendered as `???`. Missing logos are rendered as labelled placeholder boxes ("LOGO — Fatih Bilingual School"). Before launch, every remaining `???` must be either filled or deliberately replaced with "Segera diumumkan / To be announced" (Phase 5 check).
 - Work in the phase order in section 12. Do not skip the hero prototype gate.
 - When you finish a phase, list what changed, what is unverified, and which open questions remain.
+
+---
+
+## 0.1 CURRENT STATE (v1.7.0, 7 Nov 2026): read this first, it overrides older text below
+
+Where later sections disagree with this block, this block and `content/` win.
+
+- **Competitions:** 17, including a TK level (Lomba Mewarnai). The list lives in `content/competitions.ts`; the table in section 5 is the original 16-item poster list and is history only. "STEAM Project" is the official name (slug `smp-sma-stem-expo` is kept because it is an internal id).
+- **Dates (dates only, no times of day):** competition days 25-27 Nov 2026, Awarding Ceremony 28 Nov 2026. Each competition's own date is **To Be Announced** (null in content; the detail card shows "To Be Announced").
+- **Registration:** one general Google Form for everything, one shared deadline, **20 Nov 2026, 23:59 WIB**. The hero shows a live countdown; the register buttons (hero, flowchart step 3, detail cards) disappear after the deadline (client-side check, `lib/registration.ts`).
+- **Juknis:** one shared Google Drive folder for every competition. Per-competition PDFs were removed.
+- **Contacts:** per competition from `Data Lomba/Data Lomba.xlsx`; competitions without their own contact fall back to the level contact (TK & SD, SMP, SMA, see `festival.levelContacts`). The footer is titled "Narahubung Umum".
+- **More information:** Linktree and Instagram links in the footer; the official flyer is downloadable from the footer (`public/assets/poster-fatih-festival-3.0.jpg`).
+- **Removed on purpose:** favourites, the "Minatmu" filter, the hero starburst behind 3.0, the per-competition juknis links.
+- **Missing facts:** still `null` in `content/`. In the detail card they render as "To Be Announced"; elsewhere as `???` (for example step 4 of Cara Daftar).
+- **Design:** "Pilih Jenjangmu" is a comic page of slanted panels on a purple halftone background (a user decision that overrides the "no gradients / no purple" lines in the ban list). The hero title is the flyer lettering (outline + extrusion + gradient halftone fill).
+- **Updating content:** see `docs/content-update.md`.
 
 ---
 
@@ -369,6 +386,11 @@ Event dates · venue · fees · prizes · registration windows · form and jukni
 ---
 
 ## CHANGELOG
+
+**1.7.0 - 7 Nov 2026**
+- Added section 0.1 (current state). Real dates (25-27 Nov, awarding 28 Nov), deadline (20 Nov 23:59 WIB) with live countdown, general Google Form, shared juknis folder, level-based contacts, Linktree/Instagram, poster download, comic-panel picker, flowchart "Cara Daftar", flyer-style title.
+- Register buttons now hide after the deadline. Old per-competition juknis PDFs deleted (they carried outdated dates and contacts).
+- Independent review (7 Nov): focus ring on panels, transition rules, contrast and nav tap targets fixed; docs refreshed.
 
 **1.6.0 — 3 Nov 2026**
 - "Cara Daftar" desktop: replaced the sideways-scrolling strip with a fixed row of four (2×2 on medium screens) and a pinned, scroll-scrubbed ink-in. Verified all panels inside the viewport at 1280×720, 1366×768, 1440×900 and 1920×1080.

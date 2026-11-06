@@ -4,6 +4,7 @@ import { formatDateRange } from '@/lib/dates';
 import { getMessages } from '@/messages';
 import { Bolt, Sparkle, Star } from './ComicShapes';
 import Countdown from './Countdown';
+import RegisterLink from './RegisterLink';
 import HeroMotion from './HeroMotion';
 import s from './Hero.module.css';
 
@@ -103,11 +104,9 @@ export default function Hero({ lang }: { lang: Lang }) {
         </div>
 
         <div className={s.actions}>
-          {festival.formUrl && (
-            <a className={s.cta} href={festival.formUrl} target="_blank" rel="noopener noreferrer">
-              {t.hero.ctaRegister} <span className="sr-only">{t.detail.newTab}</span>
-            </a>
-          )}
+          <RegisterLink className={s.cta}>
+            {t.hero.ctaRegister} <span className="sr-only">{t.detail.newTab}</span>
+          </RegisterLink>
           <a className={`${s.cta} ${s.ctaAlt}`} href="#jenjang">
             {t.hero.ctaPrimary}
           </a>

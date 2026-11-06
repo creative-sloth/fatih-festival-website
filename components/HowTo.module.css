@@ -469,7 +469,7 @@
     color: var(--ink);
     text-align: center;
     text-decoration: none;
-    transition: translate 260ms var(--ease-spring), box-shadow 90ms ease-out;
+    transition: translate 260ms var(--ease-spring);
   }
   .chatLink:hover {
     translate: -0.2cqw -0.3cqw;

@@ -8,6 +8,7 @@ import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
+import { useRegistrationClosed } from '@/lib/registration';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
 import s from './LevelExplorer.module.css';
@@ -85,16 +86,18 @@ const prefersReduced = () => typeof window !== 'undefined' && window.matchMedia(
 
 function fmtDate(iso: string | null, lang: Lang) {
   if (!iso) return null;
+  // A date-only value (YYYY-MM-DD) prints no time of day; a full timestamp prints it in WIB.
+  const dateOnly = iso.length === 10;
+  const when = new Date(dateOnly ? `${iso}T12:00:00+07:00` : iso);
   return (
     new Intl.DateTimeFormat(lang === 'id' ? 'id-ID' : 'en-GB', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      ...(dateOnly ? {} : { hour: '2-digit', minute: '2-digit' }),
       timeZone: 'Asia/Jakarta',
-    }).format(new Date(iso)) + ' WIB'
+    }).format(when) + (dateOnly ? '' : ' WIB')
   );
 }
 
@@ -122,6 +125,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
   const [level, setLevel] = useState<Filter>('ALL');
   const [openSlug, setOpenSlug] = useState<string | null>(null);
+  const registrationClosed = useRegistrationClosed();
 
   const sectionRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLUListElement>(null);
@@ -438,6 +442,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                       <span className={s.cat}>{t.categories[c.category]}</span>
                     </span>
                     <CategoryIcon category={c.category} className={s.icon} />
+                    <span className={s.ring} aria-hidden="true" />
                     <span className={s.cardBody}>
                       <span className={s.name} lang={c.name[lang] ? lang : 'id'}>
                         {name}
@@ -582,12 +587,12 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
 
             {/* No form URL → no active register button (HANDOFF.md §7) */}
             <div className={s.register} data-reveal>
-              {formUrl ? (
+              {formUrl && !registrationClosed ? (
                 <a className={s.registerBtn} href={formUrl} target="_blank" rel="noopener noreferrer">
                   {t.detail.register} <span className="sr-only">{t.detail.newTab}</span>
                 </a>
               ) : (
-                <p className={s.registerNote}>{t.detail.registerUnavailable}</p>
+                <p className={s.registerNote}>{formUrl ? t.detail.registrationClosed : t.detail.registerUnavailable}</p>
               )}
             </div>
 

@@ -140,9 +140,7 @@
   font-size: 1.25rem;
   letter-spacing: 0.04em;
   text-decoration: none;
-  transition:
-    transform var(--dur-press) ease-out,
-    box-shadow var(--dur-press) ease-out;
+  transition: transform var(--dur-press) ease-out;
 }
 .lang b {
   font-weight: 400;
@@ -200,7 +198,7 @@
    The old single-layer text-stroke also traced the font's overlapping inner contours as little squares. */
 .glyph,
 .numText {
-  --ext: 0.013em;
+  --ext: 0.022em;
   position: relative;
   display: inline-block;
   color: transparent;
@@ -236,24 +234,7 @@
     calc(var(--ext) * 4) calc(var(--ext) * 4.40) 0 var(--ink),
     calc(var(--ext) * 5) calc(var(--ext) * 5.50) 0 var(--ink),
     calc(var(--ext) * 6) calc(var(--ext) * 6.60) 0 var(--ink),
-    calc(var(--ext) * 7) calc(var(--ext) * 7.70) 0 var(--ink),
-    calc(var(--ext) * 8) calc(var(--ext) * 8.80) 0 var(--ink),
-    calc(var(--ext) * 9) calc(var(--ext) * 9.90) 0 var(--ink),
-    calc(var(--ext) * 10) calc(var(--ext) * 11.00) 0 var(--ink),
-    calc(var(--ext) * 11) calc(var(--ext) * 12.10) 0 var(--ink),
-    calc(var(--ext) * 12) calc(var(--ext) * 13.20) 0 var(--ink)
-}
-.glyph::after,
-.numText::after {
-  color: transparent;
-  background-image:
-    radial-gradient(circle, rgb(255 255 255 / 0.5) 22%, transparent 26%),
-    linear-gradient(180deg, var(--sun-1) 8%, var(--sun-2) 42%, var(--sun-3) 74%, var(--sun-4) 100%);
-  background-size:
-    0.09em 0.09em,
-    100% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
+    calc(var(--ext) * 7) calc(var(--ext) * 7.70) 0 var(--ink)
 }
 
 .num {
@@ -407,9 +388,7 @@
   letter-spacing: 0.05em;
   text-decoration: none;
   rotate: -1.5deg;
-  transition:
-    transform 260ms var(--ease-spring),
-    box-shadow var(--dur-press) ease-out;
+  transition: transform 260ms var(--ease-spring);
 }
 .ctaAlt {
   background: var(--paper);

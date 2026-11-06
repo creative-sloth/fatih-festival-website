@@ -3,3 +3,11 @@ node_modules/
 out/
 next-env.d.ts
 *.tsbuildinfo
+
+# local scratch and committee source data (never commit)
+.wrangler/
+_*.js
+_*.py
+_*.txt
+_xlsx_out/
+Data Lomba/

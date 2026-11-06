@@ -137,10 +137,7 @@
   border: var(--line) solid var(--ink);
   background: var(--paper);
   box-shadow: var(--shadow-md);
-  transition:
-    transform 0.55s var(--ease-spring),
-    box-shadow 0.55s var(--ease-spring),
-    background-color 0.2s;
+  transition: transform 0.55s var(--ease-spring);
 }
 /* Level-coloured halftone corner */
 .optCard::before {
@@ -236,9 +233,7 @@
   grid-column: span var(--span, 4);
   /* Hard offset shadow follows the slanted shape (filter runs after the child's clip-path). */
   filter: drop-shadow(4px 4px 0 var(--ink));
-  transition:
-    translate 0.5s var(--ease-spring),
-    filter 0.5s var(--ease-spring);
+  transition: translate 0.5s var(--ease-spring);
 }
 .cell:hover {
   z-index: 2;
@@ -356,6 +351,15 @@
 }
 .card:focus-visible {
   outline: none;
+}
+/* The ring is its own top layer: the panel art pseudo-elements would paint over a box-shadow on the card. */
+.ring {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.card:focus-visible .ring {
   box-shadow: inset 0 0 0 5px var(--accent-yellow), inset 0 0 0 8px var(--ink);
 }
 
@@ -533,9 +537,7 @@
   color: var(--ink);
   font: 800 0.95rem var(--font-body);
   cursor: pointer;
-  transition:
-    transform 0.45s var(--ease-spring),
-    box-shadow 0.45s var(--ease-spring);
+  transition: transform 0.45s var(--ease-spring);
 }
 .favToggle svg {
   width: 22px;
@@ -573,9 +575,7 @@
   background: var(--paper);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
-  transition:
-    transform 0.45s var(--ease-spring),
-    box-shadow 0.45s var(--ease-spring);
+  transition: transform 0.45s var(--ease-spring);
 }
 .fav {
   position: absolute;
@@ -829,7 +829,7 @@
   box-shadow: var(--shadow-sm);
   font: 800 1.1rem var(--font-body);
   cursor: pointer;
-  transition: transform var(--dur-press), box-shadow var(--dur-press);
+  transition: transform var(--dur-press);
 }
 .close:active {
   transform: translate(3px, 3px);
@@ -989,7 +989,7 @@
   font-size: 1.2rem;
   letter-spacing: 0.03em;
   cursor: pointer;
-  transition: transform var(--dur-press), box-shadow var(--dur-press);
+  transition: transform var(--dur-press);
 }
 .pageBtn:active:not(:disabled) {
   transform: translate(3px, 3px);
@@ -1060,7 +1060,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   font-style: italic;
-  opacity: 0.6;
+  opacity: 0.78;
 }
 
 /* ---------- Section background: purple comic burst (not on the cards) ----------
