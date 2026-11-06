@@ -167,7 +167,7 @@
 .title {
   position: relative;
   margin: 0;
-  width: min(96vw, 760px, calc(51svh - max(0px, (900px - 100svh) * 0.45)));
+  width: min(96vw, 860px, calc(80svh - max(0px, (900px - 100svh) * 0.1)));
   line-height: 0;
 }
 .titleSvg {
@@ -232,7 +232,7 @@
 .bubbleWrap {
   position: relative;
   z-index: 1;
-  margin-top: -3.5svh;
+  margin-top: -5.5svh;
 }
 
 .bubble {
@@ -365,6 +365,42 @@
   margin: 0;
 }
 
+/* Wide screens: the three caption boxes sit in one row, which frees height for a bigger title */
+@media (min-width: 900px) {
+  /* Bigger bolts and stars, pulled in to frame the larger title */
+  .decorWrap {
+    width: clamp(90px, 9.5vw, 170px);
+  }
+  .boltL {
+    left: 9%;
+    top: 10%;
+  }
+  .boltR {
+    right: 9%;
+    top: 14%;
+  }
+  .starL {
+    left: 13%;
+    bottom: 22%;
+  }
+  .starR {
+    right: 12%;
+    bottom: 26%;
+  }
+  .caption {
+    font-size: 1.05rem;
+  }
+  .caption dt {
+    font-size: 1.3rem;
+  }
+  .captions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+  }
+}
+
 /* ---------- Small screens ---------- */
 
 @media (max-width: 640px) {
@@ -389,6 +425,21 @@
 
   .bubble {
     font-size: 1.2rem;
+  }
+  /* The tail must not poke into the letters on phones */
+  .bubbleWrap {
+    margin-top: -1svh;
+  }
+  /* Both buttons share one row, which also gives the title more room */
+  .actions {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+  .cta {
+    padding: 6px 14px 3px;
+    font-size: clamp(1.05rem, 4.7vw, 1.5rem);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
   }
   .boltR,
   .starL {

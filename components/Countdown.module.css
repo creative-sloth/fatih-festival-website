@@ -70,3 +70,13 @@
   font-weight: 800;
   text-align: center;
 }
+
+/* Wide screens: caption and tiles share one row (saves a row of hero height) */
+@media (min-width: 900px) {
+  .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 18px;
+  }
+}
