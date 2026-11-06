@@ -180,17 +180,6 @@
   isolation: isolate;
 }
 
-/* Black slab behind the lettering, like the flyer: one slanted mass that spills out to the lower right. */
-.title::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: -0.06em -0.2em -0.12em -0.14em;
-  background: var(--ink);
-  clip-path: polygon(3% 2%, 99% 9%, 104% 76%, 97% 104%, 4% 96%, -3% 30%);
-  translate: 0.05em 0.06em;
-}
-
 .line1 {
   font-size: 1.42em;
 }
@@ -211,7 +200,7 @@
    The old single-layer text-stroke also traced the font's overlapping inner contours as little squares. */
 .glyph,
 .numText {
-  --ext: 0.014em;
+  --ext: 0.013em;
   position: relative;
   display: inline-block;
   color: transparent;
@@ -239,17 +228,20 @@
 .glyph::before,
 .numText::before {
   color: var(--ink);
-  -webkit-text-stroke: 0.11em var(--ink);
+  -webkit-text-stroke: 0.15em var(--ink);
   text-shadow:
-    calc(var(--ext) * 1) calc(var(--ext) * 1.15) 0 var(--ink),
-    calc(var(--ext) * 2) calc(var(--ext) * 2.3) 0 var(--ink),
-    calc(var(--ext) * 3) calc(var(--ext) * 3.45) 0 var(--ink),
-    calc(var(--ext) * 4) calc(var(--ext) * 4.6) 0 var(--ink),
-    calc(var(--ext) * 5) calc(var(--ext) * 5.75) 0 var(--ink),
-    calc(var(--ext) * 6) calc(var(--ext) * 6.9) 0 var(--ink),
-    calc(var(--ext) * 7) calc(var(--ext) * 8.05) 0 var(--ink),
-    calc(var(--ext) * 8) calc(var(--ext) * 9.2) 0 var(--ink),
-    calc(var(--ext) * 9) calc(var(--ext) * 10.35) 0 var(--ink);
+    calc(var(--ext) * 1) calc(var(--ext) * 1.10) 0 var(--ink),
+    calc(var(--ext) * 2) calc(var(--ext) * 2.20) 0 var(--ink),
+    calc(var(--ext) * 3) calc(var(--ext) * 3.30) 0 var(--ink),
+    calc(var(--ext) * 4) calc(var(--ext) * 4.40) 0 var(--ink),
+    calc(var(--ext) * 5) calc(var(--ext) * 5.50) 0 var(--ink),
+    calc(var(--ext) * 6) calc(var(--ext) * 6.60) 0 var(--ink),
+    calc(var(--ext) * 7) calc(var(--ext) * 7.70) 0 var(--ink),
+    calc(var(--ext) * 8) calc(var(--ext) * 8.80) 0 var(--ink),
+    calc(var(--ext) * 9) calc(var(--ext) * 9.90) 0 var(--ink),
+    calc(var(--ext) * 10) calc(var(--ext) * 11.00) 0 var(--ink),
+    calc(var(--ext) * 11) calc(var(--ext) * 12.10) 0 var(--ink),
+    calc(var(--ext) * 12) calc(var(--ext) * 13.20) 0 var(--ink)
 }
 .glyph::after,
 .numText::after {
