@@ -1034,30 +1034,6 @@
   text-align: center;
 }
 
-.shareRow {
-  display: flex;
-  justify-content: center;
-  padding: 0 18px 16px;
-}
-.shareBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 4px 16px 2px 12px;
-  border: var(--line) solid var(--ink);
-  background: var(--paper);
-  box-shadow: var(--shadow-sm);
-  font: 800 0.95rem var(--font-body);
-  color: var(--ink);
-  cursor: pointer;
-  transition: transform var(--dur-press);
-}
-.shareBtn:active {
-  transform: translate(3px, 3px);
-  box-shadow: none;
-}
-
 .pager {
   position: sticky;
   bottom: 0;
