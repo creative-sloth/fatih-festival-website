@@ -51,6 +51,17 @@ function LinktreeIcon() {
   );
 }
 
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="16" rx="2" fill="var(--paper)" />
+      <path d="M3 10 H21" fill="var(--sun-4)" />
+      <path d="M8 3 V7 M16 3 V7" />
+      <path d="M8 15 H8.01 M12 15 H12.01 M16 15 H16.01" strokeWidth="3" />
+    </svg>
+  );
+}
+
 export default function Footer({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
 
@@ -100,6 +111,10 @@ export default function Footer({ lang }: { lang: Lang }) {
                   <span>{t.footer.poster}</span>
                 </a>
               )}
+              <a className={s.moreLink} href={`/${lang}/fatih-festival.ics`} download="fatih-festival-3.0.ics">
+                <CalendarIcon />
+                <span>{t.footer.calendar}</span>
+              </a>
               {festival.linktreeUrl && (
                 <a className={s.moreLink} href={festival.linktreeUrl} target="_blank" rel="noopener noreferrer">
                   <LinktreeIcon />

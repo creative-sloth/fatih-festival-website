@@ -19,6 +19,7 @@ gsap.registerPlugin(Flip, ScrollTrigger);
 type Filter = 'ALL' | Level;
 const FILTERS: Filter[] = ['ALL', 'TK', 'SD', 'SMP', 'SMA'];
 const PARAM_LEVEL = 'jenjang';
+const PARAM_COMPETITION = 'lomba';
 
 const isFilter = (v: string | null): v is Filter => !!v && (FILTERS as string[]).includes(v);
 const inLevel = (c: Competition, f: Filter) => f === 'ALL' || c.levels.includes(f);
@@ -128,6 +129,17 @@ function WhatsAppIcon() {
 
 /** "Pick your level" + competition panels + detail dialog.
  *  The level lives in the URL (?jenjang=SMP) so a teacher can share a filtered view. */
+function ShareIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18" cy="5" r="3" fill="var(--paper)" />
+      <circle cx="6" cy="12" r="3" fill="var(--paper)" />
+      <circle cx="18" cy="19" r="3" fill="var(--paper)" />
+      <path d="M8.6 10.5 L15.4 6.5 M8.6 13.5 L15.4 17.5" />
+    </svg>
+  );
+}
+
 export default function LevelExplorer({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
   const [level, setLevel] = useState<Filter>('ALL');
@@ -169,10 +181,48 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const fromUrl = params.get(PARAM_LEVEL);
-    const initial = isFilter(fromUrl) ? fromUrl : 'ALL';
+    // A shared link (?lomba=slug) opens that competition's card; if the level filter would hide it, show all levels.
+    const wanted = competitions.find((c) => c.slug === params.get(PARAM_COMPETITION));
+    let initial: Filter = isFilter(fromUrl) ? fromUrl : 'ALL';
+    if (wanted && !inLevel(wanted, initial)) initial = 'ALL';
     setLevel(initial);
     if (sectionRef.current) sectionRef.current.dataset.tint = initial;
+    if (!wanted) return;
+    // Let the grid lay out first so the card zooms open from where it really is.
+    const timer = window.setTimeout(() => {
+      trigger.current = gridRef.current?.querySelector<HTMLElement>(`[data-flip-id="${wanted.slug}"] [data-open]`) ?? null;
+      setOpenSlug(wanted.slug);
+    }, 700);
+    return () => window.clearTimeout(timer);
   }, []);
+
+  // The open competition lives in the URL (?lomba=slug) so the address bar is always a shareable link.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (openSlug) url.searchParams.set(PARAM_COMPETITION, openSlug);
+    else url.searchParams.delete(PARAM_COMPETITION);
+    window.history.replaceState(null, '', url);
+  }, [openSlug]);
+
+  // Native share sheet where it exists (phones); otherwise a WhatsApp message with the link.
+  const shareActive = async () => {
+    if (!active) return;
+    const url = new URL(window.location.href);
+    url.search = '';
+    url.hash = '';
+    url.searchParams.set(PARAM_COMPETITION, active.slug);
+    const text = t.detail.shareText(active.name[lang] ?? active.name.id);
+    if (typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: active.name[lang] ?? active.name.id, text, url: url.toString() });
+      } catch {
+        /* dismissed */
+      }
+      return;
+    }
+    window.open(`https://wa.me/?text=${encodeURIComponent(`${text}
+${url}`)}`, '_blank', 'noopener');
+  };
 
   // ---------- First view: panels ink in as they scroll into view (once) ----------
   useEffect(() => {
@@ -611,6 +661,13 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
               ) : (
                 <p className={s.registerNote}>{formUrl ? t.detail.registrationClosed : t.detail.registerUnavailable}</p>
               )}
+            </div>
+
+            <div className={s.shareRow}>
+              <button type="button" className={s.shareBtn} onClick={shareActive}>
+                <ShareIcon />
+                {t.detail.share}
+              </button>
             </div>
 
             {visible.length > 1 && activeIndex >= 0 && (
