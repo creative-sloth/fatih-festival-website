@@ -508,9 +508,53 @@
       0 calc(100% - max(var(--sb, 0px), 0px))
     );
   }
+  /* Compact rows (about 136px instead of 290px): icon and category on the left, caption box on the right.
+     17 stacked 290px panels were about 5,000px of scrolling on a phone. */
+  .grid {
+    grid-auto-rows: 136px;
+  }
+  .band {
+    left: 10px;
+    top: 9px;
+  }
+  .cat {
+    padding: 1px 6px 0;
+    font-size: 0.95rem;
+  }
   .icon {
-    width: 66px;
-    height: 66px;
+    left: 44px;
+    top: 66%;
+    width: 52px;
+    height: 52px;
+    filter: drop-shadow(3px 3px 0 var(--ink));
+  }
+  .cardBody {
+    left: 92px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    align-content: space-between;
+    gap: 4px;
+    padding: 6px 9px 7px;
+    rotate: 0deg;
+  }
+  .cell:nth-child(even) .cardBody {
+    rotate: 0deg;
+  }
+  .name {
+    font-size: 1.3rem;
+  }
+  .chips {
+    gap: 4px;
+  }
+  .badge,
+  .chip {
+    padding: 0 5px;
+    font-size: 0.7rem;
+  }
+  .more {
+    width: 26px;
+    height: 26px;
   }
 }
 
