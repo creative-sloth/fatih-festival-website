@@ -52,11 +52,51 @@ const shapes: Record<Category, React.ReactNode> = {
   ),
 };
 
-export default function CategoryIcon({ category, className }: { category: Category; className?: string }) {
+// Competition-specific glyphs where the category icon would mislead (colouring is not music, futsal is not basketball).
+// They keep their category's data-cat, so the hover animation stays the same.
+type Variant = 'palette' | 'mic' | 'soccer';
+const variants: Record<Variant, React.ReactNode> = {
+  palette: (
+    <g strokeWidth="4" stroke={INK} strokeLinejoin="round">
+      <path
+        d="M32 6 C16 6 6 18 6 31 C6 45 18 56 30 56 C37 56 37 50 34 47 C31 44 33 40 39 40 H48 C54 40 58 36 58 30 C58 17 46 6 32 6 Z"
+        fill="var(--paper)"
+      />
+      <circle cx="20" cy="27" r="5" fill="var(--sun-4)" />
+      <circle cx="31" cy="17" r="5" fill="var(--accent-yellow)" />
+      <circle cx="44" cy="20" r="5" fill="var(--level-sma)" />
+      <circle cx="19" cy="42" r="5" fill="var(--level-smp)" />
+    </g>
+  ),
+  mic: (
+    <g strokeWidth="4" stroke={INK} strokeLinejoin="round" strokeLinecap="round">
+      <rect x="23" y="4" width="20" height="32" rx="10" fill="var(--level-smp)" />
+      <path d="M23 15 H43 M23 23 H43" fill="none" />
+      <path d="M14 28 C14 46 52 46 52 28" fill="none" />
+      <path d="M33 44 V56 M23 57 H43" fill="none" />
+    </g>
+  ),
+  soccer: (
+    <g strokeWidth="4" stroke={INK} strokeLinejoin="round" fill="none">
+      <circle cx="33" cy="33" r="23" fill="var(--paper)" />
+      <path d="M33 24 L41 30 L38 40 H28 L25 30 Z" fill={INK} />
+      <path d="M33 24 V10 M41 30 L54 26 M38 40 L46 52 M28 40 L20 52 M25 30 L12 26" />
+    </g>
+  ),
+};
+const variantFor: Record<string, Variant> = {
+  'tk-mewarnai': 'palette',
+  'smp-sma-desain-grafis': 'palette',
+  'sd-vocal-solo': 'mic',
+  'smp-vocal-solo': 'mic',
+  'sd-futsal': 'soccer',
+};
+
+export default function CategoryIcon({ category, slug, className }: { category: Category; slug?: string; className?: string }) {
   return (
     <svg className={className} viewBox="0 0 66 66" aria-hidden="true" data-cat={category}>
       <g transform="translate(3 3)" opacity="1" style={{ filter: 'drop-shadow(3px 3px 0 var(--ink))' }}>
-        {shapes[category]}
+        {(slug && variants[variantFor[slug]]) || shapes[category]}
       </g>
     </svg>
   );

@@ -8,6 +8,7 @@ import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
+import { formatFee } from '@/lib/fee';
 import { useRegistrationClosed } from '@/lib/registration';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
@@ -441,7 +442,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                     <span className={s.band}>
                       <span className={s.cat}>{t.categories[c.category]}</span>
                     </span>
-                    <CategoryIcon category={c.category} className={s.icon} />
+                    <CategoryIcon category={c.category} slug={c.slug} className={s.icon} />
                     <span className={s.ring} aria-hidden="true" />
                     <span className={s.cardBody}>
                       <span className={s.name} lang={c.name[lang] ? lang : 'id'}>
@@ -455,7 +456,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                             </span>
                           ))}
                           <span className={s.badge}>{c.participation ? t.detail.participationValues[c.participation] : u}</span>
-                          <span className={`${s.badge} ${s.badgeFee}`}>{c.fee ?? u}</span>
+                          <span className={`${s.badge} ${s.badgeFee}`}>{formatFee(c.fee, lang) ?? u}</span>
                         </span>
                         <span className={s.more} aria-hidden="true">
                           ›
@@ -501,7 +502,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
             onPointerCancel={() => (swipe.current = null)}
           >
             <div className={`${s.panelHead} ht`}>
-              <CategoryIcon category={active.category} className={s.panelIcon} />
+              <CategoryIcon category={active.category} slug={active.slug} className={s.panelIcon} />
               <div>
                 <p className={s.panelCat} data-reveal>
                   {t.categories[active.category]}
@@ -543,7 +544,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
               </div>
               <div className={s.fact} data-tone="fee" data-reveal>
                 <dt>{t.detail.fee}</dt>
-                <dd className={active.fee ? undefined : s.tba}>{active.fee ?? t.detail.tba}</dd>
+                <dd className={active.fee ? undefined : s.tba}>{formatFee(active.fee, lang) ?? t.detail.tba}</dd>
               </div>
               <div className={s.fact} data-tone="juknis" data-reveal>
                 <dt>{t.detail.juknis}</dt>
