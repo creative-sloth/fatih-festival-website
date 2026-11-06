@@ -55,7 +55,7 @@ export const competitions: Competition[] = [
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
     participation: 'team',
-    fee: 'Rp 120.000 / peserta',
+    fee: 'Rp 120.000 / tim',
     contact: [{ name: 'Ms. Ailiya', whatsapp: '0822 4732 3894' }],
   },
   {
