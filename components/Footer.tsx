@@ -56,7 +56,6 @@ export default function Footer({ lang }: { lang: Lang }) {
 
   return (
     <footer className={s.footer} id="kontak" aria-labelledby="kontak-title">
-      <p className={s.tbc}>{t.footer.tbc}</p>
       <div className={s.box}>
         <h2 className={s.title} id="kontak-title">
           {t.footer.contactTitle}

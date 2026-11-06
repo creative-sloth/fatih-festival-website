@@ -96,7 +96,6 @@ const id = {
     },
   },
   footer: {
-    tbc: 'Bersambung di hari lomba...',
     contactTitle: 'Narahubung Umum',
     moreInfo: 'Informasi lebih lanjut tentang lomba',
     poster: 'Unduh Poster',
@@ -204,7 +203,6 @@ const en: typeof id = {
     },
   },
   footer: {
-    tbc: 'To be continued on competition day...',
     contactTitle: 'General Contact Person',
     moreInfo: 'More information about the competitions',
     poster: 'Download Poster',
