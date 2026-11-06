@@ -138,7 +138,6 @@ export default function HowTo({ lang }: { lang: Lang }) {
         <h2 className={s.title} id="howto-title">
           {t.howto.title}
         </h2>
-        <p className={s.intro}>{t.howto.intro}</p>
       </div>
 
       <div className={s.chart}>
@@ -158,9 +157,6 @@ export default function HowTo({ lang }: { lang: Lang }) {
             ))}
           </svg>
 
-          <p className={s.hint} aria-hidden="true">
-            {f.hint}
-          </p>
           <span className={`${s.tag} ${s.tagYes}`} aria-hidden="true" data-link style={{ '--order': 7 } as CSSProperties}>
             {f.yes}
           </span>

@@ -206,8 +206,10 @@
     100% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 0.032em var(--ink);
-  filter: drop-shadow(0.045em 0.055em 0 var(--ink));
+  /* Outline via stacked hard drop-shadows (the union of the glyph shapes). A text-stroke here also traced the
+     font's overlapping inner contours, which showed up as small squares inside the F, E, T... */
+  filter: drop-shadow(0.03em 0 0 var(--ink)) drop-shadow(-0.03em 0 0 var(--ink)) drop-shadow(0 0.03em 0 var(--ink))
+    drop-shadow(0 -0.03em 0 var(--ink)) drop-shadow(0.045em 0.055em 0 var(--ink));
   transform-origin: 50% 85%;
 }
 
@@ -242,8 +244,8 @@
     100% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 0.03em var(--ink);
-  filter: drop-shadow(0.04em 0.05em 0 var(--ink));
+  filter: drop-shadow(0.028em 0 0 var(--ink)) drop-shadow(-0.028em 0 0 var(--ink)) drop-shadow(0 0.028em 0 var(--ink))
+    drop-shadow(0 -0.028em 0 var(--ink)) drop-shadow(0.04em 0.05em 0 var(--ink));
 }
 
 .sparkle {
@@ -432,7 +434,9 @@
   margin: 0;
   display: flex;
   align-items: baseline;
-  gap: 0.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.5em;
   padding: 3px 12px 2px;
   border: var(--line) solid var(--ink);
   background: #fff3a6;
@@ -444,6 +448,7 @@
   rotate: 1deg;
 }
 .caption dt {
+  white-space: nowrap;
   font-family: var(--font-display);
   font-size: 1.15rem;
   letter-spacing: 0.03em;

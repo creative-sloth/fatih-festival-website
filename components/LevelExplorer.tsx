@@ -8,7 +8,6 @@ import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
-import { formatDateRange } from '@/lib/dates';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
 import s from './LevelExplorer.module.css';
@@ -378,8 +377,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
       : t.detail.participationValues.individual
     : null;
   const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
-  // A competition's own date wins; otherwise the shared festival days.
-  const dateText = active ? (fmtDate(active.competitionDate, lang) ?? formatDateRange(festival.startDate, festival.endDate, lang)) : null;
+  // Each competition's own date; not decided yet, so the card shows To Be Announced.
+  const dateText = active ? fmtDate(active.competitionDate, lang) : null;
   const juknisUrl = active ? (active.juknisUrl ?? festival.juknisUrl) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
@@ -393,7 +392,6 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
           <h2 className={s.title} id="jenjang-title">
             {t.explorer.title}
           </h2>
-          <p className={s.intro}>{t.explorer.intro}</p>
         </header>
 
         <fieldset className={s.picker}>

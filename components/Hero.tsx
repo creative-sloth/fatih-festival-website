@@ -1,4 +1,3 @@
-import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
 import { formatDateRange } from '@/lib/dates';
@@ -125,13 +124,14 @@ export default function Hero({ lang }: { lang: Lang }) {
             <dd>{formatDateRange(festival.startDate, festival.endDate, lang) ?? t.unknown}</dd>
           </div>
           <div className={s.caption}>
+            <dt>{t.hero.awarding}</dt>
+            <dd>{formatDateRange(festival.awardingDate, null, lang) ?? t.detail.tba}</dd>
+          </div>
+          <div className={s.caption}>
             <dt>{t.hero.venue}</dt>
             <dd>{festival.venueShort?.[lang] ?? festival.venueShort?.id ?? t.unknown}</dd>
           </div>
         </dl>
-        <p className={`${s.caption} ${s.captionWide}`}>
-          {t.hero.competitionsCount(competitions.length)} · {t.hero.levels}
-        </p>
       </div>
 
       <HeroMotion />

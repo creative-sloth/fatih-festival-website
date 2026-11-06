@@ -7,7 +7,8 @@ const id = {
   nav: { label: 'Navigasi utama', levels: 'Jenjang', competitions: 'Lomba', howto: 'Cara Daftar', contact: 'Narahubung' },
   langSwitch: { label: 'Bahasa', other: 'EN', otherName: 'English' },
   hero: {
-    date: 'Tanggal',
+    date: 'Tanggal Pelaksanaan',
+    awarding: 'Awarding Ceremony',
     venue: 'Tempat',
     levels: 'Untuk TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} cabang lomba`,
@@ -111,7 +112,8 @@ const en: typeof id = {
   nav: { label: 'Main navigation', levels: 'Levels', competitions: 'Competitions', howto: 'How to Register', contact: 'Contact Person' },
   langSwitch: { label: 'Language', other: 'ID', otherName: 'Bahasa Indonesia' },
   hero: {
-    date: 'Date',
+    date: 'Event Dates',
+    awarding: 'Awarding Ceremony',
     venue: 'Venue',
     levels: 'For TK · SD · SMP · SMA',
     competitionsCount: (n: number) => `${n} competitions`,
