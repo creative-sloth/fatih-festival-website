@@ -79,6 +79,7 @@ const id = {
       { title: '???', body: 'Langkah selanjutnya akan diumumkan panitia.' },
     ],
     formLink: 'Buka Google Form',
+    juknisLink: 'Buka folder juknis',
     flow: {
       hint: 'Ikuti panahnya!',
       start: 'MULAI',
@@ -94,6 +95,7 @@ const id = {
   footer: {
     tbc: 'Bersambung di hari lomba...',
     contactTitle: 'Narahubung Umum',
+    moreInfo: 'Informasi lebih lanjut tentang lomba',
     contactNote: 'Narahubung untuk setiap lomba dapat dilihat pada halaman detail lomba masing-masing',
     group: (label: string) => `Narahubung ${label}`,
     chat: 'Chat lewat WhatsApp',
@@ -181,6 +183,7 @@ const en: typeof id = {
       { title: '???', body: 'The next step will be announced by the committee.' },
     ],
     formLink: 'Open the Google Form',
+    juknisLink: 'Open the juknis folder',
     flow: {
       hint: 'Follow the arrows!',
       start: 'START',
@@ -196,6 +199,7 @@ const en: typeof id = {
   footer: {
     tbc: 'To be continued on competition day...',
     contactTitle: 'General Contact Person',
+    moreInfo: 'More information about the competitions',
     contactNote: 'Contact persons for each competition are listed on that competition\'s detail page',
     group: (label: string) => `Contact person ${label}`,
     chat: 'Chat on WhatsApp',

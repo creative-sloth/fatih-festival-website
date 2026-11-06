@@ -68,6 +68,11 @@ export interface Festival {
   /** Short place line for the hero (the full address in `venue` goes in the footer). */
   venueShort: Localized | null;
   logos: { name: string; short: string; src: string | null }[];
+  /** One shared Google Drive folder with every juknis. Replaces the per-competition juknis files. */
+  juknisUrl: string | null;
+  /** Linktree and Instagram for more information about the competitions. */
+  linktreeUrl: string | null;
+  instagram: { handle: string; url: string } | null;
   /** General Google Form for registration. Used when a competition has no `formUrl` of its own. */
   formUrl: string | null;
   /** Registration deadline (ISO, +07:00), the same for every competition. null = not announced: the hero

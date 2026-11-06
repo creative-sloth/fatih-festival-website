@@ -380,6 +380,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
   const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
   // A competition's own date wins; otherwise the shared festival days.
   const dateText = active ? (fmtDate(active.competitionDate, lang) ?? formatDateRange(festival.startDate, festival.endDate, lang)) : null;
+  const juknisUrl = active ? (active.juknisUrl ?? festival.juknisUrl) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
 
@@ -543,9 +544,9 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
               </div>
               <div className={s.fact} data-tone="juknis" data-reveal>
                 <dt>{t.detail.juknis}</dt>
-                <dd className={active.juknisUrl ? undefined : s.tba}>
-                  {active.juknisUrl ? (
-                    <a className={s.factLink} href={active.juknisUrl} target="_blank" rel="noopener noreferrer">
+                <dd className={juknisUrl ? undefined : s.tba}>
+                  {juknisUrl ? (
+                    <a className={s.factLink} href={juknisUrl} target="_blank" rel="noopener noreferrer">
                       <LinkIcon />
                       {t.detail.juknisDownload} <span className="sr-only">{t.detail.newTab}</span>
                     </a>

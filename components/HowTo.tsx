@@ -117,6 +117,11 @@ export default function HowTo({ lang }: { lang: Lang }) {
             {st.title}
           </h3>
           <p className={s.stepBody}>{st.body}</p>
+          {i === 1 && festival.juknisUrl && (
+            <a className={s.stepLink} href={festival.juknisUrl} target="_blank" rel="noopener noreferrer">
+              {t.howto.juknisLink} <span className="sr-only">{t.detail.newTab}</span> ›
+            </a>
+          )}
           {i === 2 && festival.formUrl && (
             <a className={s.stepLink} href={festival.formUrl} target="_blank" rel="noopener noreferrer">
               {t.howto.formLink} <span className="sr-only">{t.detail.newTab}</span> ›

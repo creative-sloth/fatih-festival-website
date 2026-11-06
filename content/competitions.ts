@@ -8,9 +8,6 @@ const VENUE = {
   en: null,
 };
 
-/** Per-competition juknis, split out of the 33-page booklet into public/juknis/<slug>.pdf. */
-const juknis = (slug: string) => `/juknis/${slug}.pdf`;
-
 const base = (slug: string, name: string, levels: Level[], category: Category): Competition => ({
   slug,
   name: { id: name, en: null },
@@ -28,7 +25,7 @@ const base = (slug: string, name: string, levels: Level[], category: Category): 
   format: 'onsite',
   fee: null,
   prizes: null,
-  juknisUrl: juknis(slug),
+  juknisUrl: null, // every competition uses the shared juknis folder in `festival.juknisUrl`
   juknisLanguage: 'id',
   formUrl: null,
   contact: null,

@@ -22,6 +22,25 @@ function WhatsAppIcon() {
   );
 }
 
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="5" fill="#ff7ab8" />
+      <circle cx="12" cy="12" r="4.2" fill="var(--paper)" />
+      <circle cx="17.2" cy="6.8" r="1" fill="var(--ink)" stroke="none" />
+    </svg>
+  );
+}
+
+function LinktreeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3 V21" />
+      <path d="M12 8 L6 4 M12 8 L18 4 M12 13 L5 9 M12 13 L19 9 M12 18 L7 15 M12 18 L17 15" fill="none" stroke="#2fc16b" />
+    </svg>
+  );
+}
+
 export default function Footer({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
 
@@ -61,6 +80,30 @@ export default function Footer({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
+
+        {(festival.linktreeUrl || festival.instagram) && (
+          <div className={s.more}>
+            <p className={s.moreTitle}>{t.footer.moreInfo}</p>
+            <div className={s.moreLinks}>
+              {festival.linktreeUrl && (
+                <a className={s.moreLink} href={festival.linktreeUrl} target="_blank" rel="noopener noreferrer">
+                  <LinktreeIcon />
+                  <span>
+                    Linktree <span className="sr-only">{t.detail.newTab}</span>
+                  </span>
+                </a>
+              )}
+              {festival.instagram && (
+                <a className={s.moreLink} href={festival.instagram.url} target="_blank" rel="noopener noreferrer">
+                  <InstagramIcon />
+                  <span>
+                    Instagram {festival.instagram.handle} <span className="sr-only">{t.detail.newTab}</span>
+                  </span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <p className={s.host}>
         {t.footer.host} <b>{festival.host}</b>
