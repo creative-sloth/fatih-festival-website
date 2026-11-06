@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { competitions } from '@/content/competitions';
 import { festival } from '@/content/festival';
-import type { Competition, Lang, Level } from '@/content/types';
+import type { Category, Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
 import { formatFee } from '@/lib/fee';
 import { useRegistrationClosed } from '@/lib/registration';
@@ -33,15 +33,21 @@ const bandOf = (c: Competition) => (c.category === 'Olahraga' ? 'olahraga' : c.l
 // and the panel on its right use the same value, so the two edges stay parallel. Three layouts are
 // computed (desktop 12-column rows, tablet 2-up, phone single column) and picked by CSS media queries.
 const SLANTS = [24, -20, 16, -26, 22, -16];
-const PATTERNS = ['rays', 'dots', 'burst'] as const;
+// Panel art follows the category, so it works as wayfinding: language = speech rays, arts = glowing burst,
+// media = print halftone, academic and innovation = graph paper, sports = speed stripes.
+const PATTERN_OF: Record<Category, string> = {
+  Akademik: 'grid',
+  Inovasi: 'grid',
+  Bahasa: 'rays',
+  Seni: 'burst',
+  Media: 'dots',
+  Olahraga: 'stripes',
+};
 
-type Cell = { style: React.CSSProperties; pattern: (typeof PATTERNS)[number] };
+type Cell = { style: React.CSSProperties };
 
 function buildLayout(n: number): Cell[] {
-  const cells: Cell[] = Array.from({ length: n }, (_, i) => ({
-    style: {},
-    pattern: PATTERNS[(i + Math.floor(i / 5)) % PATTERNS.length],
-  }));
+  const cells: Cell[] = Array.from({ length: n }, () => ({ style: {} }));
   const px = (v: number) => `${v}px`;
 
   // Desktop: rows of 3 and 2
@@ -447,7 +453,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
             return (
               <li key={c.slug} data-card data-flip-id={c.slug} hidden={!shown} className={s.cell} style={cell?.style}>
                 <div className={s.frame}>
-                  <button type="button" className={s.card} data-band={bandOf(c)} data-pattern={cell?.pattern} data-open onClick={(e) => openDetail(c.slug, e.currentTarget)}>
+                  <button type="button" className={s.card} data-band={bandOf(c)} data-pattern={PATTERN_OF[c.category]} data-pos={visible.indexOf(c) % 3} data-open onClick={(e) => openDetail(c.slug, e.currentTarget)}>
                     <span className={s.band}>
                       <span className={s.cat}>{t.categories[c.category]}</span>
                     </span>
