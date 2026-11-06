@@ -25,7 +25,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           {festival.logos.map((logo) => (
             <li key={logo.name} className={s.logoSlot}>
               {logo.src ? (
-                <img src={logo.src} alt={logo.name} className={s.logoImg} />
+                <img src={logo.src} alt={logo.name} width={logo.width} height={logo.height} className={s.logoImg} />
               ) : (
                 <>
                   <span className={s.logoTag}>{t.logoPlaceholder}</span>

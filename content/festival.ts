@@ -20,9 +20,9 @@ export const festival: Festival = {
   venue: { id: ADDRESS, en: ADDRESS },
   venueShort: { id: 'Fatih Bilingual School, Banda Aceh', en: 'Fatih Bilingual School, Banda Aceh' },
   logos: [
-    { name: 'Fatih Bilingual School', short: 'Fatih', src: '/logos/fatih.png' },
-    { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: '/logos/garuda.png' },
-    { name: 'Cambridge International School', short: 'Cambridge', src: '/logos/cambridge.png' },
+    { name: 'Fatih Bilingual School', short: 'Fatih', src: '/logos/fatih.png', width: 474, height: 240 },
+    { name: 'SMA Unggul Garuda Transformasi', short: 'Garuda', src: '/logos/garuda.png', width: 654, height: 240 },
+    { name: 'Cambridge International School', short: 'Cambridge', src: '/logos/cambridge.png', width: 550, height: 240 },
   ],
   // All juknis live in one shared Drive folder (committee, 6 Nov 2026).
   juknisUrl: 'https://drive.google.com/drive/folders/1dKVKPncjZa9aCuqxclTL1Yn0CaGa-nnD',

@@ -67,6 +67,8 @@
 }
 
 .lang {
+  min-width: 44px;
+  justify-content: center;
   border-left: 2px solid var(--ink);
 }
 

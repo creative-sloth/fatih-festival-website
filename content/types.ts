@@ -69,7 +69,7 @@ export interface Festival {
   venue: Localized | null;
   /** Short place line for the hero (the full address in `venue` goes in the footer). */
   venueShort: Localized | null;
-  logos: { name: string; short: string; src: string | null }[];
+  logos: { name: string; short: string; src: string | null; width: number; height: number }[];
   /** One shared Google Drive folder with every juknis. Replaces the per-competition juknis files. */
   juknisUrl: string | null;
   /** Official poster image for the download button (public/assets). */

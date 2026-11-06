@@ -6,6 +6,8 @@ import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
 import { getMessages, langs } from '@/messages';
 
+const SITE_URL = 'https://fatih-fest.f2005.workers.dev';
+
 // Stand-in fonts until the poster font is identified (HANDOFF.md §9.1).
 const display = Bangers({ weight: '400', subsets: ['latin'], variable: '--font-display-loaded' });
 const body = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-body-loaded' });
@@ -19,10 +21,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   if (!isLang(lang)) return {};
   const title = `${festival.name} ${festival.edition}`;
+  const description = `${title}: ${festival.tagline[lang] ?? festival.tagline.id}. ${festival.host}.`;
   return {
+    // Needed so share-preview URLs resolve to absolute. Update if the site moves to its own domain.
+    metadataBase: new URL(SITE_URL),
     title,
-    description: `${title}: ${festival.tagline[lang] ?? festival.tagline.id}. ${festival.host}.`,
-    alternates: { languages: { id: '/id/', en: '/en/' } },
+    description,
+    alternates: { canonical: `/${lang}/`, languages: { id: '/id/', en: '/en/', 'x-default': '/id/' } },
+    openGraph: {
+      type: 'website',
+      siteName: title,
+      title,
+      description,
+      url: `/${lang}/`,
+      locale: lang === 'id' ? 'id_ID' : 'en_US',
+      images: festival.posterUrl ? [{ url: festival.posterUrl, width: 1131, height: 1600, alt: title }] : [],
+    },
+    twitter: { card: 'summary_large_image', title, description, images: festival.posterUrl ? [festival.posterUrl] : [] },
   };
 }
 

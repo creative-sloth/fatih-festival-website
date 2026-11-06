@@ -77,7 +77,7 @@ const id = {
     steps: [
       { title: 'Pilih lomba', body: 'Cari lomba yang sesuai dengan jenjang sekolahmu.' },
       { title: 'Baca juknis', body: 'Unduh petunjuk teknis dan pahami aturannya sebelum mendaftar.' },
-      { title: 'Isi Google Form', body: 'Daftar lewat link Google Form di halaman lomba.' },
+      { title: 'Isi Google Form', body: 'Daftar lewat Google Form resmi.' },
       { title: '???', body: 'Langkah selanjutnya akan diumumkan panitia.' },
     ],
     formLink: 'Buka Google Form',
@@ -118,7 +118,7 @@ const en: typeof id = {
     awarding: 'Awarding Ceremony',
     venue: 'Venue',
     levels: 'For TK · SD · SMP · SMA',
-    competitionsCount: (n: number) => `${n} competitions`,
+    competitionsCount: (n: number) => `${n} ${n === 1 ? 'competition' : 'competitions'}`,
     ctaPrimary: 'See Competitions',
     ctaRegister: 'Register Now',
     countdown: {
@@ -132,7 +132,7 @@ const en: typeof id = {
     intro: 'Choose your school level to see the competitions you can join.',
     legend: 'School level',
     all: 'All',
-    count: (n: number) => `${n} competitions`,
+    count: (n: number) => `${n} ${n === 1 ? 'competition' : 'competitions'}`,
     showing: (n: number, level: string | null) =>
       level ? `${n} competitions for ${level}` : `All ${n} competitions`,
     open: 'See details',
@@ -184,7 +184,7 @@ const en: typeof id = {
     steps: [
       { title: 'Pick a competition', body: 'Find a competition that matches your school level.' },
       { title: 'Read the juknis', body: 'Download the technical guidelines and learn the rules before you register.' },
-      { title: 'Fill in the Google Form', body: 'Register through the Google Form link on the competition page.' },
+      { title: 'Fill in the Google Form', body: 'Register through the official Google Form.' },
       { title: '???', body: 'The next step will be announced by the committee.' },
     ],
     formLink: 'Open the Google Form',
