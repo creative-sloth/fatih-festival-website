@@ -949,27 +949,10 @@
   border: 2px solid var(--ink);
   background: #fafaf6;
 }
-/* Each header has its own colour so the six boxes are told apart at a glance. */
-.fact[data-tone='level'] {
-  --hc: var(--level-smp-sma);
+/* One ink header for all six boxes: six unrelated colours carried no meaning and made the card look like a template. */
+.fact {
+  --hc: var(--ink);
   --hf: var(--paper);
-}
-.fact[data-tone='peserta'] {
-  --hc: var(--level-smp);
-  --hf: var(--paper);
-}
-.fact[data-tone='date'] {
-  --hc: var(--sun-3);
-}
-.fact[data-tone='fee'] {
-  --hc: var(--level-sma);
-  --hf: var(--paper);
-}
-.fact[data-tone='juknis'] {
-  --hc: var(--accent-yellow);
-}
-.fact[data-tone='contact'] {
-  --hc: var(--teal);
 }
 .fact dt {
   display: flex;
