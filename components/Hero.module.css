@@ -177,6 +177,18 @@
   line-height: 0.84;
   letter-spacing: 0.01em;
   rotate: -4deg;
+  isolation: isolate;
+}
+
+/* Black slab behind the lettering, like the flyer: one slanted mass that spills out to the lower right. */
+.title::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -0.06em -0.2em -0.12em -0.14em;
+  background: var(--ink);
+  clip-path: polygon(3% 2%, 99% 9%, 104% 76%, 97% 104%, 4% 96%, -3% 30%);
+  translate: 0.05em 0.06em;
 }
 
 .line1 {
@@ -194,58 +206,70 @@
   display: inline-flex;
 }
 
-.glyph {
+/* Each letter is built from two stacked copies of itself (the real text stays invisible):
+   ::before = ink outline + deep extrusion, ::after = gradient fill with halftone dots.
+   The old single-layer text-stroke also traced the font's overlapping inner contours as little squares. */
+.glyph,
+.numText {
+  --ext: 0.014em;
+  position: relative;
   display: inline-block;
+  color: transparent;
+}
+.numText {
+  z-index: 1;
+  padding: 0 0.04em;
+}
+.glyph {
   padding: 0 0.02em;
+  transform-origin: 50% 85%;
+}
+.glyph::before,
+.glyph::after,
+.numText::before,
+.numText::after {
+  content: attr(data-ch);
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: inherit;
+  white-space: pre;
+  pointer-events: none;
+}
+.glyph::before,
+.numText::before {
+  color: var(--ink);
+  -webkit-text-stroke: 0.11em var(--ink);
+  text-shadow:
+    calc(var(--ext) * 1) calc(var(--ext) * 1.15) 0 var(--ink),
+    calc(var(--ext) * 2) calc(var(--ext) * 2.3) 0 var(--ink),
+    calc(var(--ext) * 3) calc(var(--ext) * 3.45) 0 var(--ink),
+    calc(var(--ext) * 4) calc(var(--ext) * 4.6) 0 var(--ink),
+    calc(var(--ext) * 5) calc(var(--ext) * 5.75) 0 var(--ink),
+    calc(var(--ext) * 6) calc(var(--ext) * 6.9) 0 var(--ink),
+    calc(var(--ext) * 7) calc(var(--ext) * 8.05) 0 var(--ink),
+    calc(var(--ext) * 8) calc(var(--ext) * 9.2) 0 var(--ink),
+    calc(var(--ext) * 9) calc(var(--ext) * 10.35) 0 var(--ink);
+}
+.glyph::after,
+.numText::after {
   color: transparent;
   background-image:
     radial-gradient(circle, rgb(255 255 255 / 0.5) 22%, transparent 26%),
-    linear-gradient(180deg, var(--sun-1) 10%, var(--sun-2) 42%, var(--sun-3) 74%, var(--sun-4) 100%);
+    linear-gradient(180deg, var(--sun-1) 8%, var(--sun-2) 42%, var(--sun-3) 74%, var(--sun-4) 100%);
   background-size:
     0.09em 0.09em,
     100% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  /* Outline via stacked hard drop-shadows (the union of the glyph shapes). A text-stroke here also traced the
-     font's overlapping inner contours, which showed up as small squares inside the F, E, T... */
-  filter: drop-shadow(0.03em 0 0 var(--ink)) drop-shadow(-0.03em 0 0 var(--ink)) drop-shadow(0 0.03em 0 var(--ink))
-    drop-shadow(0 -0.03em 0 var(--ink)) drop-shadow(0.045em 0.055em 0 var(--ink));
-  transform-origin: 50% 85%;
 }
 
 .num {
   position: relative;
   display: inline-grid;
   place-items: center;
-  margin-left: 0.24em;
+  margin-left: 0.14em;
   font-size: 1.3em;
-}
-
-.burst {
-  position: absolute;
-  left: 50%;
-  top: 52%;
-  z-index: 0;
-  width: 1.75em;
-  height: 1.75em;
-  margin: -0.875em 0 0 -0.875em;
-}
-
-.numText {
-  position: relative;
-  z-index: 1;
-  padding: 0 0.04em;
-  color: transparent;
-  background-image:
-    radial-gradient(circle, rgb(255 255 255 / 0.45) 22%, transparent 26%),
-    linear-gradient(180deg, #ffd23f 0%, var(--sun-3) 48%, var(--sun-4) 100%);
-  background-size:
-    0.08em 0.08em,
-    100% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  filter: drop-shadow(0.028em 0 0 var(--ink)) drop-shadow(-0.028em 0 0 var(--ink)) drop-shadow(0 0.028em 0 var(--ink))
-    drop-shadow(0 -0.028em 0 var(--ink)) drop-shadow(0.04em 0.05em 0 var(--ink));
 }
 
 .sparkle {

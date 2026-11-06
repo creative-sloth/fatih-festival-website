@@ -72,6 +72,8 @@ export interface Festival {
   logos: { name: string; short: string; src: string | null }[];
   /** One shared Google Drive folder with every juknis. Replaces the per-competition juknis files. */
   juknisUrl: string | null;
+  /** Official poster image for the download button (public/assets). */
+  posterUrl: string | null;
   /** Linktree and Instagram for more information about the competitions. */
   linktreeUrl: string | null;
   instagram: { handle: string; url: string } | null;

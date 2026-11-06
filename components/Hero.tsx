@@ -2,7 +2,7 @@ import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
 import { formatDateRange } from '@/lib/dates';
 import { getMessages } from '@/messages';
-import { Bolt, Sparkle, Star, Starburst } from './ComicShapes';
+import { Bolt, Sparkle, Star } from './ComicShapes';
 import Countdown from './Countdown';
 import HeroMotion from './HeroMotion';
 import s from './Hero.module.css';
@@ -13,7 +13,7 @@ function Glyphs({ text, group }: { text: string; group: string }) {
   return (
     <span className={s.word} aria-hidden="true">
       {[...text].map((c, i) => (
-        <span key={i} className={s.glyph} data-anim={group} data-glyph>
+        <span key={i} className={s.glyph} data-anim={group} data-glyph data-ch={c}>
           {c}
         </span>
       ))}
@@ -85,8 +85,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <span className={s.line2}>
               <Glyphs text="FESTIVAL" group="ch2" />
               <span className={s.num} aria-hidden="true">
-                <Starburst className={s.burst} anim />
-                <span className={s.numText} data-anim="num" data-glyph>
+                <span className={s.numText} data-anim="num" data-glyph data-ch={festival.edition}>
                   {festival.edition}
                 </span>
               </span>

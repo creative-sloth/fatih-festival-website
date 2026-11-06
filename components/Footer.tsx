@@ -32,6 +32,16 @@ function InstagramIcon() {
   );
 }
 
+function DownloadIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3 V15" />
+      <path d="M6.5 10.5 L12 16 L17.5 10.5" fill="none" />
+      <path d="M4 20 H20" />
+    </svg>
+  );
+}
+
 function LinktreeIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,10 +91,16 @@ export default function Footer({ lang }: { lang: Lang }) {
           ))}
         </ul>
 
-        {(festival.linktreeUrl || festival.instagram) && (
+        {(festival.posterUrl || festival.linktreeUrl || festival.instagram) && (
           <div className={s.more}>
             <p className={s.moreTitle}>{t.footer.moreInfo}</p>
             <div className={s.moreLinks}>
+              {festival.posterUrl && (
+                <a className={s.moreLink} href={festival.posterUrl} download="Fatih-Festival-3.0-Poster.jpg">
+                  <DownloadIcon />
+                  <span>{t.footer.poster}</span>
+                </a>
+              )}
               {festival.linktreeUrl && (
                 <a className={s.moreLink} href={festival.linktreeUrl} target="_blank" rel="noopener noreferrer">
                   <LinktreeIcon />

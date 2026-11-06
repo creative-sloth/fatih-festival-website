@@ -28,6 +28,7 @@ export const festival: Festival = {
   ],
   // All juknis live in one shared Drive folder (committee, 6 Nov 2026).
   juknisUrl: 'https://drive.google.com/drive/folders/1dKVKPncjZa9aCuqxclTL1Yn0CaGa-nnD',
+  posterUrl: '/assets/poster-fatih-festival-3.0.jpg',
   linktreeUrl: 'https://linktr.ee/fatih.festival',
   instagram: { handle: '@fatihfestival', url: 'https://www.instagram.com/fatihfestival/' },
   // General registration form (committee, 5 Nov 2026). A competition with its own `formUrl` overrides it.
