@@ -6,6 +6,7 @@ import { Bolt, Star } from './ComicShapes';
 import Countdown from './Countdown';
 import RegisterLink from './RegisterLink';
 import HeroMotion from './HeroMotion';
+import LangLink from './LangLink';
 import TitleArt from './TitleArt';
 import s from './Hero.module.css';
 
@@ -40,12 +41,12 @@ export default function Hero({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
-        <a className={s.lang} href={`/${other}/`} hrefLang={other} lang={other}>
+        <LangLink to={other} className={s.lang}>
           <span className="sr-only">{t.langSwitch.otherName}</span>
           <span aria-hidden="true">
             <b>{lang.toUpperCase()}</b> | {t.langSwitch.other}
           </span>
-        </a>
+        </LangLink>
       </header>
 
       <div className={s.stage} data-stage>

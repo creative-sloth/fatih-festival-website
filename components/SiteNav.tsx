@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import type { Lang } from '@/content/types';
 import { getMessages } from '@/messages';
+import LangLink from './LangLink';
 import s from './SiteNav.module.css';
 
 /** Compact nav that drops in once the hero cover has scrolled away.
@@ -41,10 +42,10 @@ export default function SiteNav({ lang }: { lang: Lang }) {
           </li>
         ))}
       </ul>
-      <a className={s.lang} href={`/${other}/`} hrefLang={other} lang={other}>
+      <LangLink to={other} className={s.lang}>
         <span className="sr-only">{t.langSwitch.otherName}</span>
         <span aria-hidden="true">{t.langSwitch.other}</span>
-      </a>
+      </LangLink>
     </nav>
   );
 }
