@@ -376,6 +376,15 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     .filter((c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp);
   const contactList = ownContacts.length ? ownContacts : fallbackContacts;
   const contactLabel = ownContacts.length ? t.detail.contact : t.detail.contactFor(levelGroups.map((g) => g.label).join(' & '));
+  // One quiet line per panel: grades, team size and school limit, only what the juknis states.
+  const facts = (c: Competition) =>
+    [
+      c.grades?.[lang] ?? c.grades?.id ?? null,
+      c.participation === 'team' && c.teamSize ? t.detail.teamSizeShort(c.teamSize) : null,
+      c.maxPerSchool ? t.detail.perSchool(c.maxPerSchool.count, c.maxPerSchool.unit) : null,
+    ]
+      .filter(Boolean)
+      .join(' · ');
   const pesertaMain = active?.participation
     ? active.participation === 'team'
       ? t.detail.teamOf(active.teamSize)
@@ -448,6 +457,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                       <span className={s.name} lang={c.name[lang] ? lang : 'id'}>
                         {name}
                       </span>
+                      {facts(c) && <span className={s.meta}>{facts(c)}</span>}
                       <span className={s.cardFoot}>
                         <span className={s.chips}>
                           {c.levels.map((l) => (

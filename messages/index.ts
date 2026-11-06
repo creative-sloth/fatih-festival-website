@@ -62,6 +62,7 @@ const id = {
     formatValues: { onsite: 'Luring (di lokasi)', online: 'Daring', hybrid: 'Hybrid' },
     teamOf: (size: string | null) => (size ? `Tim (${size} orang)` : 'Tim'),
     perSchool: (count: number, unit: 'tim' | 'peserta') => `maks. ${count} ${unit} per sekolah`,
+    teamSizeShort: (size: string) => `${size} orang per tim`,
     /** Label used when a competition's own juknis prints no PIC. */
     contactFor: (label: string) => `Narahubung ${label}`,
     tba: 'To Be Announced',
@@ -168,6 +169,7 @@ const en: typeof id = {
     participationValues: { individual: 'Individual', team: 'Team' },
     formatValues: { onsite: 'Onsite', online: 'Online', hybrid: 'Hybrid' },
     teamOf: (size: string | null) => (size ? `Team (${size.replace('maks.', 'max.')} people)` : 'Team'),
+    teamSizeShort: (size: string) => `${size.replace('maks.', 'max.')} people per team`,
     perSchool: (count: number, unit: 'tim' | 'peserta') =>
       `max. ${count} ${unit === 'tim' ? (count === 1 ? 'team' : 'teams') : count === 1 ? 'participant' : 'participants'} per school`,
     contactFor: (label: string) => `Contact person ${label}`,

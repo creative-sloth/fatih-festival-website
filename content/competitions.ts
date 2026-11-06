@@ -16,6 +16,7 @@ const base = (slug: string, name: string, levels: Level[], category: Category): 
   participation: null,
   teamSize: null,
   maxPerSchool: null,
+  grades: null,
   eligibility: null,
   registrationOpens: null,
   registrationCloses: null,
@@ -37,6 +38,7 @@ export const competitions: Competition[] = [
   {
     ...base('tk-mewarnai', 'Lomba Mewarnai', ['TK'], 'Seni'),
     participation: 'individual',
+    grades: { id: 'TK sederajat', en: 'Kindergarten' },
     eligibility: { id: 'Siswa/i TK sederajat, perwakilan sekolah (surat keterangan)', en: null },
     format: 'onsite',
     fee: 'Rp 30.000 / peserta',
@@ -60,6 +62,7 @@ export const competitions: Competition[] = [
     ...base('sd-olimpiade-mipa', 'Olimpiade Matematika & IPA', ['SD'], 'Akademik'),
     participation: 'individual',
     maxPerSchool: { count: 5, unit: 'peserta' },
+    grades: { id: 'Kelas 4–6', en: 'Grades 4–6' },
     eligibility: { id: 'Siswa kelas IV, V, dan VI SD/MI — perorangan; maksimal 5 siswa per sekolah per kategori', en: null },
     registrationOpens: '2026-10-15T00:00:00+07:00',
     fee: 'Rp 50.000 / peserta',
@@ -69,6 +72,7 @@ export const competitions: Competition[] = [
     ...base('sd-vocal-solo', 'Vokal Solo', ['SD'], 'Seni'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
+    grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
     eligibility: { id: 'Siswa SD/MI kelas 5 / 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 50.000 / peserta',
     contact: [{ name: 'Ms. Ratu', whatsapp: '0823 2677 8902' }],
@@ -76,6 +80,7 @@ export const competitions: Competition[] = [
   {
     ...base('sd-spelling-bee', 'Spelling Bee', ['SD'], 'Bahasa'),
     participation: 'individual',
+    grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
     eligibility: { id: 'Siswa SD/MI sederajat kelas 5 – 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 40.000 / peserta',
     contact: [{ name: 'Ms. Tiara', whatsapp: '0853 1267 7451' }],
@@ -84,6 +89,7 @@ export const competitions: Competition[] = [
   {
     ...base('smp-olimpiade-mipa', 'Olimpiade Matematika & IPA', ['SMP'], 'Akademik'),
     participation: 'individual',
+    grades: { id: 'Kelas 7–9', en: 'Grades 7–9' },
     eligibility: { id: 'Siswa kelas VII, VIII, atau IX SMP/MTs — perorangan, tanpa batasan jumlah per sekolah', en: null },
     fee: 'Rp 50.000 / peserta',
     contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }],
@@ -138,6 +144,7 @@ export const competitions: Competition[] = [
     participation: 'team',
     teamSize: '3',
     maxPerSchool: { count: 2, unit: 'tim' },
+    grades: { id: 'Kelas 10–12', en: 'Grades 10–12' },
     eligibility: { id: 'Siswa/i aktif SMA/MA/sederajat (kelas 10 – 12), perwakilan resmi sekolah', en: null },
     fee: 'Rp 200.000 / tim',
     contact: [{ name: 'Mr. Dhiya', whatsapp: '0823 7056 1457' }],
@@ -162,6 +169,7 @@ export const competitions: Competition[] = [
     participation: 'team',
     teamSize: '2',
     maxPerSchool: { count: 1, unit: 'tim' },
+    grades: { id: 'Kelas 7–12', en: 'Grades 7–12' },
     eligibility: { id: 'Siswa SMP/MTs kelas 7 – 9 dan SMA/MA sederajat kelas 10 – 12', en: null },
     fee: 'Rp 150.000 / tim', // juknis: transfer to BSI 2828-0000-52
     juknisLanguage: 'both',

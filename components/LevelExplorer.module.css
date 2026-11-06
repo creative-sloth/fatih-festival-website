@@ -383,10 +383,10 @@
 .icon {
   position: absolute;
   left: 50%;
-  top: 31%;
+  top: 27%;
   z-index: 1;
-  width: 74px;
-  height: 74px;
+  width: 62px;
+  height: 62px;
   translate: -50% -50%;
   filter: drop-shadow(4px 4px 0 var(--ink));
 }
@@ -419,6 +419,13 @@
   font-size: clamp(1.4rem, 0.7vw + 1.1rem, 1.75rem);
   line-height: 1;
   letter-spacing: 0.01em;
+}
+
+.meta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #3b3a42;
 }
 
 .cardFoot {
@@ -543,6 +550,10 @@
   }
   .name {
     font-size: 1.3rem;
+  }
+  /* Phone rows are too short for the extra line; the detail dialog has it. */
+  .meta {
+    display: none;
   }
   .chips {
     gap: 4px;

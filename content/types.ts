@@ -41,6 +41,8 @@ export interface Competition {
   teamSize: string | null;
   /** School entry limit, e.g. 2 teams or 5 participants. Rendered as "maks. 2 tim per sekolah". */
   maxPerSchool: { count: number; unit: 'tim' | 'peserta' } | null;
+  /** Short grade range for the panel, e.g. "Kelas 5–6". Only where the juknis states one. */
+  grades: Localized | null;
   eligibility: Localized | null;
   registrationOpens: string | null; // ISO 8601 with +07:00
   registrationCloses: string | null;
