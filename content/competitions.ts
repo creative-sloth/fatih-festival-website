@@ -55,7 +55,7 @@ export const competitions: Competition[] = [
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
     participation: 'team',
-    fee: 'Rp 120.000 / tim',
+    fee: 'Rp 150.000 / tim',
     contact: [{ name: 'Ms. Ailiya', whatsapp: '0822 4732 3894' }],
   },
   {
@@ -69,7 +69,7 @@ export const competitions: Competition[] = [
     contact: [{ name: 'Ms. Ihda', whatsapp: '0823 7078 6848' }],
   },
   {
-    ...base('sd-vocal-solo', 'Vokal Solo', ['SD'], 'Seni'),
+    ...base('sd-vocal-solo', 'Vokal Solo SD', ['SD'], 'Seni'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
     grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
@@ -95,7 +95,7 @@ export const competitions: Competition[] = [
     contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }],
   },
   {
-    ...base('smp-vocal-solo', 'Vokal Solo', ['SMP'], 'Seni'),
+    ...base('smp-vocal-solo', 'Vokal Solo SMP', ['SMP'], 'Seni'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
     eligibility: { id: 'Siswa SMP/MTs sederajat, perwakilan sekolah (surat keterangan aktif atau KTS)', en: null },
@@ -114,7 +114,7 @@ export const competitions: Competition[] = [
     ...base('smp-basket', 'Lomba Basket', ['SMP'], 'Olahraga'),
     participation: 'team',
     teamSize: 'maks. 12',
-    fee: 'Rp 300.000 / tim',
+    fee: 'Rp 500.000 / tim',
     contact: [{ name: 'Mr. Juliandi', whatsapp: '0853 6274 3015' }],
   },
 
