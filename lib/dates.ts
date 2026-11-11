@@ -19,10 +19,15 @@ export function formatDateRange(startIso: string | null, endIso: string | null, 
   return `${fmt({ day: 'numeric', month: 'long' }, start)} – ${fmt(full, end)}`;
 }
 
+/** "14.00–17.00 WIB" (Indonesian) or "14:00–17:00 WIB" (English). */
+export function formatTimeRange(start: string, end: string, lang: Lang): string {
+  const t = (hhmm: string) => (lang === 'id' ? hhmm.replace(':', '.') : hhmm);
+  return `${t(start)}–${t(end)} WIB`;
+}
+
 /** "Rab, 25 Nov · 13.30–18.00 WIB" (Indonesian) or "Wed 25 Nov · 13:30–18:00 WIB" (English). */
 export function formatSlot(slot: ScheduleSlot, lang: Lang): string {
   const locale = lang === 'id' ? 'id-ID' : 'en-GB';
   const day = new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ }).format(parse(slot.date));
-  const t = (hhmm: string) => (lang === 'id' ? hhmm.replace(':', '.') : hhmm);
-  return `${day} · ${t(slot.start)}–${t(slot.end)} WIB`;
+  return `${day} · ${formatTimeRange(slot.start, slot.end, lang)}`;
 }

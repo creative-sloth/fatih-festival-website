@@ -7,7 +7,7 @@ Never type event facts into components.
 
 | What | File | Field |
 |---|---|---|
-| Competition days, awarding day, venue, short venue | `content/festival.ts` | `startDate`, `endDate`, `awardingDate`, `venue`, `venueShort` (dates as `'2026-11-25'`, no time) |
+| Competition days, awarding day, venue, short venue | `content/festival.ts` | `startDate`, `endDate` (dates as `'2026-11-25'`, no time), `awarding` (`{ date, start, end }`), `venue`, `venueShort` |
 | Registration deadline (drives the countdown and hides the register buttons) | `content/festival.ts` | `registrationCloses` (ISO with +07:00, e.g. `'2026-11-20T23:59:00+07:00'`) and `registrationClosesText` (the label shown next to the countdown) |
 | General Google Form | `content/festival.ts` | `formUrl` |
 | Shared juknis folder | `content/festival.ts` | `juknisUrl` |

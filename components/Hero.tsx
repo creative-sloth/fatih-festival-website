@@ -1,6 +1,6 @@
 import { festival } from '@/content/festival';
 import type { Lang } from '@/content/types';
-import { formatDateRange } from '@/lib/dates';
+import { formatDateRange, formatSlot } from '@/lib/dates';
 import { getMessages } from '@/messages';
 import { Bolt, Star } from './ComicShapes';
 import Countdown from './Countdown';
@@ -103,7 +103,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           </div>
           <div className={s.caption}>
             <dt>{t.hero.awarding}</dt>
-            <dd>{formatDateRange(festival.awardingDate, null, lang) ?? t.detail.tba}</dd>
+            <dd>{festival.awarding ? formatSlot(festival.awarding, lang) : t.detail.tba}</dd>
           </div>
           <div className={s.caption}>
             <dt>{t.hero.venue}</dt>

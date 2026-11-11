@@ -75,8 +75,8 @@ export interface Festival {
   host: string;
   startDate: string | null;
   endDate: string | null;
-  /** Awarding ceremony day (date only), the day after the last competition day. */
-  awardingDate: string | null;
+  /** Awarding Ceremony slot from the official rundown. */
+  awarding: ScheduleSlot | null;
   venue: Localized | null;
   /** Short place line for the hero (the full address in `venue` goes in the footer). */
   venueShort: Localized | null;
