@@ -85,6 +85,11 @@ export default function Hero({ lang }: { lang: Lang }) {
           <a className={`${s.cta} ${s.ctaAlt}`} href="#jenjang">
             {t.hero.ctaPrimary}
           </a>
+          {festival.juknisUrl && (
+            <a className={`${s.cta} ${s.ctaAlt}`} href={festival.juknisUrl} target="_blank" rel="noopener noreferrer">
+              {t.hero.ctaRundown} <span className="sr-only">{t.detail.newTab}</span>
+            </a>
+          )}
         </div>
 
         <Countdown lang={lang} />

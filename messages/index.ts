@@ -14,6 +14,7 @@ const id = {
     competitionsCount: (n: number) => `${n} cabang lomba`,
     ctaPrimary: 'Lihat Lomba',
     ctaRegister: 'Daftar Sekarang',
+    ctaRundown: 'Rundown & Juknis Umum',
     countdown: {
       title: 'Pendaftaran ditutup',
       units: { d: 'Hari', h: 'Jam', m: 'Menit', s: 'Detik' },
@@ -46,7 +47,7 @@ const id = {
     category: 'Kategori',
     participation: 'Peserta',
     registration: 'Pendaftaran',
-    date: 'Tanggal lomba',
+    date: 'Waktu Pelaksanaan',
     venue: 'Tempat',
     format: 'Format',
     fee: 'Biaya',
@@ -121,6 +122,7 @@ const en: typeof id = {
     competitionsCount: (n: number) => `${n} ${n === 1 ? 'competition' : 'competitions'}`,
     ctaPrimary: 'See Competitions',
     ctaRegister: 'Register Now',
+    ctaRundown: 'Rundown & General Guidelines',
     countdown: {
       title: 'Registration closes',
       units: { d: 'Days', h: 'Hours', m: 'Min', s: 'Sec' },
@@ -153,7 +155,7 @@ const en: typeof id = {
     category: 'Category',
     participation: 'Participants',
     registration: 'Registration',
-    date: 'Competition date',
+    date: 'Schedule',
     venue: 'Venue',
     format: 'Format',
     fee: 'Fee',

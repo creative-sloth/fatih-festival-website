@@ -46,7 +46,8 @@ export interface Competition {
   eligibility: Localized | null;
   registrationOpens: string | null; // ISO 8601 with +07:00
   registrationCloses: string | null;
-  competitionDate: string | null;
+  /** Time slots from the official rundown (Rundown Fatih Festival 3.0.pdf), WIB. null = not scheduled yet. */
+  schedule: ScheduleSlot[] | null;
   venue: Localized | null;
   format: 'onsite' | 'online' | 'hybrid' | null;
   fee: string | null;
@@ -57,6 +58,14 @@ export interface Competition {
   contact: Contact[] | null;
   cancelled: boolean;
   results: Winner[] | null;
+}
+
+export interface ScheduleSlot {
+  date: string; // YYYY-MM-DD
+  start: string; // HH:MM, 24 h, WIB
+  end: string;
+  /** Small remark shown after the time, e.g. "Final Debate" or "optional". */
+  note?: Localized;
 }
 
 export interface Festival {

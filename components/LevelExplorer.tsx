@@ -9,6 +9,7 @@ import { festival } from '@/content/festival';
 import type { Category, Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
 import { formatFee } from '@/lib/fee';
+import { formatSlot } from '@/lib/dates';
 import { useRegistrationClosed } from '@/lib/registration';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
@@ -90,23 +91,6 @@ function buildLayout(n: number): Cell[] {
 }
 
 const prefersReduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function fmtDate(iso: string | null, lang: Lang) {
-  if (!iso) return null;
-  // A date-only value (YYYY-MM-DD) prints no time of day; a full timestamp prints it in WIB.
-  const dateOnly = iso.length === 10;
-  const when = new Date(dateOnly ? `${iso}T12:00:00+07:00` : iso);
-  return (
-    new Intl.DateTimeFormat(lang === 'id' ? 'id-ID' : 'en-GB', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      ...(dateOnly ? {} : { hour: '2-digit', minute: '2-digit' }),
-      timeZone: 'Asia/Jakarta',
-    }).format(when) + (dateOnly ? '' : ' WIB')
-  );
-}
 
 function LinkIcon() {
   return (
@@ -397,8 +381,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
       : t.detail.participationValues.individual
     : null;
   const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
-  // Each competition's own date; not decided yet, so the card shows To Be Announced.
-  const dateText = active ? fmtDate(active.competitionDate, lang) : null;
+  // Time slots from the official rundown; a competition without one shows To Be Announced.
+  const slots = active?.schedule ?? [];
   const juknisUrl = active ? (active.juknisUrl ?? festival.juknisUrl) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
@@ -556,7 +540,16 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
               </div>
               <div className={s.fact} data-tone="date" data-reveal>
                 <dt>{t.detail.date}</dt>
-                <dd className={dateText ? undefined : s.tba}>{dateText ?? t.detail.tba}</dd>
+                <dd className={slots.length ? s.slots : s.tba}>
+                  {slots.length
+                    ? slots.map((sl, i) => (
+                        <span key={i} className={s.slot}>
+                          {formatSlot(sl, lang)}
+                          {sl.note && <span className={s.dim}> ({sl.note[lang] ?? sl.note.id})</span>}
+                        </span>
+                      ))
+                    : t.detail.tba}
+                </dd>
               </div>
               <div className={s.fact} data-tone="fee" data-reveal>
                 <dt>{t.detail.fee}</dt>

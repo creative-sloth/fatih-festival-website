@@ -13,12 +13,12 @@ Never type event facts into components.
 | Shared juknis folder | `content/festival.ts` | `juknisUrl` |
 | Linktree, Instagram, poster file | `content/festival.ts` | `linktreeUrl`, `instagram`, `posterUrl` |
 | Contacts per level (footer and fallback) | `content/festival.ts` | `levelContacts` |
-| One competition (name, fee, team size, contact, own date) | `content/competitions.ts` | the entry's fields |
+| One competition (name, fee, team size, contact, schedule) | `content/competitions.ts` | the entry's fields |
 
 ## Common changes
 
 - **A competition's contact person:** in `content/competitions.ts` set `contact: [{ name: 'Ms. Nama', whatsapp: '0812 3456 7890' }]`. Without it the level contact from `festival.levelContacts` is shown.
-- **A competition's date:** set `competitionDate: '2026-11-26'` (date only) or a full timestamp with +07:00 if a time is known. Until then the card shows "To Be Announced".
+- **A competition's schedule:** `schedule: [{ date: '2026-11-26', start: '08:00', end: '12:00' }]` (one entry per time slot, WIB; optional `note: { id: 'Final Debate', en: 'Final Debate' }`). Source: the official rundown PDF in the shared Drive folder. Without a schedule the card shows "To Be Announced".
 - **A competition's own form:** set `formUrl` on that entry; it overrides the general form for that competition only.
 - **A fee:** `fee: 'Rp 50.000 / peserta'` (exact committee wording).
 - **Team size and school limit:** `teamSize: '3'` shows as "Tim (3 orang)"; `maxPerSchool: { count: 2, unit: 'tim' }` shows as "maks. 2 tim per sekolah".

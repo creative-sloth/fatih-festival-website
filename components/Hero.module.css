@@ -167,7 +167,7 @@
 .title {
   position: relative;
   margin: 0;
-  width: min(96vw, 860px, calc(80svh - max(0px, (900px - 100svh) * 0.1)));
+  width: min(96vw, 860px, calc(75svh - max(0px, (900px - 100svh) * 0.32)));
   line-height: 0;
 }
 .titleSvg {

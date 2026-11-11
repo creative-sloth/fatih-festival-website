@@ -1161,3 +1161,12 @@
   background: var(--paper);
   box-shadow: var(--shadow-sm);
 }
+
+/* Schedule box: one line per time slot from the rundown */
+.slots {
+  gap: 4px;
+}
+.slot {
+  font-size: 0.86rem;
+  line-height: 1.25;
+}

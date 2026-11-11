@@ -20,7 +20,7 @@ const base = (slug: string, name: string, levels: Level[], category: Category): 
   eligibility: null,
   registrationOpens: null,
   registrationCloses: null,
-  competitionDate: null,
+  schedule: null,
   venue: VENUE,
   format: 'onsite',
   fee: null,
@@ -42,6 +42,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa/i TK sederajat, perwakilan sekolah (surat keterangan)', en: null },
     format: 'onsite',
     fee: 'Rp 30.000 / peserta',
+    schedule: [{ date: '2026-11-27', start: '09:00', end: '11:00' }],
     contact: [{ name: 'Ms. Wardah', whatsapp: '0852 6062 6123' }],
   },
 
@@ -50,12 +51,14 @@ export const competitions: Competition[] = [
     ...base('sd-bercerita', 'Lomba Bercerita', ['SD'], 'Bahasa'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
+    schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }],
     contact: [{ name: 'Ms. Nina', whatsapp: '0852 6269 8828' }],
   },
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
     participation: 'team',
     fee: 'Rp 150.000 / tim',
+    schedule: [{ date: '2026-11-27', start: '08:00', end: '12:00' }],
     contact: [{ name: 'Ms. Ailiya', whatsapp: '0822 4732 3894' }],
   },
   {
@@ -66,6 +69,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa kelas IV, V, dan VI SD/MI — perorangan; maksimal 5 siswa per sekolah per kategori', en: null },
     registrationOpens: '2026-10-15T00:00:00+07:00',
     fee: 'Rp 50.000 / peserta',
+    schedule: [{ date: '2026-11-25', start: '14:00', end: '18:00' }],
     contact: [{ name: 'Ms. Ihda', whatsapp: '0823 7078 6848' }],
   },
   {
@@ -75,6 +79,7 @@ export const competitions: Competition[] = [
     grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
     eligibility: { id: 'Siswa SD/MI kelas 5 / 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 50.000 / peserta',
+    schedule: [{ date: '2026-11-26', start: '08:00', end: '12:30' }],
     contact: [{ name: 'Ms. Ratu', whatsapp: '0823 2677 8902' }],
   },
   {
@@ -83,6 +88,7 @@ export const competitions: Competition[] = [
     grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
     eligibility: { id: 'Siswa SD/MI sederajat kelas 5 – 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
     fee: 'Rp 40.000 / peserta',
+    schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }],
     contact: [{ name: 'Ms. Tiara', whatsapp: '0853 1267 7451' }],
   },
   // ---------- SMP/MTs ----------
@@ -92,6 +98,7 @@ export const competitions: Competition[] = [
     grades: { id: 'Kelas 7–9', en: 'Grades 7–9' },
     eligibility: { id: 'Siswa kelas VII, VIII, atau IX SMP/MTs — perorangan, tanpa batasan jumlah per sekolah', en: null },
     fee: 'Rp 50.000 / peserta',
+    schedule: [{ date: '2026-11-26', start: '14:00', end: '17:30' }],
     contact: [{ name: 'Mr. Dwiki', whatsapp: '0813 1850 6606' }],
   },
   {
@@ -100,6 +107,7 @@ export const competitions: Competition[] = [
     maxPerSchool: { count: 2, unit: 'peserta' },
     eligibility: { id: 'Siswa SMP/MTs sederajat, perwakilan sekolah (surat keterangan aktif atau KTS)', en: null },
     fee: 'Rp 65.000 / peserta',
+    schedule: [{ date: '2026-11-26', start: '13:30', end: '18:00' }],
     contact: [{ name: 'Mr. Eko', whatsapp: '0852 7710 0192' }],
   },
   {
@@ -108,6 +116,7 @@ export const competitions: Competition[] = [
     maxPerSchool: { count: 2, unit: 'peserta' },
     eligibility: { id: 'Siswa/siswi aktif SMP/MTs dan sederajat', en: null },
     fee: 'Rp 40.000 / peserta',
+    schedule: [{ date: '2026-11-25', start: '14:00', end: '18:00' }],
     contact: [{ name: 'Mr. Safriadi', whatsapp: '0823 6294 6335' }],
   },
   {
@@ -115,6 +124,7 @@ export const competitions: Competition[] = [
     participation: 'team',
     teamSize: 'maks. 12',
     fee: 'Rp 500.000 / tim',
+    schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }, { date: '2026-11-26', start: '08:00', end: '18:00' }],
     contact: [{ name: 'Mr. Juliandi', whatsapp: '0853 6274 3015' }],
   },
 
@@ -128,6 +138,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Siswa/i aktif SMA/MA/sederajat (KTS atau surat keterangan aktif)', en: null },
     registrationOpens: '2026-09-19T00:00:00+07:00',
     fee: 'Rp 300.000 / tim',
+    schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }, { date: '2026-11-26', start: '08:00', end: '14:00' }, { date: '2026-11-26', start: '16:00', end: '18:00', note: { id: 'Final Debate', en: 'Final Debate' } }],
     juknisLanguage: 'both',
     contact: [{ name: 'Ms. Raysa', whatsapp: '0822 7250 3705' }],
   },
@@ -137,6 +148,7 @@ export const competitions: Competition[] = [
     eligibility: { id: 'Pelajar aktif SMA/MA/SMK/sederajat; individu, satu karya per peserta', en: null },
     format: 'online',
     fee: 'Rp 40.000 / peserta',
+    schedule: [{ date: '2026-11-27', start: '08:00', end: '12:00', note: { id: 'opsional', en: 'optional' } }],
     contact: [{ name: 'Ms. Nabila', whatsapp: '0823 6418 0206' }],
   },
   {
@@ -147,12 +159,14 @@ export const competitions: Competition[] = [
     grades: { id: 'Kelas 10–12', en: 'Grades 10–12' },
     eligibility: { id: 'Siswa/i aktif SMA/MA/sederajat (kelas 10 – 12), perwakilan resmi sekolah', en: null },
     fee: 'Rp 200.000 / tim',
+    schedule: [{ date: '2026-11-26', start: '08:00', end: '16:00' }],
     contact: [{ name: 'Mr. Dhiya', whatsapp: '0823 7056 1457' }],
   },
   {
     ...base('sma-culture-vlog', 'Culture Vlog Competition', ['SMA'], 'Media'),
     participation: 'individual',
     fee: 'Rp 50.000 / peserta',
+    schedule: [{ date: '2026-11-27', start: '08:00', end: '12:00', note: { id: 'opsional', en: 'optional' } }],
     juknisLanguage: 'both',
     contact: [{ name: 'Mr. Surya', whatsapp: '0853 7192 8827' }],
   },
@@ -162,6 +176,7 @@ export const competitions: Competition[] = [
     ...base('smp-sma-desain-grafis', 'Desain Grafis – Komik', ['SMP', 'SMA'], 'Media'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
+    schedule: [{ date: '2026-11-26', start: '13:30', end: '17:30' }],
     contact: [{ name: 'Mr. Arief', whatsapp: '0812 6545 4182' }],
   },
   {
@@ -172,6 +187,7 @@ export const competitions: Competition[] = [
     grades: { id: 'Kelas 7–12', en: 'Grades 7–12' },
     eligibility: { id: 'Siswa SMP/MTs kelas 7 – 9 dan SMA/MA sederajat kelas 10 – 12', en: null },
     fee: 'Rp 150.000 / tim', // juknis: transfer to BSI 2828-0000-52
+    schedule: [{ date: '2026-11-25', start: '11:00', end: '13:00' }],
     juknisLanguage: 'both',
     contact: [{ name: 'Ms. Bella', whatsapp: '0822 4921 4517' }],
   },
@@ -184,6 +200,7 @@ export const competitions: Competition[] = [
     teamSize: 'maks. 12',
     eligibility: { id: 'Siswa tingkat SD/MI sederajat, perwakilan sekolah (surat tugas)', en: null },
     fee: 'Rp 350.000 / tim',
+    schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }, { date: '2026-11-26', start: '08:00', end: '18:00' }, { date: '2026-11-27', start: '08:00', end: '12:00' }],
     contact: [{ name: 'Mr. Surya', whatsapp: '0853 7192 8827' }],
   },
 ];

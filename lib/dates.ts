@@ -1,4 +1,4 @@
-import type { Lang } from '@/content/types';
+import type { Lang, ScheduleSlot } from '@/content/types';
 
 const TZ = 'Asia/Jakarta';
 
@@ -17,4 +17,12 @@ export function formatDateRange(startIso: string | null, endIso: string | null, 
   const sameMonth = fmt({ month: 'numeric', year: 'numeric' }, start) === fmt({ month: 'numeric', year: 'numeric' }, end);
   if (sameMonth) return `${fmt({ day: 'numeric' }, start)}–${fmt(full, end)}`;
   return `${fmt({ day: 'numeric', month: 'long' }, start)} – ${fmt(full, end)}`;
+}
+
+/** "Rab, 25 Nov · 13.30–18.00 WIB" (Indonesian) or "Wed 25 Nov · 13:30–18:00 WIB" (English). */
+export function formatSlot(slot: ScheduleSlot, lang: Lang): string {
+  const locale = lang === 'id' ? 'id-ID' : 'en-GB';
+  const day = new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ }).format(parse(slot.date));
+  const t = (hhmm: string) => (lang === 'id' ? hhmm.replace(':', '.') : hhmm);
+  return `${day} · ${t(slot.start)}–${t(slot.end)} WIB`;
 }
