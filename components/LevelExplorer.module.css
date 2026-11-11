@@ -1162,11 +1162,21 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Schedule box: one line per time slot from the rundown */
+/* Schedule box: each day is two lines, the day and date on top and the time range under it */
 .slots {
-  gap: 4px;
+  gap: 10px;
 }
 .slot {
-  font-size: 0.86rem;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
   line-height: 1.25;
+}
+.slotDay {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.slotTime {
+  font-size: 0.9rem;
+  font-weight: 700;
 }

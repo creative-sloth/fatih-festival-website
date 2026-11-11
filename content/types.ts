@@ -20,6 +20,8 @@ export interface Winner {
 export interface Contact {
   name: string;
   whatsapp: string;
+  /** Levels this person covers; shown as "(TK)" in the footer and used to pick the right person as a fallback. */
+  levels?: Level[];
 }
 
 export interface Photo {
@@ -64,8 +66,6 @@ export interface ScheduleSlot {
   date: string; // YYYY-MM-DD
   start: string; // HH:MM, 24 h, WIB
   end: string;
-  /** Small remark shown after the time, e.g. "Final Debate" or "optional". */
-  note?: Localized;
 }
 
 export interface Festival {

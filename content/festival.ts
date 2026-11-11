@@ -38,7 +38,14 @@ export const festival: Festival = {
   registrationClosesText: { id: '20 November 2026, 23.59 WIB', en: '20 November 2026, 11:59 PM WIB' },
   // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person ..."); TK & SD was later changed to Ms. Nisa by the committee (6 Nov 2026).
   levelContacts: [
-    { label: 'TK & SD', levels: ['TK', 'SD'], people: [{ name: 'Ms. Nisa', whatsapp: '0852 7637 7196' }] },
+    {
+      label: 'TK & SD',
+      levels: ['TK', 'SD'],
+      people: [
+        { name: 'Ms. Wardah', whatsapp: '0852 6062 6123', levels: ['TK'] },
+        { name: 'Ms. Nisa', whatsapp: '0852 7637 7196', levels: ['SD'] },
+      ],
+    },
     { label: 'SMP', levels: ['SMP'], people: [{ name: 'Mr. Farisi', whatsapp: '0852 8268 8976' }] },
     {
       label: 'SMA',

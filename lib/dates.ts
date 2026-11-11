@@ -31,3 +31,20 @@ export function formatSlot(slot: ScheduleSlot, lang: Lang): string {
   const day = new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ }).format(parse(slot.date));
   return `${day} · ${formatTimeRange(slot.start, slot.end, lang)}`;
 }
+
+/** Several slots on the same day become one range: earliest start to latest end. Sorted by date. */
+export function mergeSlotsByDay(slots: ScheduleSlot[]): ScheduleSlot[] {
+  const byDay = new Map<string, ScheduleSlot>();
+  for (const s of slots) {
+    const cur = byDay.get(s.date);
+    if (!cur) byDay.set(s.date, { date: s.date, start: s.start, end: s.end });
+    else byDay.set(s.date, { date: s.date, start: s.start < cur.start ? s.start : cur.start, end: s.end > cur.end ? s.end : cur.end });
+  }
+  return [...byDay.values()].sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/** "Rab, 25 Nov" (Indonesian) or "Wed 25 Nov" (English). */
+export function formatDay(date: string, lang: Lang): string {
+  const locale = lang === 'id' ? 'id-ID' : 'en-GB';
+  return new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', timeZone: TZ }).format(parse(date));
+}

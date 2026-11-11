@@ -9,7 +9,7 @@ import { festival } from '@/content/festival';
 import type { Category, Competition, Lang, Level } from '@/content/types';
 import { getMessages } from '@/messages';
 import { formatFee } from '@/lib/fee';
-import { formatSlot } from '@/lib/dates';
+import { formatDay, formatTimeRange, mergeSlotsByDay } from '@/lib/dates';
 import { useRegistrationClosed } from '@/lib/registration';
 import { waLink } from '@/lib/whatsapp';
 import CategoryIcon from './CategoryIcon';
@@ -361,9 +361,10 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     (c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp,
   );
   const levelGroups = active ? festival.levelContacts.filter((g) => g.levels.some((l) => active.levels.includes(l))) : [];
+  // Only the people who cover this competition's level (e.g. Ms. Wardah for TK, Ms. Nisa for SD).
   const fallbackContacts = levelGroups
     .flatMap((g) => g.people)
-    .filter((c): c is { name: string; whatsapp: string } => !!c.name && !!c.whatsapp);
+    .filter((c) => !c.levels || c.levels.some((l) => active?.levels.includes(l)));
   const contactList = ownContacts.length ? ownContacts : fallbackContacts;
   const contactLabel = ownContacts.length ? t.detail.contact : t.detail.contactFor(levelGroups.map((g) => g.label).join(' & '));
   // One quiet line per panel: grades, team size and school limit, only what the juknis states.
@@ -382,7 +383,7 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
     : null;
   const pesertaSub = active?.maxPerSchool ? t.detail.perSchool(active.maxPerSchool.count, active.maxPerSchool.unit) : null;
   // Time slots from the official rundown; a competition without one shows To Be Announced.
-  const slots = active?.schedule ?? [];
+  const slots = mergeSlotsByDay(active?.schedule ?? []);
   const juknisUrl = active ? (active.juknisUrl ?? festival.juknisUrl) : null;
   // The competition's own form wins; otherwise the general registration form.
   const formUrl = active ? (active.formUrl ?? festival.formUrl) : null;
@@ -544,8 +545,8 @@ export default function LevelExplorer({ lang }: { lang: Lang }) {
                   {slots.length
                     ? slots.map((sl, i) => (
                         <span key={i} className={s.slot}>
-                          {formatSlot(sl, lang)}
-                          {sl.note && <span className={s.dim}> ({sl.note[lang] ?? sl.note.id})</span>}
+                          <span className={s.slotDay}>{formatDay(sl.date, lang)}</span>
+                          <span className={s.slotTime}>{formatTimeRange(sl.start, sl.end, lang)}</span>
                         </span>
                       ))
                     : t.detail.tba}

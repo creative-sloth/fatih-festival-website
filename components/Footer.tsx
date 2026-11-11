@@ -67,7 +67,10 @@ export default function Footer({ lang }: { lang: Lang }) {
               <span className={s.label}>{t.footer.group(group.label)}</span>
               {group.people.map((person) => (
                 <span key={person.whatsapp ?? person.name} className={s.contactRow}>
-                  <span className={s.name}>{person.name}</span>
+                  <span className={s.name}>
+                    {person.name}
+                    {person.levels && <small className={s.nameTag}> ({person.levels.join(' / ')})</small>}
+                  </span>
                   {person.whatsapp ? (
                     <a className={s.wa} href={waLink(person.whatsapp, `${t.footer.prefill} (${group.label})`)} target="_blank" rel="noopener noreferrer">
                       <WhatsAppIcon />
