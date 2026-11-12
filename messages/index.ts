@@ -106,6 +106,7 @@ const id = {
     prefill: 'Halo, saya ingin bertanya tentang Fatih Festival 3.0.',
     host: 'Diselenggarakan oleh',
   },
+  sponsors: { title: 'Special Thanks To', label: 'Sponsor dan pendukung Fatih Festival 3.0' },
   unknown: '???',
   logoPlaceholder: 'LOGO',
 };
@@ -214,6 +215,7 @@ const en: typeof id = {
     prefill: 'Hello, I have a question about Fatih Festival 3.0.',
     host: 'Hosted by',
   },
+  sponsors: { title: 'Special Thanks To', label: 'Sponsors and supporters of Fatih Festival 3.0' },
   unknown: '???',
   logoPlaceholder: 'LOGO',
 };

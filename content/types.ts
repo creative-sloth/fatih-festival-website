@@ -68,6 +68,15 @@ export interface ScheduleSlot {
   end: string;
 }
 
+export interface Sponsor {
+  name: string;
+  src: string;
+  width: number;
+  height: number;
+  /** Optional website; when set the logo becomes a link. */
+  url?: string;
+}
+
 export interface Festival {
   name: string;
   edition: string;
