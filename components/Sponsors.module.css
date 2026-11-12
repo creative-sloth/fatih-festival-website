@@ -1,5 +1,5 @@
-/* "Special Thanks To": a blue comic burst band (rays, graded halftone, zigzag edges) with frameless logo stickers.
-   Variant of the comic look: the picker is a purple burst, this one is a sky-blue sunburst. */
+/* "Special Thanks To": a deep-navy comic burst band (rays, graded halftone, zigzag edges) with frameless logo stickers.
+   The dark ground makes the white-edged logos stand out. Variant of the comic look: the picker is a purple burst. */
 
 .band {
   position: relative;
@@ -7,7 +7,7 @@
   isolation: isolate;
   border-top: var(--line) solid var(--ink);
   border-bottom: var(--line) solid var(--ink);
-  background: repeating-conic-gradient(from 0deg at 50% 24%, #2a86e0 0 6deg, #4aa6f2 6deg 12deg);
+  background: repeating-conic-gradient(from 0deg at 50% 30%, #131a52 0 6deg, #1d2670 6deg 12deg);
   color: var(--ink);
   scroll-margin-top: 64px;
 }
@@ -18,7 +18,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(255 255 255 / 0.42);
+  background: rgb(120 150 255 / 0.4);
   -webkit-mask:
     url('/assets/halftone-tl.svg') left top / min(520px, 60vw) no-repeat,
     url('/assets/halftone-br.svg') right bottom / min(520px, 60vw) no-repeat;
@@ -28,7 +28,7 @@
   pointer-events: none;
 }
 
-/* Zigzag ink edges, like a torn comic panel */
+/* Zigzag yellow edges, like a torn comic panel */
 .teethTop,
 .teethBottom {
   position: absolute;
@@ -39,46 +39,11 @@
 }
 .teethTop {
   top: 0;
-  background: conic-gradient(from 135deg at top, #0000, var(--ink) 1deg 89deg, #0000 90deg) 50% 0 / 32px 100% repeat-x;
+  background: conic-gradient(from 135deg at top, #0000, var(--accent-yellow) 1deg 89deg, #0000 90deg) 50% 0 / 32px 100% repeat-x;
 }
 .teethBottom {
   bottom: 0;
-  background: conic-gradient(from -45deg at bottom, #0000, var(--ink) 1deg 89deg, #0000 90deg) 50% 100% / 32px 100% repeat-x;
-}
-
-.decorWrap {
-  position: absolute;
-  z-index: 0;
-  width: clamp(56px, 8vw, 120px);
-  pointer-events: none;
-}
-.decor {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.flip {
-  transform: scaleX(-1);
-}
-.boltL {
-  left: 6%;
-  top: 8%;
-  rotate: -14deg;
-}
-.starL {
-  left: 3%;
-  bottom: 12%;
-  rotate: -10deg;
-}
-.boltR {
-  right: 6%;
-  top: 10%;
-  rotate: 12deg;
-}
-.starR {
-  right: 4%;
-  bottom: 14%;
-  rotate: 12deg;
+  background: conic-gradient(from -45deg at bottom, #0000, var(--accent-yellow) 1deg 89deg, #0000 90deg) 50% 100% / 32px 100% repeat-x;
 }
 
 .inner {
@@ -152,8 +117,8 @@
   max-width: clamp(120px, 19vw, 260px);
   max-height: clamp(66px, 9.4vw, 124px);
   object-fit: contain;
-  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
-    drop-shadow(3px 4px 0 var(--ink));
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+    drop-shadow(4px 5px 0 #000);
 }
 
 @media (prefers-reduced-motion: reduce) {
