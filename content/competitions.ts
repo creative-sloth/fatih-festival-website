@@ -7,6 +7,9 @@ const VENUE = {
   en: null,
 };
 
+/** Each competition's own juknis PDF in the shared Drive folder "Juknis per Lomba". The /view link opens the PDF straight away. */
+const juknisPdf = (id: string) => `https://drive.google.com/file/d/${id}/view`;
+
 const base = (slug: string, name: string, levels: Level[], category: Category): Competition => ({
   slug,
   name: { id: name, en: null },
@@ -25,7 +28,7 @@ const base = (slug: string, name: string, levels: Level[], category: Category): 
   format: 'onsite',
   fee: null,
   prizes: null,
-  juknisUrl: null, // every competition uses the shared juknis folder in `festival.juknisUrl`
+  juknisUrl: null, // set per competition (juknisPdf); falls back to the shared folder in `festival.juknisUrl`
   juknisLanguage: 'id',
   formUrl: null,
   contact: null,
@@ -37,6 +40,7 @@ export const competitions: Competition[] = [
   // ---------- TK ----------
   {
     ...base('tk-mewarnai', 'Lomba Mewarnai', ['TK'], 'Seni'),
+    juknisUrl: juknisPdf('1Bp1s9sKFjtwTa9iVvipscyh65SMyBSH8'),
     participation: 'individual',
     grades: { id: 'TK sederajat', en: 'Kindergarten' },
     eligibility: { id: 'Siswa/i TK sederajat, perwakilan sekolah (surat keterangan)', en: null },
@@ -49,6 +53,7 @@ export const competitions: Competition[] = [
   // ---------- SD/MI ----------
   {
     ...base('sd-bercerita', 'Lomba Bercerita', ['SD'], 'Bahasa'),
+    juknisUrl: juknisPdf('1TTt_P-cHXvwYgnjOQ7f1MSnkXa7qQreX'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
     schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }],
@@ -56,6 +61,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
+    juknisUrl: juknisPdf('1v4jUplWfBtmcs7ExCN_v7_gi7JUaC_jo'),
     participation: 'team',
     fee: 'Rp 150.000 / tim',
     schedule: [{ date: '2026-11-27', start: '08:00', end: '12:00' }],
@@ -63,6 +69,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sd-olimpiade-mipa', 'Olimpiade Matematika & IPA', ['SD'], 'Akademik'),
+    juknisUrl: juknisPdf('1BIgaovQM9vA_HweRmrGNY9f_aPth5qVp'),
     participation: 'individual',
     maxPerSchool: { count: 5, unit: 'peserta' },
     grades: { id: 'Kelas 4–6', en: 'Grades 4–6' },
@@ -74,6 +81,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sd-vocal-solo', 'Vokal Solo SD', ['SD'], 'Seni'),
+    juknisUrl: juknisPdf('1gEbR7cNWVG1jAv-D-qwCNOBUif3C0P9H'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
     grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
@@ -84,6 +92,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sd-spelling-bee', 'Spelling Bee', ['SD'], 'Bahasa'),
+    juknisUrl: juknisPdf('1vx9ZQWjubHsAY1EvPJzqyWbm3cwqAvO9'),
     participation: 'individual',
     grades: { id: 'Kelas 5–6', en: 'Grades 5–6' },
     eligibility: { id: 'Siswa SD/MI sederajat kelas 5 – 6, perwakilan sekolah (surat keterangan atau KTS)', en: null },
@@ -94,6 +103,7 @@ export const competitions: Competition[] = [
   // ---------- SMP/MTs ----------
   {
     ...base('smp-olimpiade-mipa', 'Olimpiade Matematika & IPA', ['SMP'], 'Akademik'),
+    juknisUrl: juknisPdf('1WIk1MZXolViTribNFREKhCZ1jrgFRSvQ'),
     participation: 'individual',
     grades: { id: 'Kelas 7–9', en: 'Grades 7–9' },
     eligibility: { id: 'Siswa kelas VII, VIII, atau IX SMP/MTs — perorangan, tanpa batasan jumlah per sekolah', en: null },
@@ -103,6 +113,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('smp-vocal-solo', 'Vokal Solo SMP', ['SMP'], 'Seni'),
+    juknisUrl: juknisPdf('10a9O1l-rs-ZbWqSFCDH5k7hTwFAODD5W'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
     eligibility: { id: 'Siswa SMP/MTs sederajat, perwakilan sekolah (surat keterangan aktif atau KTS)', en: null },
@@ -112,6 +123,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('smp-baca-puisi', 'Lomba Baca Puisi', ['SMP'], 'Bahasa'),
+    juknisUrl: juknisPdf('1xVbYWObhdCZxD0Ti14lIh7h-b3LVvzIF'),
     participation: 'individual',
     maxPerSchool: { count: 2, unit: 'peserta' },
     eligibility: { id: 'Siswa/siswi aktif SMP/MTs dan sederajat', en: null },
@@ -121,6 +133,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('smp-basket', 'Lomba Basket', ['SMP'], 'Olahraga'),
+    juknisUrl: juknisPdf('1DeTtJnpKI6f68yw_fArMKAQeASNI3ukK'),
     participation: 'team',
     teamSize: 'maks. 12',
     fee: 'Rp 500.000 / tim',
@@ -131,6 +144,7 @@ export const competitions: Competition[] = [
   // ---------- SMA/MA ----------
   {
     ...base('sma-debate', 'English Debate', ['SMA'], 'Bahasa'),
+    juknisUrl: juknisPdf('1gITQOMgcUToorMpD-WaKsUxuXHrK_LhW'),
     name: { id: 'English Debate', en: 'English Debate' },
     participation: 'team',
     teamSize: '3',
@@ -144,6 +158,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sma-essay', 'Lomba Essay', ['SMA'], 'Akademik'),
+    juknisUrl: juknisPdf('1LZKqhJ-ZGHPx3D4O4vZcFYgqm5WTpGg8'),
     participation: 'individual',
     eligibility: { id: 'Pelajar aktif SMA/MA/SMK/sederajat; individu, satu karya per peserta', en: null },
     format: 'online',
@@ -153,6 +168,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sma-cerdas-cermat', 'Cerdas Cermat', ['SMA'], 'Akademik'),
+    juknisUrl: juknisPdf('17be6ish4fBFYBNNWfEQcdMbaGyXYbiyj'),
     participation: 'team',
     teamSize: '3',
     maxPerSchool: { count: 2, unit: 'tim' },
@@ -164,6 +180,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('sma-culture-vlog', 'Culture Vlog Competition', ['SMA'], 'Media'),
+    juknisUrl: juknisPdf('1TcvYAF6pMAxe27HUE8QL0iZicPmgCsSJ'),
     participation: 'individual',
     fee: 'Rp 50.000 / peserta',
     schedule: [{ date: '2026-11-27', start: '08:00', end: '12:00' }],
@@ -174,6 +191,7 @@ export const competitions: Competition[] = [
   // ---------- SMP & SMA ----------
   {
     ...base('smp-sma-desain-grafis', 'Desain Grafis – Komik', ['SMP', 'SMA'], 'Media'),
+    juknisUrl: juknisPdf('13t7UHmbiIUM4OOFJy0Muua9H2dNwAR5c'),
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
     schedule: [{ date: '2026-11-26', start: '13:30', end: '17:30' }],
@@ -181,6 +199,7 @@ export const competitions: Competition[] = [
   },
   {
     ...base('smp-sma-stem-expo', 'STEAM Project', ['SMP', 'SMA'], 'Inovasi'),
+    juknisUrl: juknisPdf('1uWb3dILabOiNxKIueU64ru7ZglBP8xaW'),
     participation: 'team',
     teamSize: '2',
     maxPerSchool: { count: 1, unit: 'tim' },
@@ -196,6 +215,7 @@ export const competitions: Competition[] = [
   // PETUNJUK TEKNIS - LOMBA FUTSAL SD/MI, so it is a confirmed competition.
   {
     ...base('sd-futsal', 'Futsal', ['SD'], 'Olahraga'),
+    juknisUrl: juknisPdf('19_UxKonzhWcSqCNDeHbcXpDWrhFG0Hgl'),
     participation: 'team',
     teamSize: 'maks. 12',
     eligibility: { id: 'Siswa tingkat SD/MI sederajat, perwakilan sekolah (surat tugas)', en: null },
