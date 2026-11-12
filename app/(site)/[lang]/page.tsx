@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import HowTo from '@/components/HowTo';
 import LevelExplorer from '@/components/LevelExplorer';
+import Sponsors from '@/components/Sponsors';
 import SiteNav from '@/components/SiteNav';
 import type { Lang } from '@/content/types';
 
@@ -13,7 +14,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <main id="main">
         <Hero lang={lang} />
         <LevelExplorer lang={lang} />
-        {/* Sponsor band is built (components/Sponsors.tsx, content/sponsors.ts) but hidden for now: import it and add <Sponsors lang={lang} /> here. */}
+        <Sponsors lang={lang} />
         <HowTo lang={lang} />
       </main>
       <Footer lang={lang} />
