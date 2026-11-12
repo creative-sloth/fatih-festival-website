@@ -7,6 +7,7 @@ import Countdown from './Countdown';
 import RegisterLink from './RegisterLink';
 import HeroMotion from './HeroMotion';
 import LangLink from './LangLink';
+import TitleArt from './TitleArt';
 import s from './Hero.module.css';
 
 export default function Hero({ lang }: { lang: Lang }) {
@@ -67,17 +68,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <span className="sr-only">
               {festival.name} {festival.edition}
             </span>
-            {/* Official artwork from the committee (docs/brand/logo-fatfest-3.0.png, cut out to a transparent WebP). */}
-            <img
-              className={s.titleImg}
-              src="/assets/brand/logo-fatfest-3.0.webp"
-              alt=""
-              width={1600}
-              height={885}
-              fetchPriority="high"
-              decoding="async"
-              data-anim="title"
-            />
+            <TitleArt />
           </h1>
         </div>
 

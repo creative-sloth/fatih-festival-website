@@ -165,19 +165,27 @@
   padding: clamp(8px, 2svh, 32px) var(--gutter);
 }
 
-/* The title is the committee's official artwork as one image: no live-text effects, so it draws the same in every browser.
-   Size is capped by width AND by viewport height so the hero still fits one screen. Aspect = 1600:885. */
+/* The title is one inline SVG (traced from the flyer): no live-text effects, so it draws the same in every browser.
+   Size is capped by width AND by viewport height so the hero still fits one screen. Aspect = 2828:1596. */
 .title {
   position: relative;
   margin: 0;
   width: min(96vw, 860px, calc(75svh - max(0px, (900px - 100svh) * 0.32)));
   line-height: 0;
 }
-.titleImg {
+.titleSvg {
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
+}
+.titleFace {
   cursor: pointer;
+  pointer-events: all;
+}
+.titleMass,
+.titleSparkle {
+  pointer-events: none;
 }
 
 /* ---------- Decorations (wrappers carry position + parallax, SVGs carry the intro pop) ---------- */

@@ -57,7 +57,7 @@ export const competitions: Competition[] = [
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
     schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }],
-    contact: [{ name: 'Ms. Nina', whatsapp: '0852 6269 8828' }],
+    contact: [{ name: 'Ms. Zanna', whatsapp: '0852 8852 3515' }],
   },
   {
     ...base('sd-tari-kreasi', 'Tari Kreasi Group', ['SD'], 'Seni'),
