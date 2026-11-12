@@ -73,6 +73,8 @@ export interface Sponsor {
   src: string;
   width: number;
   height: number;
+  /** "wordmark" = mostly text or a wide block (shown large, 3 per row); "emblem" = round, square or pictorial (4 per row). */
+  kind: 'wordmark' | 'emblem';
   /** Optional website; when set the logo becomes a link. */
   url?: string;
 }

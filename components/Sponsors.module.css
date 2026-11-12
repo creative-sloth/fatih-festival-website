@@ -1,5 +1,5 @@
-/* "Special Thanks To": a deep-navy comic burst band (rays, graded halftone, zigzag edges) with frameless logo stickers.
-   The dark ground makes the white-edged logos stand out. Variant of the comic look: the picker is a purple burst. */
+/* "Special Thanks To": a light sky comic burst band (rays, graded halftone, zigzag edges) with frameless logo stickers.
+   Variant of the comic look: the picker is a purple burst. */
 
 .band {
   position: relative;
@@ -7,7 +7,7 @@
   isolation: isolate;
   border-top: var(--line) solid var(--ink);
   border-bottom: var(--line) solid var(--ink);
-  background: repeating-conic-gradient(from 0deg at 50% 30%, #131a52 0 6deg, #1d2670 6deg 12deg);
+  background: repeating-conic-gradient(from 0deg at 50% 22%, #9fd6f6 0 6deg, #c4ebfc 6deg 12deg);
   color: var(--ink);
   scroll-margin-top: 64px;
 }
@@ -18,7 +18,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(120 150 255 / 0.4);
+  background: rgb(46 130 215 / 0.34);
   -webkit-mask:
     url('/assets/halftone-tl.svg') left top / min(520px, 60vw) no-repeat,
     url('/assets/halftone-br.svg') right bottom / min(520px, 60vw) no-repeat;
@@ -28,7 +28,7 @@
   pointer-events: none;
 }
 
-/* Zigzag yellow edges, like a torn comic panel */
+/* Zigzag ink edges, like a torn comic panel */
 .teethTop,
 .teethBottom {
   position: absolute;
@@ -39,11 +39,11 @@
 }
 .teethTop {
   top: 0;
-  background: conic-gradient(from 135deg at top, #0000, var(--accent-yellow) 1deg 89deg, #0000 90deg) 50% 0 / 32px 100% repeat-x;
+  background: conic-gradient(from 135deg at top, #0000, var(--ink) 1deg 89deg, #0000 90deg) 50% 0 / 32px 100% repeat-x;
 }
 .teethBottom {
   bottom: 0;
-  background: conic-gradient(from -45deg at bottom, #0000, var(--accent-yellow) 1deg 89deg, #0000 90deg) 50% 100% / 32px 100% repeat-x;
+  background: conic-gradient(from -45deg at bottom, #0000, var(--ink) 1deg 89deg, #0000 90deg) 50% 100% / 32px 100% repeat-x;
 }
 
 .inner {
@@ -71,30 +71,39 @@
   rotate: -1.5deg;
 }
 
-/* No cards: each logo is a sticker with a hard white edge and an ink offset shadow, straight on the band. */
+/* No cards: each logo is a sticker (white edge, thin ink edge, ink offset shadow) straight on the band.
+   Wordmarks sit in an even 3-column grid and are large; emblems follow in an even 4-column grid. */
 .logos {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  gap: clamp(22px, 3vw, 40px) clamp(28px, 4.2vw, 60px);
+  justify-items: center;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+.words {
+  --h: clamp(60px, 6.6vw, 92px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+.emblems {
+  --h: clamp(84px, 9.4vw, 128px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
+}
 .item {
   display: grid;
   place-items: center;
+  width: 100%;
+  min-height: var(--h);
   transition: translate 0.45s var(--ease-spring);
 }
-.item:nth-child(3n + 1) {
-  rotate: -1.4deg;
+.item:nth-child(odd) {
+  rotate: -1deg;
 }
-.item:nth-child(3n + 2) {
-  rotate: 1deg;
-}
-.item:nth-child(3n) {
-  rotate: -0.4deg;
+.item:nth-child(even) {
+  rotate: 0.8deg;
 }
 .item:hover {
   translate: 0 -4px;
@@ -114,15 +123,34 @@
   display: block;
   width: auto;
   height: auto;
-  max-width: clamp(120px, 19vw, 260px);
-  max-height: clamp(66px, 9.4vw, 124px);
+  max-width: min(100%, 320px);
+  max-height: var(--h);
   object-fit: contain;
   filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
-    drop-shadow(4px 5px 0 #000);
+    drop-shadow(2px 0 0 var(--ink)) drop-shadow(-2px 0 0 var(--ink)) drop-shadow(0 2px 0 var(--ink)) drop-shadow(0 -2px 0 var(--ink))
+    drop-shadow(4px 5px 0 var(--ink));
+}
+.emblems .logo {
+  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .item {
     transition: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .emblems {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 479px) {
+  .words {
+    grid-template-columns: minmax(0, 1fr);
+    --h: 72px;
+  }
+  .logo {
+    max-width: min(100%, 280px);
   }
 }
