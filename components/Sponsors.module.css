@@ -1,5 +1,5 @@
-/* "Special Thanks To": a light sky comic burst band (rays, graded halftone, zigzag edges) with frameless logo stickers.
-   Variant of the comic look: the picker is a purple burst. */
+/* "Special Thanks To": a polished gold comic burst band (gold rays, a glossy diagonal sheen, a slow glint, graded halftone,
+   zigzag edges) with frameless logo stickers. Variant of the comic look: the picker is a purple burst. */
 
 .band {
   position: relative;
@@ -7,7 +7,11 @@
   isolation: isolate;
   border-top: var(--line) solid var(--ink);
   border-bottom: var(--line) solid var(--ink);
-  background: repeating-conic-gradient(from 0deg at 50% 22%, #9fd6f6 0 6deg, #c4ebfc 6deg 12deg);
+  /* gloss: two soft white highlight bands across the rays, plus a warm vignette so the gold reads as metal */
+  background:
+    linear-gradient(115deg, transparent 22%, rgb(255 255 255 / 0.5) 31%, transparent 40%, transparent 58%, rgb(255 255 255 / 0.32) 66%, transparent 74%),
+    linear-gradient(180deg, rgb(255 244 190 / 0.28), transparent 38%, rgb(120 70 0 / 0.22)),
+    repeating-conic-gradient(from 0deg at 50% 22%, #dba51b 0 6deg, #f6d466 6deg 12deg);
   color: var(--ink);
   scroll-margin-top: 64px;
 }
@@ -18,7 +22,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(46 130 215 / 0.34);
+  background: rgb(125 78 0 / 0.38);
   -webkit-mask:
     url('/assets/halftone-tl.svg') left top / min(520px, 60vw) no-repeat,
     url('/assets/halftone-br.svg') right bottom / min(520px, 60vw) no-repeat;
@@ -26,6 +30,36 @@
     url('/assets/halftone-tl.svg') left top / min(520px, 60vw) no-repeat,
     url('/assets/halftone-br.svg') right bottom / min(520px, 60vw) no-repeat;
   pointer-events: none;
+}
+
+/* A slow glint sweeping across the gold (transform only; reduced motion keeps the static sheen above) */
+.band::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 24%;
+  z-index: 0;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.55) 48%, rgb(255 255 255 / 0.15) 60%, transparent);
+  transform: translateX(-120%) skewX(-18deg);
+  pointer-events: none;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .band::after {
+    opacity: 1;
+    animation: glint 9s ease-in-out 1.5s 4;
+  }
+}
+@keyframes glint {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  38%,
+  100% {
+    transform: translateX(520%) skewX(-18deg);
+  }
 }
 
 /* Zigzag ink edges, like a torn comic panel */
@@ -58,15 +92,16 @@
   display: block;
   width: fit-content;
   margin: 0 auto clamp(30px, 4.5vw, 54px);
-  padding: 8px 24px 4px;
+  padding: 8px 26px 4px;
   border: var(--line) solid var(--ink);
-  background: var(--accent-yellow);
-  box-shadow: 6px 6px 0 var(--ink);
+  background: var(--ink);
+  color: #ffd84d;
+  box-shadow: 6px 6px 0 #7a4e00;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2rem, 3.2vw + 1rem, 3.6rem);
   line-height: 1;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-align: center;
   rotate: -1.5deg;
 }
