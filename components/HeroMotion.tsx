@@ -16,7 +16,7 @@ let intro: gsap.core.Timeline | null = null;
 /** Hero interactivity. Renders nothing; finds its elements under [data-hero-root].
  *  - Intro: ≤ ~1.2s, once per session, skippable, skipped entirely on slow hydration.
  *  - Pointer depth parallax + halftone lens (fine pointers only).
- *  - Letters spring when poked.
+ *  - The title springs when poked.
  *  - The cover tilts away as you scroll past it.
  *  Everything except the intro is set up inside gsap.matchMedia so reduced motion gets none of it. */
 export default function HeroMotion() {
@@ -27,54 +27,20 @@ export default function HeroMotion() {
     const cleanups: (() => void)[] = [];
     const q = <T extends Element = HTMLElement>(sel: string) => Array.from(root.querySelectorAll<T & Element>(sel));
 
-    // Title SVG groups already have their pivot at local (0,0) (see TitleArt). Fix GSAP's origin once, before anything
-    // animates: setting svgOrigin inside a tween that also moves x/y makes GSAP bake the offset into the final matrix.
-    gsap.set(q('[data-letter], [data-anim="sparkle"]'), { svgOrigin: '0 0' });
-
     // ---------- Intro ----------
     if (html.dataset.hero === 'pending' && performance.now() > INTRO_DEADLINE_MS) {
       delete html.dataset.hero;
     }
 
     if (html.dataset.hero === 'pending') {
-      const jolt = () => gsap.utils.random(-28, 28);
-      // Each letter is two SVG groups (ink silhouette + face) sharing data-letter; each group's origin is already its pivot (see TitleArt).
-      const letter = (id: string) => q(`[data-letter="${id}"]`);
-      const ids = (g: string) => Array.from(new Set(q(`[data-anim="${g}"][data-letter]`).map((e) => e.dataset.letter!)));
+      // The official title artwork slams in as one piece, then the whole cover jolts.
       intro = gsap.timeline({ defaults: { ease: 'back.out(2.4)' } });
-      const slam = (g: string, start: number, stagger: number, duration: number, scale: number, ease?: string) =>
-        ids(g).forEach((id, i) => {
-          const els = letter(id);
-          const r = jolt();
-          intro!.fromTo(
-            els,
-            { opacity: 0, scale, y: -170, rotate: r },
-            { opacity: 1, scale: 1, y: 0, rotate: 0, duration, ...(ease ? { ease } : {}) },
-            start + i * stagger,
-          );
-        });
-      slam('ch1', 0, 0.05, 0.34, 2.6);
-      slam('ch2', 0.2, 0.032, 0.3, 2.4);
-      // "3.0" accelerates INTO the page (no overshoot) so the impact reads as a slam
-      ids('num').forEach((id) => {
-        intro!.fromTo(
-          letter(id),
-          { opacity: 0, scale: 3.4, rotate: -24 },
-          { opacity: 1, scale: 1, rotate: 0, duration: 0.24, ease: 'power4.in' },
-          0.56,
-        );
-      });
+      intro.fromTo(q('[data-anim="title"]'), { opacity: 0, scale: 2.6, y: -170, rotate: -14 }, { opacity: 1, scale: 1, y: 0, rotate: 0, duration: 0.5, ease: 'back.out(1.8)' }, 0);
       intro
-        .fromTo(
-          q('[data-anim="burst"]'),
-          { opacity: 0, scale: 0.2, rotate: -80 },
-          { opacity: 1, scale: 1, rotate: 0, duration: 0.32, ease: 'back.out(3)', transformOrigin: '50% 50%' },
-          0.8,
-        )
         .to(
           root.querySelector('[data-title]'),
           { keyframes: { x: [0, -9, 8, -5, 3, 0], y: [0, 5, -4, 2, -1, 0] }, duration: 0.16, ease: 'none' },
-          0.8,
+          0.5,
         )
         .fromTo(
           q('[data-anim="decor"]'),
@@ -114,22 +80,16 @@ export default function HeroMotion() {
     const mm = gsap.matchMedia();
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      // Letters spring when poked (hover on desktop, tap on touch).
-      const boing = (face: Element) => {
-        const id = (face as HTMLElement).dataset.letter;
-        const els = q(`[data-letter="${id}"]`);
-        if (!introDone() || els.some((e) => gsap.isTweening(e))) return;
-        gsap.fromTo(
-          els,
-          { scaleX: 1.2, scaleY: 0.8, y: 14 },
-          { scaleX: 1, scaleY: 1, y: 0, duration: 0.9, ease: 'elastic.out(1.2, 0.32)' },
-        );
+      // The title springs when poked (hover on desktop, tap on touch).
+      const title = q('[data-anim="title"]');
+      const boing = (el: Element) => {
+        if (!introDone() || gsap.isTweening(el)) return;
+        gsap.fromTo(el, { scaleX: 1.06, scaleY: 0.94, y: 6 }, { scaleX: 1, scaleY: 1, y: 0, duration: 0.9, ease: 'elastic.out(1.2, 0.32)' });
       };
-      const glyphs = q('[data-glyph]');
-      const onGlyph = (e: Event) => boing(e.currentTarget as Element);
-      glyphs.forEach((g) => {
-        g.addEventListener('pointerenter', onGlyph);
-        g.addEventListener('pointerdown', onGlyph);
+      const onTitle = (e: Event) => boing(e.currentTarget as Element);
+      title.forEach((g) => {
+        g.addEventListener('pointerenter', onTitle);
+        g.addEventListener('pointerdown', onTitle);
       });
 
       // The cover tilts away as you scroll into the issue.
@@ -144,9 +104,9 @@ export default function HeroMotion() {
       });
 
       return () => {
-        glyphs.forEach((g) => {
-          g.removeEventListener('pointerenter', onGlyph);
-          g.removeEventListener('pointerdown', onGlyph);
+        title.forEach((g) => {
+          g.removeEventListener('pointerenter', onTitle);
+          g.removeEventListener('pointerdown', onTitle);
         });
         scrollOut.scrollTrigger?.kill();
       };
