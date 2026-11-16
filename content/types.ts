@@ -79,6 +79,17 @@ export interface Sponsor {
   url?: string;
 }
 
+export interface Tenant {
+  name: string;
+  src: string;
+  width: number;
+  height: number;
+  /** "wide" = banner-like logo (3 per row, larger); "square" = round, square or badge logo (4 per row). */
+  kind: 'wide' | 'square';
+  /** Optional link (Instagram or similar); when set the logo becomes a link. */
+  url?: string;
+}
+
 export interface Festival {
   name: string;
   edition: string;

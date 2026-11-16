@@ -1,3 +1,4 @@
+import Bazaar from '@/components/Bazaar';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import HowTo from '@/components/HowTo';
@@ -16,6 +17,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <LevelExplorer lang={lang} />
         <Sponsors lang={lang} />
         <HowTo lang={lang} />
+        <Bazaar lang={lang} />
       </main>
       <Footer lang={lang} />
     </>

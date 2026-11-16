@@ -107,6 +107,7 @@ const id = {
     host: 'Diselenggarakan oleh',
   },
   sponsors: { title: 'Special Thanks To', label: 'Sponsor dan pendukung Fatih Festival 3.0' },
+  bazaar: { title: 'Tenant Bazaar', label: 'Tenant bazar Fatih Festival 3.0' },
   unknown: '???',
   logoPlaceholder: 'LOGO',
 };
@@ -216,6 +217,7 @@ const en: typeof id = {
     host: 'Hosted by',
   },
   sponsors: { title: 'Special Thanks To', label: 'Sponsors and supporters of Fatih Festival 3.0' },
+  bazaar: { title: 'Tenant Bazaar', label: 'Bazaar tenants of Fatih Festival 3.0' },
   unknown: '???',
   logoPlaceholder: 'LOGO',
 };
