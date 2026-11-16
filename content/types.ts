@@ -84,8 +84,9 @@ export interface Tenant {
   src: string;
   width: number;
   height: number;
-  /** "wide" = banner-like logo (3 per row, larger); "square" = round, square or badge logo (4 per row). */
-  kind: 'wide' | 'square';
+  /** Where the logo sits in the scattered desktop layout, as % of the layout box (x, y = top-left corner, w = width),
+   *  and its tilt in degrees. Phones ignore x/y and use w and r in a loose wrapped layout. */
+  layout: { x: number; y: number; w: number; r: number };
   /** Optional link (Instagram or similar); when set the logo becomes a link. */
   url?: string;
 }

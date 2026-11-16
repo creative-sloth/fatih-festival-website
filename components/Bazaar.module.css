@@ -1,13 +1,13 @@
-/* "Tenant Bazaar": a market-stall comic band. A red and white striped awning with scalloped edge hangs over a warm orange
-   burst (rays + graded halftone); the tenant logos are frameless stickers. Variant of the comic look: purple picker,
-   gold sponsors, black-and-white speed lines for Cara Daftar. */
+/* "Tenant Bazaar": a market-stall comic band. A red and white striped awning with a scalloped edge hangs over a pink ground covered
+   in food, drink and accessory doodles (pizza, ice cream, boba, drumstick, noodles, ring, bow, sunglasses, bag, donut) with graded
+   halftone corners. The tenant logos are frameless stickers scattered over it. */
 
 .band {
   position: relative;
   overflow: hidden;
   isolation: isolate;
   border-top: var(--line) solid var(--ink);
-  background: repeating-conic-gradient(from 0deg at 50% 30%, #ff8c3a 0 6deg, #ffa25c 6deg 12deg);
+  background: url('/assets/bazaar-doodles.svg') 0 0 / clamp(380px, 38vw, 560px) repeat, #ff8fbd;
   color: var(--ink);
   scroll-margin-top: 64px;
 }
@@ -17,7 +17,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(150 30 0 / 0.3);
+  background: rgb(160 20 90 / 0.34);
   -webkit-mask:
     url('/assets/halftone-tr.svg') right top / min(520px, 60vw) no-repeat,
     url('/assets/halftone-bl.svg') left bottom / min(520px, 60vw) no-repeat;
@@ -56,13 +56,13 @@
   z-index: 1;
   max-width: 1240px;
   margin: 0 auto;
-  padding: clamp(78px, 8vw, 110px) var(--gutter) clamp(52px, 7vw, 92px);
+  padding: clamp(78px, 8vw, 110px) var(--gutter) clamp(48px, 6vw, 84px);
 }
 
 .title {
   display: block;
   width: fit-content;
-  margin: 0 auto clamp(30px, 4.5vw, 54px);
+  margin: 0 auto clamp(26px, 4vw, 48px);
   padding: 8px 26px 4px;
   border: var(--line) solid var(--ink);
   background: #fff;
@@ -77,46 +77,32 @@
   rotate: 1.5deg;
 }
 
-/* Frameless stickers: white edge, thin ink edge, ink offset shadow. Wide logos first, then square ones, in even grids. */
-.logos {
-  display: grid;
-  align-items: center;
-  justify-items: center;
+/* Scattered on purpose. Desktop: every logo has its own spot (x, y, width, tilt) inside a fixed-ratio board that scales as one
+   picture. Phones: a loose wrapped layout, same tilts, small vertical nudges. */
+.board {
+  position: relative;
+  aspect-ratio: 1200 / 700;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.wide {
-  --h: clamp(68px, 7.6vw, 108px);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
-  margin-bottom: clamp(36px, 5vw, 64px);
-}
-.square {
-  --h: clamp(92px, 10.4vw, 142px);
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
-}
 .item {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  rotate: var(--r);
   display: grid;
   place-items: center;
-  width: 100%;
-  min-height: var(--h);
   transition: translate 0.45s var(--ease-spring);
 }
-.item:nth-child(odd) {
-  rotate: -1deg;
-}
-.item:nth-child(even) {
-  rotate: 0.8deg;
-}
 .item:hover {
-  translate: 0 -4px;
+  translate: 0 -6px;
+  z-index: 2;
 }
 
 .link {
-  display: grid;
-  place-items: center;
+  display: block;
 }
 .link:focus-visible {
   outline: 3px solid var(--ink);
@@ -126,17 +112,11 @@
 
 .logo {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: min(100%, 320px);
-  max-height: var(--h);
-  object-fit: contain;
   filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
     drop-shadow(2px 0 0 var(--ink)) drop-shadow(-2px 0 0 var(--ink)) drop-shadow(0 2px 0 var(--ink)) drop-shadow(0 -2px 0 var(--ink))
     drop-shadow(4px 5px 0 var(--ink));
-}
-.square .logo {
-  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -145,17 +125,20 @@
   }
 }
 
-@media (max-width: 719px) {
-  .square {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 899px) {
+  .board {
+    aspect-ratio: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 22px 26px;
   }
-}
-@media (max-width: 479px) {
-  .wide {
-    grid-template-columns: minmax(0, 1fr);
-    --h: 76px;
-  }
-  .logo {
-    max-width: min(100%, 280px);
+  .item {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(calc(var(--wn) * 2.5%), 46%);
+    margin-top: var(--nudge);
   }
 }
