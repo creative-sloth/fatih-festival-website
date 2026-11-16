@@ -73,8 +73,8 @@ export interface Sponsor {
   src: string;
   width: number;
   height: number;
-  /** "wordmark" = mostly text or a wide block (shown large, 3 per row); "emblem" = round, square or pictorial (4 per row). */
-  kind: 'wordmark' | 'emblem';
+  /** Contribution tier, 1 = largest contribution (biggest logo, top row) down to 4 (smallest). From the committee's Sponsor Order flyer. */
+  tier: 1 | 2 | 3 | 4;
   /** Optional website; when set the logo becomes a link. */
   url?: string;
 }

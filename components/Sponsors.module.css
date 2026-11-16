@@ -76,30 +76,45 @@
 }
 
 /* No cards: each logo is a sticker (white edge, thin ink edge, ink offset shadow) straight on the band.
-   Wordmarks sit in an even 3-column grid and are large; emblems follow in an even 4-column grid. */
+   One centred row per contribution tier; the logo size drops with each tier (t1 biggest ... t4 smallest). */
 .logos {
-  display: grid;
+  --gap-x: clamp(24px, 3.6vw, 56px);
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-items: center;
-  margin: 0;
+  justify-content: center;
+  gap: clamp(22px, 3vw, 38px) var(--gap-x);
+  margin: 0 0 clamp(34px, 4.6vw, 62px);
   padding: 0;
   list-style: none;
 }
-.words {
-  --h: clamp(60px, 6.6vw, 92px);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
-  margin-bottom: clamp(36px, 5vw, 64px);
+.logos:last-child {
+  margin-bottom: 0;
 }
-.emblems {
-  --h: clamp(84px, 9.4vw, 128px);
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(26px, 3.4vw, 46px) clamp(24px, 3.6vw, 56px);
+.t1 {
+  --h: clamp(84px, 11vw, 152px);
+  --w: clamp(150px, 17vw, 240px);
+}
+.t2 {
+  --h: clamp(62px, 7.8vw, 108px);
+  --w: clamp(130px, 19vw, 280px);
+}
+.t3 {
+  --h: clamp(52px, 6.4vw, 90px);
+  --w: clamp(110px, 17vw, 250px);
+}
+.t4 {
+  --h: clamp(44px, 5.2vw, 74px);
+  --w: 100%;
+  gap: clamp(20px, 2.6vw, 32px) clamp(18px, 2.4vw, 34px);
+}
+/* tier 4 is a six-up grid; a seventh logo wraps onto a centred second row */
+.t4 .item {
+  flex: 0 0 calc((100% - 5 * clamp(18px, 2.4vw, 34px)) / 6);
 }
 .item {
   display: grid;
   place-items: center;
-  width: 100%;
   min-height: var(--h);
   transition: translate 0.45s var(--ease-spring);
 }
@@ -127,15 +142,12 @@
   display: block;
   width: auto;
   height: auto;
-  max-width: min(100%, 320px);
+  max-width: var(--w);
   max-height: var(--h);
   object-fit: contain;
   filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
     drop-shadow(2px 0 0 var(--ink)) drop-shadow(-2px 0 0 var(--ink)) drop-shadow(0 2px 0 var(--ink)) drop-shadow(0 -2px 0 var(--ink))
     drop-shadow(4px 5px 0 var(--ink));
-}
-.emblems .logo {
-  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -145,16 +157,21 @@
 }
 
 @media (max-width: 719px) {
-  .emblems {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .t4 .item {
+    flex-basis: calc((100% - 2 * 18px) / 3);
   }
 }
 @media (max-width: 479px) {
-  .words {
-    grid-template-columns: minmax(0, 1fr);
-    --h: 72px;
+  .t1 {
+    --h: 78px;
+    --w: 130px;
   }
-  .logo {
-    max-width: min(100%, 280px);
+  .t2 {
+    --h: 58px;
+    --w: 150px;
+  }
+  .t3 {
+    --h: 52px;
+    --w: 130px;
   }
 }

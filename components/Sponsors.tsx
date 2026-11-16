@@ -3,8 +3,11 @@ import type { Lang, Sponsor } from '@/content/types';
 import { getMessages } from '@/messages';
 import s from './Sponsors.module.css';
 
-/** "Special Thanks To": frameless sponsor logos on a light sky comic burst band, right after the competition panels.
- *  Two orderly groups: the wordmarks (large, 3 per row) and then the emblems (4 per row). */
+const TIERS: Sponsor['tier'][] = [1, 2, 3, 4];
+const TIER_CLASS: Record<Sponsor['tier'], string> = { 1: s.t1, 2: s.t2, 3: s.t3, 4: s.t4 };
+
+/** "Special Thanks To": frameless sponsor logos on an antique-gold comic band. One row per contribution tier, from the biggest
+ *  contributors (largest logos, top) to the smallest (compact logos, bottom). */
 export default function Sponsors({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
   if (sponsors.length === 0) return null;
@@ -20,19 +23,6 @@ export default function Sponsors({ lang }: { lang: Lang }) {
       img
     );
   };
-  const group = (kind: Sponsor['kind'], className: string) => {
-    const items = sponsors.filter((sp) => sp.kind === kind);
-    if (items.length === 0) return null;
-    return (
-      <ul className={`${s.logos} ${className}`} aria-label={t.sponsors.label}>
-        {items.map((sp) => (
-          <li key={sp.name} className={s.item}>
-            {logo(sp)}
-          </li>
-        ))}
-      </ul>
-    );
-  };
 
   return (
     <section className={s.band} id="sponsor" aria-labelledby="sponsor-title">
@@ -41,8 +31,19 @@ export default function Sponsors({ lang }: { lang: Lang }) {
         <h2 className={s.title} id="sponsor-title">
           {t.sponsors.title}
         </h2>
-        {group('wordmark', s.words)}
-        {group('emblem', s.emblems)}
+        {TIERS.map((tier) => {
+          const items = sponsors.filter((sp) => sp.tier === tier);
+          if (items.length === 0) return null;
+          return (
+            <ul key={tier} className={`${s.logos} ${TIER_CLASS[tier]}`} aria-label={t.sponsors.label}>
+              {items.map((sp) => (
+                <li key={sp.name} className={s.item}>
+                  {logo(sp)}
+                </li>
+              ))}
+            </ul>
+          );
+        })}
       </div>
       <span className={s.teethBottom} aria-hidden="true" />
     </section>
