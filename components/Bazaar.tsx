@@ -15,8 +15,8 @@ const place = (tn: Tenant, i: number): CSSProperties =>
     '--nudge': `${[0, 14, -6, 18, 4, -10][i % 6]}px`,
   }) as CSSProperties;
 
-/** "Tenant Bazaar": the last section of the page. A market-stall look (striped awning over a pink burst with food, drink and
- *  accessory doodles) with the tenant logos scattered around as frameless stickers. */
+/** "Tenant Bazaar": the last section of the page. A market-stall look (striped awning over the committee's food-and-drink
+ *  comic background) with the tenant logos scattered around as frameless stickers. */
 export default function Bazaar({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
   if (tenants.length === 0) return null;
