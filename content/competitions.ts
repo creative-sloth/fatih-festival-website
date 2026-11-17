@@ -53,7 +53,8 @@ export const competitions: Competition[] = [
   // ---------- SD/MI ----------
   {
     ...base('sd-bercerita', 'Lomba Bercerita', ['SD'], 'Bahasa'),
-    juknisUrl: juknisPdf('1TTt_P-cHXvwYgnjOQ7f1MSnkXa7qQreX'),
+    // PDF 1TTt_P-cHXvwYgnjOQ7f1MSnkXa7qQreX is restricted (visitors get 401): use the shared folder until it is shared as "anyone with the link".
+    juknisUrl: null,
     participation: 'individual',
     fee: 'Rp 40.000 / peserta',
     schedule: [{ date: '2026-11-25', start: '13:30', end: '18:00' }],

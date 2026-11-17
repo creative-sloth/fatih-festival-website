@@ -12,7 +12,7 @@ const place = (tn: Tenant, i: number): CSSProperties =>
     '--wn': tn.layout.w,
     '--r': `${tn.layout.r}deg`,
     // phones: small alternating vertical nudges so the wrapped logos still look loose
-    '--nudge': `${[0, 14, -6, 18, 4, -10][i % 6]}px`,
+    '--nudge': `${[0, 10, -4, 12, 4, -6][i % 6]}px`,
   }) as CSSProperties;
 
 /** "Tenant Bazaar": the last section of the page. A market-stall look (striped awning over the committee's food-and-drink

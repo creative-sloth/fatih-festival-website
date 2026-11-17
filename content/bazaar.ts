@@ -8,7 +8,7 @@ export const tenants: Tenant[] = [
   { name: 'Little Matcha', src: '/assets/bazaar/little-matcha.webp', width: 560, height: 134, layout: { x: 52, y: 8, w: 24, r: -3 } },
   { name: 'Morning People', src: '/assets/bazaar/morning-people.webp', width: 390, height: 392, layout: { x: 81, y: 8, w: 14, r: 8 } },
   { name: 'Ayang Beib', src: '/assets/bazaar/ayang-beib.webp', width: 356, height: 356, layout: { x: 5, y: 41, w: 15, r: 5 } },
-  { name: 'Mie Pangsit Chili Oil', src: '/assets/bazaar/mie-pangsit.webp', width: 438, height: 420, layout: { x: 25, y: 28, w: 16, r: 6 } },
+  { name: 'Mie Pangsit Chili Oil', src: '/assets/bazaar/mie-pangsit.webp', width: 438, height: 420, layout: { x: 25, y: 32, w: 16, r: 6 } },
   { name: 'Artistry Studio', src: '/assets/bazaar/artistry-studio.webp', width: 560, height: 339, layout: { x: 47, y: 40, w: 19, r: 4 } },
   { name: 'OPizza', src: '/assets/bazaar/opizza.webp', width: 420, height: 420, layout: { x: 83, y: 52, w: 14, r: -8 } },
   { name: 'Gerai Handmade', src: '/assets/bazaar/gerai-handmade.webp', width: 398, height: 256, layout: { x: 17, y: 74, w: 20, r: -4 } },
