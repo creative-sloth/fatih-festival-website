@@ -14,4 +14,5 @@ export const tenants: Tenant[] = [
   { name: 'Gerai Handmade', src: '/assets/bazaar/gerai-handmade.webp', width: 398, height: 256, layout: { x: 17, y: 74, w: 20, r: -4 } },
   { name: 'Mr Key Ice Cream', src: '/assets/bazaar/mr-key.webp', width: 495, height: 420, layout: { x: 40, y: 68, w: 17, r: 6 } },
   { name: 'Korean Food Noona', src: '/assets/bazaar/korean-food-noona.webp', width: 420, height: 420, layout: { x: 66, y: 66, w: 14, r: 7 } },
+  { name: 'Bestya Kitchen', src: '/assets/bazaar/bestya-kitchen.webp', width: 420, height: 420, layout: { x: 1, y: 72, w: 13, r: -6 } },
 ];
