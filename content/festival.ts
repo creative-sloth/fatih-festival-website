@@ -32,10 +32,10 @@ export const festival: Festival = {
   // General registration form (committee, 5 Nov 2026). A competition with its own `formUrl` overrides it.
   formUrl:
     'https://docs.google.com/forms/d/e/1FAIpQLSc0ZACvGgYvLkD2lDxdqXY-qM3dH2eMaRIJFU6LyWLNUBpOsw/viewform',
-  // One deadline for all competitions: 20 Nov 2026, 23:59 WIB (committee, 6 Nov 2026).
+  // One deadline for all competitions: 23 Nov 2026, 12:00 WIB (committee; extended from 20 Nov 23:59 on 21 Nov 2026).
   // Pelaksanaan 25-27 Nov 2026 (startDate/endDate); Awarding Ceremony 27 Nov 2026 14.00-17.00 WIB (rundown). Festival days themselves are dates only.
-  registrationCloses: '2026-11-20T23:59:00+07:00',
-  registrationClosesText: { id: '20 November 2026, 23.59 WIB', en: '20 November 2026, 11:59 PM WIB' },
+  registrationCloses: '2026-11-23T12:00:00+07:00',
+  registrationClosesText: { id: '23 November 2026, 12.00 WIB', en: '23 November 2026, 12:00 PM WIB' },
   // Narahubung per school level, from Data Lomba.xlsx (rows "Contact Person ..."); TK & SD was later changed to Ms. Nisa by the committee (6 Nov 2026).
   levelContacts: [
     {

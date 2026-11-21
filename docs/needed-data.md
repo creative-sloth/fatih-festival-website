@@ -20,7 +20,7 @@ Anything not listed here is filled in `content/`. Missing facts stay `null`.
 Found by comparing `content/` with `Data Lomba.xlsx`, `docs/juknis-extracted.md` and the live links. Nothing here has been changed on the site yet.
 
 1. **Google Form asks for sign-in (launch risk).** A logged-out request to the registration form returns HTTP 401 with a "sign in to your Google account" page. Open the link in a private window. If it asks for sign-in, check the form settings (restricted to an organisation, file upload, or one response per person) so students from other schools can register.
-2. **Old dates in the Drive juknis.** The juknis still print competition days of 11-14 Nov and registration or upload deadlines of 6, 7, 10 and 11 Nov. The site shows 25-27 Nov and a 20 Nov deadline. The documents need updating or visitors see contradictory dates.
+2. **Old dates in the Drive juknis.** The juknis still print competition days of 11-14 Nov and registration or upload deadlines of 6, 7, 10 and 11 Nov. The site shows 25-27 Nov and a 23 Nov deadline. The documents need updating or visitors see contradictory dates.
 3. **Contact persons differ between juknis and spreadsheet.**
    - Lomba Baca Puisi: juknis Ms. Afrileni (0813 6040 4988), spreadsheet and site Mr. Safriadi.
    - Lomba Basket: juknis Mr. Anis (0813 9684 2987), spreadsheet and site Mr. Juliandi.

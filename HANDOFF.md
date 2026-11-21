@@ -1,5 +1,5 @@
 # PROJECT HANDOFF — FATIH FESTIVAL 3.0 WEBSITE
-Version: 1.7.0
+Version: 1.7.1
 Prepared: 3 November 2026 (updated 7 November 2026)
 Supersedes: `school_festival_website_handoff_claude_opus.md` (v1.0) and v1.1
 Audience: Claude Code (implementer) and any reviewer agent. This file is the single source of truth for scope, design, and rules. If anything here conflicts with chat history, this file wins; if it conflicts with an official committee document, the committee document wins and the conflict must be flagged.
@@ -16,13 +16,13 @@ Audience: Claude Code (implementer) and any reviewer agent. This file is the sin
 
 ---
 
-## 0.1 CURRENT STATE (v1.7.0, 7 Nov 2026): read this first, it overrides older text below
+## 0.1 CURRENT STATE (v1.7.1, 21 Nov 2026): read this first, it overrides older text below
 
 Where later sections disagree with this block, this block and `content/` win.
 
 - **Competitions:** 17, including a TK level (Lomba Mewarnai). The list lives in `content/competitions.ts`; the table in section 5 is the original 16-item poster list and is history only. "STEAM Project" is the official name (slug `smp-sma-stem-expo` is kept because it is an internal id).
 - **Dates:** competition days 25-27 Nov 2026 (dates only); Awarding Ceremony 27 Nov 2026, 14.00-17.00 WIB (official rundown, confirmed by the owner 11 Nov; it replaced an earlier 28 Nov). Each competition's schedule comes from the rundown PDF in the shared Drive folder (`schedule` in `content/competitions.ts`, shown as "Waktu Pelaksanaan" in the detail card).
-- **Registration:** one general Google Form for everything, one shared deadline, **20 Nov 2026, 23:59 WIB**. The hero shows a live countdown; the register buttons (hero, flowchart step 3, detail cards) disappear after the deadline (client-side check, `lib/registration.ts`).
+- **Registration:** one general Google Form for everything, one shared deadline, **23 Nov 2026, 12:00 WIB** (extended from 20 Nov 23:59). The hero shows a live countdown; the register buttons (hero, flowchart step 3, detail cards) disappear after the deadline (client-side check, `lib/registration.ts`).
 - **Juknis:** one shared Google Drive folder for every competition. Per-competition PDFs were removed.
 - **Contacts:** per competition from `Data Lomba/Data Lomba.xlsx`; competitions without their own contact fall back to the level contact (TK & SD, SMP, SMA, see `festival.levelContacts`). The footer is titled "Narahubung Umum".
 - **More information:** Linktree and Instagram links in the footer; the official flyer is downloadable from the footer (`public/assets/poster-fatih-festival-3.0.jpg`).
@@ -386,6 +386,9 @@ Event dates · venue · fees · prizes · registration windows · form and jukni
 ---
 
 ## CHANGELOG
+
+**1.7.1 - 21 Nov 2026**
+- Registration deadline extended from 20 Nov 23:59 WIB to 23 Nov 2026, 12:00 WIB (`content/festival.ts`).
 
 **1.7.0 - 7 Nov 2026**
 - Added section 0.1 (current state). Real dates (25-27 Nov, awarding 28 Nov), deadline (20 Nov 23:59 WIB) with live countdown, general Google Form, shared juknis folder, level-based contacts, Linktree/Instagram, poster download, comic-panel picker, flowchart "Cara Daftar", flyer-style title.
